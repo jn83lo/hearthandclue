@@ -408,9 +408,9 @@
       <div class="row" style="margin-top:0">
         <button class="btn-primary" id="share">Share your result</button>
       </div>
-      <a class="cta" href="https://www.etsy.com/shop/HearthAndClue" target="_blank" rel="noopener">
-        <b>Want a whole book of these?</b>
-        <span>30 large-print printable puzzle books · instant download</span>
+      <a class="cta" id="bookCta" href="https://www.etsy.com/shop/HearthAndClue" target="_blank" rel="noopener">
+        <b id="ctaTitle">Want a whole book of these?</b>
+        <span id="ctaSub">30 large-print printable puzzle books · instant download</span>
       </a>
     </div>
   </section>
@@ -437,59 +437,59 @@
      cycling in order. Words: A-Z only, 9 letters max (10x10 grid).
   ----------------------------------------------------------------*/
   var THEMES = [
-    { name:"The Garden Gate", note:"Everything worth growing takes longer than you'd like.",
+    { name:"The Garden Gate", book:{s:"gardening",u:"https://www.etsy.com/listing/4552628958/gardening-word-search-book-large-print"}, note:"Everything worth growing takes longer than you'd like.",
       words:["SEEDLING","TRELLIS","COMPOST","BLOSSOM","PRUNING","HARVEST","ORCHARD","WATERING"] },
-    { name:"Sunday Roast", note:"The kitchen window fogs up and nobody minds.",
+    { name:"Sunday Roast", book:{s:"comfort food",u:"https://www.etsy.com/listing/4550915743/large-print-word-search-book-pdf-comfort"}, note:"The kitchen window fogs up and nobody minds.",
       words:["GRAVY","ROASTED","BUTTERY","COBBLER","SIMMER","PANTRY","DUMPLING","CRACKLING"] },
-    { name:"At the Feeder", note:"Sit still long enough and they forget you're there.",
+    { name:"At the Feeder", book:{s:"birdwatching",u:"https://www.etsy.com/listing/4553703020/bird-word-search-puzzle-book-pdf-large"}, note:"Sit still long enough and they forget you're there.",
       words:["SPARROW","FINCH","HERON","PLUMAGE","NESTING","WARBLER","SWALLOW","THRUSH"] },
-    { name:"The First Cup", note:"Nothing is decided before the kettle boils.",
+    { name:"The First Cup", book:{s:"coffee and tea",u:"https://www.etsy.com/listing/4553745994/coffee-tea-word-search-puzzle-book-pdf"}, note:"Nothing is decided before the kettle boils.",
       words:["ESPRESSO","KETTLE","STEEPING","SAUCER","CREAMER","MORNING","BREWING","TEAPOT"] },
-    { name:"By the Fireside", note:"One more row, then bed. It is never one more row.",
+    { name:"By the Fireside", book:{s:"cosy home",u:"https://www.etsy.com/listing/4553679743/cozy-home-word-search-puzzle-book-pdf"}, note:"One more row, then bed. It is never one more row.",
       words:["SKEIN","PURL","CABLES","MERINO","PATTERN","STITCHES","BOBBIN","WOOLLEN"] },
-    { name:"Out Under Canvas", note:"The best conversations happen after the torch goes out.",
+    { name:"Out Under Canvas", book:{s:"camping",u:"https://www.etsy.com/listing/4554896237/camping-word-search-puzzle-book-pdf"}, note:"The best conversations happen after the torch goes out.",
       words:["LANTERN","CAMPFIRE","THERMOS","TRAILS","KINDLING","CANTEEN","AWNING","EMBERS"] },
-    { name:"Grain &amp; Chisel", note:"Measure twice. Then measure once more, quietly.",
+    { name:"Grain &amp; Chisel", book:{s:"woodworking",u:"https://www.etsy.com/listing/4554679490/woodworking-word-search-book-large-print"}, note:"Measure twice. Then measure once more, quietly.",
       words:["CHISEL","SAWDUST","PLANING","WALNUT","DOVETAIL","LATHE","GRAIN","VARNISH"] },
-    { name:"Low Tide", note:"You always come home with more pockets full than you left with.",
+    { name:"Low Tide", book:{s:"beach",u:"https://www.etsy.com/listing/4554338677/beach-word-search-puzzle-book-pdf-large"}, note:"You always come home with more pockets full than you left with.",
       words:["DRIFTWOOD","SEASHELL","TIDEPOOL","HARBOUR","PEBBLES","SEAGULL","SANDBAR","LAGOON"] },
-    { name:"Proving Day", note:"Bread knows when you're in a hurry, and punishes it.",
+    { name:"Proving Day", book:{s:"baking",u:"https://www.etsy.com/listing/4554088273/baking-word-search-puzzle-book-pdf-large"}, note:"Bread knows when you're in a hurry, and punishes it.",
       words:["SOURDOUGH","KNEADING","RISING","VANILLA","WHISKED","PASTRY","CRUMB","GLAZED"] },
-    { name:"The Long Field", note:"Some mornings the fog doesn't lift until you're halfway back.",
+    { name:"The Long Field", book:{s:"horse",u:"https://www.etsy.com/listing/4554362500/horse-word-search-puzzle-book-pdf-large"}, note:"Some mornings the fog doesn't lift until you're halfway back.",
       words:["GALLOP","SADDLE","STABLE","BRIDLE","PASTURE","CANTER","HOOVES","MEADOW"] },
-    { name:"The Morning Round", note:"Nobody hurries the walk up the last fairway.",
+    { name:"The Morning Round", book:{s:"golf",u:"https://www.etsy.com/listing/4555025178/golf-word-search-puzzle-book-pdf-large"}, note:"Nobody hurries the walk up the last fairway.",
       words:["FAIRWAY","BUNKER","BIRDIE","CADDIE","PUTTER","DOGLEG","DIVOT","EAGLE"] },
-    { name:"Squares by Lamplight", note:"Every scrap in it came from something else first.",
+    { name:"Squares by Lamplight", book:{s:"quilting",u:"https://www.etsy.com/listing/4554868140/quilting-word-search-puzzle-book-pdf"}, note:"Every scrap in it came from something else first.",
       words:["BINDING","THIMBLE","BATTING","SASHING","BASTING","PIECING","BOBBIN","SEAM"] },
-    { name:"Two Rows More", note:"Just two more rows, and then it's ten.",
+    { name:"Two Rows More", book:{s:"knitting",u:"https://www.etsy.com/listing/4553872007/knitting-word-search-puzzle-book-pdf"}, note:"Just two more rows, and then it's ten.",
       words:["SKEIN","PURL","NEEDLES","CASTOFF","GAUGE","MERINO","STITCH","RIBBING"] },
-    { name:"Before the Sun", note:"The fish are incidental. Everyone knows this.",
+    { name:"Before the Sun", book:{s:"fishing",u:"https://www.etsy.com/listing/4554322092/fishing-word-search-puzzle-book-large"}, note:"The fish are incidental. Everyone knows this.",
       words:["TACKLE","BOBBER","WADERS","RIPPLE","MINNOW","LURE","REEL","DAWN"] },
-    { name:"Sunday Chrome", note:"Washed more often than it's driven.",
+    { name:"Sunday Chrome", book:{s:"classic car",u:"https://www.etsy.com/listing/4554235442/classic-car-word-search-puzzle-book-pdf"}, note:"Washed more often than it's driven.",
       words:["CHROME","GARAGE","BONNET","POLISH","ENGINE","FENDER","SPOKES","WAX"] },
-    { name:"Before the Yard Wakes", note:"The animals are up whether you are or not.",
+    { name:"Before the Yard Wakes", book:{s:"farm",u:"https://www.etsy.com/listing/4554359906/farm-word-search-puzzle-book-pdf-large"}, note:"The animals are up whether you are or not.",
       words:["TRACTOR","PADDOCK","SILAGE","HAYLOFT","MILKING","FURROW","GRANARY","STOCKMAN"] },
-    { name:"The Departure Board", note:"Half the pleasure is the part before you leave.",
+    { name:"The Departure Board", book:{s:"travel",u:"https://www.etsy.com/listing/4552210945/travel-word-search-puzzle-book-pdf-large"}, note:"Half the pleasure is the part before you leave.",
       words:["PASSPORT","PLATFORM","LUGGAGE","TIMETABLE","VOYAGE","TRANSIT","WANDER","ITINERARY"] },
-    { name:"The Warm Spot", note:"They found the one patch of sun before you did.",
+    { name:"The Warm Spot", book:{s:"dog and cat",u:"https://www.etsy.com/listing/4552069329/dog-cat-word-search-puzzle-book-pdf"}, note:"They found the one patch of sun before you did.",
       words:["WHISKERS","COLLAR","PURRING","FETCH","KENNEL","PAWPRINT","CATNIP","BASKET"] },
-    { name:"The Thaw", note:"Everything arrives at once after waiting all winter.",
+    { name:"The Thaw", book:{s:"spring",u:"https://www.etsy.com/listing/4552005575/spring-word-search-puzzle-book-pdf-large"}, note:"Everything arrives at once after waiting all winter.",
       words:["CROCUS","THAWING","LAMBING","SHOOTS","DRIZZLE","NESTBOX","BUDDING","GREENER"] },
-    { name:"The Long Evening", note:"The light holds on past when it should.",
+    { name:"The Long Evening", book:{s:"summer",u:"https://www.etsy.com/listing/4551947429/summer-word-search-puzzle-book-pdf-large"}, note:"The light holds on past when it should.",
       words:["SUNBURN","AWNING","CICADAS","PADDLING","LEMONADE","SANDALS","THUNDER","TWILIGHT"] },
-    { name:"Something Handwritten", note:"The card matters more than whatever came with it.",
+    { name:"Something Handwritten", pin:[2,8,2,14], book:{s:"Valentine's",u:"https://www.etsy.com/listing/4551939199/valentines-day-word-search-puzzle-book"}, note:"The card matters more than whatever came with it.",
       words:["RIBBON","ENVELOPE","ROSES","CANDLE","DEVOTION","LETTERS","FONDNESS","TOKENS"] },
-    { name:"The Porch Light", note:"Left on for the small ones who come after dark.",
+    { name:"The Porch Light", pin:[10,25,10,31], book:{s:"Halloween",u:"https://www.etsy.com/listing/4551703062/halloween-word-search-puzzle-book-pdf"}, note:"Left on for the small ones who come after dark.",
       words:["LANTERN","COBWEB","RATTLE","SHADOWS","COSTUME","TOFFEE","CREAKING","HOLLOW"] },
-    { name:"The Quiet Before", note:"The house asleep, the tree still lit.",
+    { name:"The Quiet Before", pin:[12,18,12,26], book:{s:"Christmas",u:"https://www.etsy.com/listing/4551500612/christmas-word-search-puzzle-book-pdf"}, note:"The house asleep, the tree still lit.",
       words:["TINSEL","CAROLS","STOCKING","MISTLETOE","WRAPPING","CHESTNUT","GARLAND","FROSTED"] },
-    { name:"The Still Hour", note:"Early enough that the day hasn't asked anything yet.",
+    { name:"The Still Hour", book:{s:"devotional",u:"https://www.etsy.com/listing/4550958759/devotional-word-search-puzzle-book-pdf"}, note:"Early enough that the day hasn't asked anything yet.",
       words:["PSALM","MERCY","VESPERS","GRATITUDE","STILLNESS","PRAYER","SCRIPTURE","REVERENCE"] },
-    { name:"The Locked Study", note:"The key was on the inside. That's the whole problem.",
+    { name:"The Locked Study", book:{s:"cosy mystery",u:"https://www.etsy.com/listing/4550924621/cozy-mystery-word-search-book-pdf-story"}, note:"The key was on the inside. That's the whole problem.",
       words:["ALIBI","INKWELL","KEYHOLE","MOTIVE","WITNESS","DECANTER","SUSPECT","LATCH"] },
-    { name:"The Missing Guest", note:"Nine sat down to dinner. Eight came through to the parlour.",
+    { name:"The Missing Guest", book:{s:"cosy mystery",u:"https://www.etsy.com/listing/4551538252/cozy-mystery-word-search-book-pdf-book"}, note:"Nine sat down to dinner. Eight came through to the parlour.",
       words:["VERDICT","TELEGRAM","CORRIDOR","SUSPICION","FOOTMAN","PARLOUR","TRUNK","INQUEST"] },
-    { name:"The Last Chapter", note:"You knew, somewhere around the middle.",
+    { name:"The Last Chapter", book:{s:"cosy mystery",u:"https://www.etsy.com/listing/4553680274/cozy-mystery-word-search-book-pdf-book"}, note:"You knew, somewhere around the middle.",
       words:["CONFESS","DETECTIVE","CIPHER","LEDGER","SHADOW","UNMASKED","TESTIMONY","FORGERY"] },
     { name:"Boots by the Door", note:"Wet leaves, and a long walk earned.",
       words:["BRAMBLE","CONKERS","WOODSMOKE","STUBBLE","RUSSET","GALES","PRESERVE","LANTERNS"] },
@@ -559,7 +559,15 @@
   var todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
   var dayIndex = Math.round((todayUTC - EPOCH) / 86400000);
   var issueNo = dayIndex + 1;
-  var theme = THEMES[((dayIndex % THEMES.length) + THEMES.length) % THEMES.length];
+  var PINNED = [], ROT = [];
+  for(var ti=0; ti<THEMES.length; ti++){ (THEMES[ti].pin ? PINNED : ROT).push(THEMES[ti]); }
+  var md = (now.getMonth()+1)*100 + now.getDate();
+  var theme = null;
+  for(var pi=0; pi<PINNED.length; pi++){
+    var q = PINNED[pi].pin, a = q[0]*100+q[1], b = q[2]*100+q[3];
+    if(a<=b ? (md>=a && md<=b) : (md>=a || md<=b)){ theme = PINNED[pi]; break; }
+  }
+  if(!theme) theme = ROT[((dayIndex % ROT.length) + ROT.length) % ROT.length];
   var themeName = theme.name.replace(/&amp;/g,"&");
 
   var built = buildGrid(theme.words, dayIndex * 104729 + 17);
@@ -753,6 +761,11 @@
       ? "No reveals. Come back tomorrow for a new one."
       : hints + (hints === 1 ? " word revealed." : " words revealed.") + " Come back tomorrow for a new one.";
     $("shareCard").textContent = shareText();
+    if(theme.book){
+      $("bookCta").href = theme.book.u;
+      $("ctaTitle").textContent = "Fifty-five more like this one";
+      $("ctaSub").textContent = "The " + theme.book.s + " book \u00b7 large print printable PDF, instant download";
+    }
     $("hint").disabled = true;
     $("finish").classList.add("show");
     $("finish").scrollIntoView({behavior:"smooth", block:"nearest"});
