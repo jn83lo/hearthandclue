@@ -1,0 +1,61 @@
+name: Generate pin images
+
+# Renders the next 30 days of Pinterest images into pins/ and commits any new
+# ones. Runs daily and on any change to the puzzle data. If this workflow ever
+# fails the live site is unaffected — Netlify only publishes what is committed.
+
+on:
+  schedule:
+    - cron: "10 14 * * *"   # 00:10 Sydney (AEST), i.e. just after the new puzzle
+  push:
+    paths:
+      - "index.html"
+      - "scripts/**"
+      - ".github/workflows/pins.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow
+        run: python -m pip install --quiet pillow
+
+      - name: Fetch brand fonts
+        continue-on-error: true
+        run: |
+          mkdir -p scripts/fonts
+          base=https://raw.githubusercontent.com/google/fonts/main
+          curl -fsSL -o scripts/fonts/Fraunces-Bold.ttf \
+            "$base/ofl/fraunces/static/Fraunces-Bold.ttf" || echo "Fraunces unavailable"
+          curl -fsSL -o scripts/fonts/Spectral-Regular.ttf \
+            "$base/ofl/spectral/Spectral-Regular.ttf" || echo "Spectral unavailable"
+          curl -fsSL -o scripts/fonts/Spectral-Italic.ttf \
+            "$base/ofl/spectral/Spectral-Italic.ttf" || true
+          curl -fsSL -o scripts/fonts/Spectral-SemiBold.ttf \
+            "$base/ofl/spectral/Spectral-SemiBold.ttf" || true
+          ls -la scripts/fonts || true
+
+      - name: Render pins
+        run: python scripts/generate_pins.py 30 index.html pins
+
+      - name: Commit new images
+        run: |
+          git config user.name "daily-clue-bot"
+          git config user.email "actions@github.com"
+          git add pins
+          if git diff --cached --quiet; then
+            echo "nothing new to commit"
+          else
+            git commit -m "Render pin images ($(date -u +%Y-%m-%d))"
+            git push
+          fi
