@@ -1,1278 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A free word search puzzle. Same puzzle for everyone playing today. No login, no ads.">
-  <meta name="theme-color" content="#F8F3ED">
-  
-  <!-- Open Graph / Social -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="The Daily Clue: A Free Word Search">
-  <meta property="og:description" content="A free word search puzzle, every day. No login, no ads.">
-  <meta property="og:image" content="https://hearthandclue.com/og-image.png">
-  <meta property="og:url" content="https://hearthandclue.com/">
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Daily Clue: A Free Word Search">
-  <meta name="twitter:description" content="A free word search puzzle, every day.">
-  <meta name="twitter:image" content="https://hearthandclue.com/og-image.png">
-  
-  <!-- Search engines -->
-  <link rel="canonical" href="https://hearthandclue.com/">
-  <link rel="icon" type="image/png" href="https://hearthandclue.com/favicon.png">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@72,500;72,700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  
-  <title>The Daily Clue — A Free Word Search</title>
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    html, body {
-      width: 100%;
-      height: 100%;
-      font-family: "Spectral", serif;
-      color: #333;
-      background: #F8F3ED;
-      overflow-x: hidden;
-    }
-    
-    :root {
-      --cream: #F8F3ED;
-      --oxblood: #8E2A2A;
-      --green: #2F4B3C;
-      --brass: #C6A266;
-      --light-brass: #E8D9C3;
-    }
-    
-    /* Accessibility */
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
-    
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-    
-    /* Skip link */
-    .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: var(--oxblood);
-      color: white;
-      padding: 8px;
-      text-decoration: none;
-      z-index: 100;
-      font-size: 14px;
-    }
-    
-    .skip-link:focus {
-      top: 0;
-    }
-    
-    /* Main container */
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    #app {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      min-height: 100vh;
-    }
-    
-    /* Header */
-    .header {
-      text-align: center;
-      margin-bottom: 40px;
-      width: 100%;
-      max-width: 800px;
-    }
-    
-    .header h1 {
-      font-family: "Fraunces", serif;
-      font-size: 48px;
-      font-weight: 700;
-      letter-spacing: -1px;
-      margin-bottom: 8px;
-      color: #333;
-    }
-    
-    .header .tagline {
-      font-family: "Spectral", serif;
-      font-size: 18px;
-      color: var(--green);
-      font-style: italic;
-      font-weight: 400;
-    }
-    
-    .header .issue-number {
-      font-size: 14px;
-      color: var(--brass);
-      margin-top: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    /* Double rule */
-    .rule {
-      border-top: 2px solid var(--brass);
-      border-bottom: 2px solid var(--brass);
-      height: 8px;
-      width: 60px;
-      margin: 12px auto 0;
-    }
-    
-    /* Theme card */
-    .theme-info {
-      margin-top: 24px;
-      padding: 16px 20px;
-      background: rgba(198, 162, 102, 0.08);
-      border-radius: 2px;
-    }
-    
-    .theme-title {
-      font-family: "Fraunces", serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--oxblood);
-      margin-bottom: 6px;
-    }
-    
-    .theme-note {
-      font-size: 15px;
-      color: var(--green);
-      font-style: italic;
-      line-height: 1.5;
-    }
-    
-    /* Game container */
-    .game-container {
-      width: 100%;
-      max-width: 500px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    
-    /* Timer */
-    .timer {
-      text-align: center;
-      font-size: 14px;
-      color: var(--green);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    /* Grid */
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      gap: 4px;
-      background: white;
-      padding: 20px;
-      border-radius: 2px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-    
-    .grid-cell {
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #FAFAF8;
-      border: 1px solid #E8E3DA;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 16px;
-      user-select: none;
-      transition: all 0.15s ease;
-      font-family: "Spectral", serif;
-      border-radius: 1px;
-    }
-    
-    .grid-cell:focus {
-      outline: 2px solid var(--oxblood);
-      outline-offset: 2px;
-    }
-    
-    .grid-cell.selected {
-      background: var(--brass);
-      color: white;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-    
-    .grid-cell.found {
-      background: var(--green);
-      color: white;
-      font-weight: 700;
-    }
-    
-    .grid-cell.revealed {
-      background: #D4A574;
-      color: white;
-    }
-    
-    @media (max-width: 600px) {
-      .grid-container {
-        gap: 2px;
-        padding: 12px;
-      }
-      
-      .grid-cell {
-        font-size: 14px;
-      }
-    }
-    
-    /* Word list */
-    .words-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 8px;
-    }
-    
-    .word-item {
-      padding: 8px 12px;
-      background: #FAFAF8;
-      border-radius: 2px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      user-select: none;
-      border: 1px solid #E8E3DA;
-    }
-    
-    .word-item:hover {
-      background: var(--light-brass);
-    }
-    
-    .word-item.found {
-      background: var(--green);
-      color: white;
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
-    
-    .word-item.revealed {
-      background: #D4A574;
-      color: white;
-      text-decoration: line-through;
-      opacity: 0.9;
-    }
-    
-    /* Controls */
-    .controls {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 2px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-family: "Spectral", serif;
-    }
-    
-    button:focus {
-      outline: 2px solid var(--oxblood);
-      outline-offset: 2px;
-    }
-    
-    .btn-primary {
-      background: var(--oxblood);
-      color: white;
-    }
-    
-    .btn-primary:hover {
-      background: #6B1F1F;
-    }
-    
-    .btn-secondary {
-      background: transparent;
-      color: var(--green);
-      border: 1px solid var(--green);
-    }
-    
-    .btn-secondary:hover {
-      background: rgba(47, 75, 60, 0.08);
-    }
-    
-    /* Finish screen */
-    .finish-screen {
-      text-align: center;
-      animation: slideUp 0.4s ease-out;
-    }
-    
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .finish-screen h2 {
-      font-family: "Fraunces", serif;
-      font-size: 36px;
-      color: var(--oxblood);
-      margin-bottom: 12px;
-    }
-    
-    .finish-stats {
-      background: rgba(198, 162, 102, 0.08);
-      padding: 20px;
-      border-radius: 2px;
-      margin: 20px 0;
-    }
-    
-    .stat {
-      font-size: 16px;
-      margin: 8px 0;
-      color: #333;
-    }
-    
-    .stat-label {
-      color: var(--green);
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 12px;
-      letter-spacing: 0.5px;
-    }
-    
-    /* Share section */
-    .share-section {
-      margin-top: 24px;
-    }
-    
-    .share-title {
-      font-size: 14px;
-      color: var(--green);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
-    }
-    
-    .share-grid {
-      font-size: 20px;
-      font-family: monospace;
-      letter-spacing: 4px;
-      margin: 12px 0;
-      word-break: break-all;
-      padding: 12px;
-      background: white;
-      border-radius: 2px;
-      border: 1px solid #E8E3DA;
-      user-select: all;
-      cursor: pointer;
-    }
-    
-    .share-grid:hover {
-      background: var(--light-brass);
-    }
-    
-    .share-text {
-      font-size: 13px;
-      color: #666;
-      margin-top: 8px;
-    }
-    
-    .share-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
-    
-    .share-btn {
-      padding: 8px 16px;
-      background: transparent;
-      border: 1px solid var(--brass);
-      color: var(--brass);
-      border-radius: 2px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all 0.15s ease;
-    }
-    
-    .share-btn:hover {
-      background: var(--brass);
-      color: white;
-    }
-    
-    /* Email capture modal */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 20px;
-    }
-    
-    .modal {
-      background: white;
-      border-radius: 2px;
-      padding: 32px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-      animation: fadeIn 0.3s ease-out;
-    }
-    
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-    
-    .modal h3 {
-      font-family: "Fraunces", serif;
-      font-size: 24px;
-      color: var(--oxblood);
-      margin-bottom: 12px;
-    }
-    
-    .modal p {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-    
-    .email-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    
-    .email-form input {
-      padding: 10px 12px;
-      border: 1px solid #E8E3DA;
-      border-radius: 2px;
-      font-size: 14px;
-      font-family: "Spectral", serif;
-    }
-    
-    .email-form input:focus {
-      outline: 2px solid var(--oxblood);
-      outline-offset: -2px;
-    }
-    
-    .email-form button {
-      background: var(--oxblood);
-      color: white;
-      padding: 10px;
-    }
-    
-    .modal-close {
-      float: right;
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: #999;
-      cursor: pointer;
-      padding: 0;
-      width: 24px;
-      height: 24px;
-    }
-    
-    /* Leaderboard */
-    .leaderboard {
-      max-width: 500px;
-      width: 100%;
-      margin-top: 20px;
-    }
-    
-    .leaderboard-title {
-      font-family: "Fraunces", serif;
-      font-size: 24px;
-      color: var(--oxblood);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    
-    .leaderboard-list {
-      background: white;
-      border-radius: 2px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-    
-    .leaderboard-entry {
-      padding: 12px 16px;
-      border-bottom: 1px solid #E8E3DA;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-    }
-    
-    .leaderboard-entry:last-child {
-      border-bottom: none;
-    }
-    
-    .leaderboard-entry.current-user {
-      background: rgba(198, 162, 102, 0.1);
-      font-weight: 600;
-    }
-    
-    .leaderboard-rank {
-      color: var(--brass);
-      font-weight: 700;
-      min-width: 30px;
-    }
-    
-    .leaderboard-name {
-      flex: 1;
-      margin-left: 16px;
-    }
-    
-    .leaderboard-time {
-      color: var(--green);
-      font-weight: 600;
-    }
-    
-    /* Footer / CTA */
-    .footer-cta {
-      margin-top: 24px;
-      padding: 20px;
-      background: rgba(142, 42, 42, 0.08);
-      border-radius: 2px;
-      text-align: center;
-    }
-    
-    .footer-cta p {
-      font-size: 14px;
-      color: #333;
-      margin-bottom: 12px;
-    }
-    
-    .footer-cta a {
-      color: var(--oxblood);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    
-    .footer-cta a:hover {
-      text-decoration: underline;
-    }
-    
-    /* Responsive */
-    @media (max-width: 600px) {
-      #app {
-        padding: 16px;
-        min-height: auto;
-      }
-      
-      .header h1 {
-        font-size: 36px;
-      }
-      
-      .header .tagline {
-        font-size: 16px;
-      }
-      
-      .theme-info {
-        margin-top: 16px;
-        padding: 12px 16px;
-      }
-      
-      .theme-title {
-        font-size: 18px;
-      }
-      
-      .theme-note {
-        font-size: 13px;
-      }
-      
-      .modal {
-        padding: 24px;
-      }
-      
-      .finish-screen h2 {
-        font-size: 28px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="A free word search puzzle. The same puzzle for everyone, every day. No login, no ads.">
+<meta name="theme-color" content="#F8F3ED">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Daily Clue — A Free Word Search">
+<meta property="og:description" content="One word search a day. The same puzzle for everyone. No login, no ads.">
+<meta property="og:image" content="https://hearthandclue.com/og-image.png">
+<meta property="og:url" content="https://hearthandclue.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Daily Clue — A Free Word Search">
+<meta name="twitter:description" content="One word search a day. The same puzzle for everyone.">
+<meta name="twitter:image" content="https://hearthandclue.com/og-image.png">
+
+<link rel="canonical" href="https://hearthandclue.com/">
+<link rel="icon" type="image/png" href="/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@72,500;72,700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<title>The Daily Clue — A Free Word Search</title>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Game","name":"The Daily Clue","url":"https://hearthandclue.com/","description":"A free daily word search puzzle. The same puzzle for everyone, every day.","genre":"Word puzzle","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"Hearth & Clue","url":"https://hearthandclue.com/"}}
+</script>
+
+<style>
+  :root {
+    --cream:#F8F3ED; --oxblood:#8E2A2A; --green:#2F4B3C;
+    --brass:#C6A266; --light-brass:#E8D9C3; --ink:#33302C;
+    --paper:#FFFDFA; --rule:#E4DCD0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body {
+    font-family:"Spectral",Georgia,serif; color:var(--ink); background:var(--cream);
+    line-height:1.5; overflow-x:hidden;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none !important; transition:none !important; } }
+
+  .skip-link { position:absolute; left:-9999px; top:0; background:var(--oxblood); color:#fff; padding:10px 14px; z-index:200; }
+  .skip-link:focus { left:0; }
+  .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+
+  .wrap { max-width:560px; margin:0 auto; padding:28px 16px 56px; }
+
+  header { text-align:center; margin-bottom:22px; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(30px,9vw,44px); letter-spacing:-.02em; line-height:1.05; }
+  .rule { border-top:2px solid var(--brass); border-bottom:2px solid var(--brass); height:6px; width:56px; margin:12px auto; }
+  .tagline { font-style:italic; color:var(--green); font-size:clamp(14px,4vw,17px); }
+  .issue { margin-top:10px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--brass); }
+
+  .card { background:rgba(198,162,102,.10); border-radius:3px; padding:14px 16px; text-align:center; margin-bottom:16px; }
+  .card h2 { font-family:"Fraunces",Georgia,serif; font-size:clamp(17px,5vw,21px); font-weight:600; color:var(--oxblood); margin-bottom:4px; line-height:1.2; }
+  .card p { font-style:italic; color:var(--green); font-size:14px; }
+
+  .status { display:flex; justify-content:center; gap:18px; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--green); font-weight:600; margin-bottom:12px; }
+
+  /* Grid — sized so ten columns always fit the viewport */
+  .board {
+    background:var(--paper); border:1px solid var(--rule); border-radius:3px;
+    padding:8px; margin:0 auto 16px;
+    width:100%; max-width:440px;
+    touch-action:none; -webkit-user-select:none; user-select:none;
+  }
+  .grid { display:grid; grid-template-columns:repeat(10,1fr); gap:2px; }
+  .cell {
+    all:unset; box-sizing:border-box;
+    display:flex; align-items:center; justify-content:center;
+    aspect-ratio:1; width:100%;
+    font-family:"Spectral",Georgia,serif; font-weight:600;
+    font-size:clamp(11px,3.1vw,17px); color:var(--ink);
+    background:#FBF8F3; border:1px solid var(--rule); border-radius:2px;
+    cursor:pointer; transition:background .12s ease, color .12s ease;
+  }
+  .cell:focus-visible { outline:2px solid var(--oxblood); outline-offset:1px; }
+  .cell.sel { background:var(--brass); color:#fff; border-color:var(--brass); }
+  .cell.found { background:var(--green); color:#fff; border-color:var(--green); }
+  .cell.hint { background:var(--light-brass); color:var(--oxblood); border-color:var(--brass); }
+
+  .words { display:grid; grid-template-columns:repeat(auto-fill,minmax(96px,1fr)); gap:6px; margin-bottom:16px; }
+  .word { background:var(--paper); border:1px solid var(--rule); border-radius:2px; padding:7px 9px; font-size:13px; letter-spacing:.03em; text-align:center; }
+  .word.done { background:var(--green); color:#fff; border-color:var(--green); text-decoration:line-through; }
+
+  .controls { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .btn {
+    font-family:"Spectral",Georgia,serif; font-size:13px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase;
+    padding:10px 18px; border-radius:2px; cursor:pointer; border:1px solid transparent;
+    transition:background .12s ease, color .12s ease;
+  }
+  .btn:focus-visible { outline:2px solid var(--oxblood); outline-offset:2px; }
+  .btn-primary { background:var(--oxblood); color:#fff; }
+  .btn-primary:hover { background:#712121; }
+  .btn-ghost { background:transparent; color:var(--green); border-color:var(--green); }
+  .btn-ghost:hover { background:rgba(47,75,60,.08); }
+  .btn:disabled { opacity:.45; cursor:default; }
+
+  .done-panel { text-align:center; }
+  .done-panel h2 { font-family:"Fraunces",Georgia,serif; font-size:clamp(24px,7vw,32px); color:var(--oxblood); margin-bottom:6px; }
+  .done-sub { font-style:italic; color:var(--green); margin-bottom:16px; }
+  .figures { display:flex; justify-content:center; gap:28px; background:rgba(198,162,102,.10); border-radius:3px; padding:16px; margin-bottom:18px; }
+  .figure-label { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--green); font-weight:600; }
+  .figure-value { font-family:"Fraunces",Georgia,serif; font-size:24px; color:var(--oxblood); }
+  .emoji-grid { font-size:19px; letter-spacing:3px; line-height:1.6; background:var(--paper); border:1px solid var(--rule); border-radius:3px; padding:12px; margin-bottom:12px; word-break:break-word; }
+  .shop-note { margin-top:18px; padding:16px; background:rgba(142,42,42,.07); border-radius:3px; font-size:14px; }
+  .shop-note a { color:var(--oxblood); font-weight:600; }
+  .tomorrow { margin-top:16px; font-size:13px; color:var(--green); font-style:italic; }
+
+  .about { margin-top:40px; padding-top:20px; border-top:1px solid var(--rule); font-size:13px; color:#6C665E; text-align:center; }
+  .about a { color:var(--oxblood); }
+  .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:24px; background:var(--green); color:#fff; padding:10px 18px; border-radius:3px; font-size:13px; z-index:300; }
+</style>
 </head>
 <body>
-  <a href="#game" class="skip-link">Skip to game</a>
-  
-  <div id="app" role="main">
-    <div class="header">
-      <h1>The Daily Clue</h1>
-      <div class="rule"></div>
-      <p class="tagline">A free word search, every day</p>
-    </div>
-    
-    <div id="content"></div>
-  </div>
-  
-  <script>
-    // Theme data
-    const THEMES = [
-      { title: "Out Under Canvas", note: "When the tent stakes hold and the lantern glows", subject: "Camping & RV", url: "https://etsy.com/listing/4554896237", seasonal: false },
-      { title: "The Fuel Receipt Kept in the Folder", note: "Chrome and miles; each one counts", subject: "Vintage Cars", url: null, seasonal: false },
-      { title: "Letters in the Blue Envelope", note: "Word by word, across the distance", subject: "Correspondence", url: null, seasonal: false },
-      { title: "The Quiet Before", note: "Wrapping, baking, waiting", subject: "Christmas", url: "https://etsy.com/listing/4551500612", seasonal: true, months: [12], days: [[18, 26]] },
-      { title: "The Porch Light", note: "One night to dress up and find what's hiding", subject: "Halloween", url: "https://etsy.com/listing/4551703062", seasonal: true, months: [10], days: [[25, 31]] },
-      { title: "Something Handwritten", note: "Small tokens for a day about affection", subject: "Valentine's", url: "https://etsy.com/listing/4551939199", seasonal: true, months: [2], days: [[8, 14]] },
-      { title: "The Fairway", note: "Line up the shot; the grass is perfect today", subject: "Golf", url: "https://etsy.com/listing/4555025178", seasonal: false },
-      { title: "In the Loop", note: "Where the needle goes, the thread follows", subject: "Quilting", url: "https://etsy.com/listing/4554868140", seasonal: false },
-      { title: "Sawdust and Light", note: "Wood speaks if you listen", subject: "Woodworking", url: "https://etsy.com/listing/4554679490", seasonal: false },
-      { title: "Green Thumb", note: "Seeds become seasons", subject: "Gardening", url: "https://etsy.com/listing/4552628958", seasonal: false },
-      { title: "Stitches Across Time", note: "One loop builds on another", subject: "Knitting", url: null, seasonal: false },
-      { title: "The Fly Cast", note: "Where the river knows your rhythm", subject: "Fishing", url: null, seasonal: false },
-      { title: "Breakfast on the Porch", note: "Coffee cools slower when you're not in a hurry", subject: "Devotional", url: null, seasonal: false },
-      { title: "Pages Turned", note: "Every word carries someone else's world", subject: "Reading", url: null, seasonal: false },
-      { title: "Paws and Prints", note: "They live in the moment; we follow", subject: "Pets", url: null, seasonal: false },
-      { title: "First Green", note: "Everything wakes at once", subject: "Spring", url: "https://etsy.com/listing/4552005575", seasonal: true, months: [3, 4, 5], days: [[1, 30]] },
-      { title: "Salt and Shade", note: "Summer asks only that you stay awhile", subject: "Summer", url: "https://etsy.com/listing/4551947429", seasonal: true, months: [6, 7, 8], days: [[1, 31]] },
-      { title: "Leaves Turning", note: "Letting go looks beautiful", subject: "Autumn", url: null, seasonal: true, months: [9, 10, 11], days: [[1, 30]] },
-      { title: "The Frost Holds", note: "Quiet before the thaw", subject: "Winter", url: null, seasonal: true, months: [12, 1, 2], days: [[1, 31]] },
-      { title: "Mystery at the Manor", note: "Clues hide in plain sight", subject: "Mystery #1", url: "https://etsy.com/listing/4550924621", seasonal: false },
-      { title: "The Lost Letter", note: "Someone's secret, waiting to be found", subject: "Mystery #2", url: null, seasonal: false },
-      { title: "Midnight Garden", note: "Not all puzzles solve themselves", subject: "Mystery #3", url: null, seasonal: false },
-      { title: "The Apothecary", note: "Roots, leaves, flowers—each one matters", subject: "Herbalism", url: null, seasonal: false },
-      { title: "Under the Thatch", note: "Old houses hold old stories", subject: "History", url: null, seasonal: false },
-      { title: "On the Platform", note: "Every journey starts with leaving", subject: "Travel", url: null, seasonal: false },
-      { title: "The Feast", note: "Butter, herbs, time, and care", subject: "Cooking", url: null, seasonal: false },
-      { title: "By the Fire", note: "Where the hours slow and stories linger", subject: "Comfort", url: null, seasonal: false },
-      { title: "The Auction Block", note: "Treasures live second lives", subject: "Collecting", url: null, seasonal: false },
-      { title: "Resolutions", note: "Every day is January 1st if you need it to be", subject: "New Year", url: null, seasonal: false },
-      { title: "On the Branch", note: "They return every year like promises kept", subject: "Birdwatching", url: null, seasonal: false }
-    ];
-    
-    // Word lists for each theme (8 words, A-Z, max 9 letters)
-    const WORD_LISTS = {
-      0: ["CANVAS", "CAMPFIRE", "LANTERN", "SLEEPING", "TENT", "STAKES", "NATURE", "ESCAPE"],
-      1: ["CHROME", "MILES", "VINTAGE", "HIGHWAY", "FUEL", "JOURNEY", "ROAD", "MEMORY"],
-      2: ["LETTER", "MAIL", "ENVELOPE", "STAMPS", "DISTANT", "WORDS", "HEART", "WAITING"],
-      3: ["WRAPPING", "BAKING", "COOKIES", "CAROLS", "SNOW", "LIGHTS", "TREE", "FAMILY"],
-      4: ["COSTUME", "MASK", "CANDY", "PUMPKIN", "NIGHT", "TRICK", "TREAT", "SPOOKY"],
-      5: ["ROSES", "HEART", "LOVE", "CUPID", "SWEET", "DATE", "ADMIRE", "CHERISH"],
-      6: ["FAIRWAY", "PUTT", "GOLF", "GREEN", "COURSE", "DRIVE", "BIRDIE", "SWING"],
-      7: ["NEEDLE", "FABRIC", "THREADS", "STITCHES", "PATTERN", "SQUARES", "COLORS", "DESIGN"],
-      8: ["HAMMER", "WOOD", "CHISEL", "CRAFT", "GRAIN", "JOINTS", "BUILD", "FINISH"],
-      9: ["GARDEN", "SEEDS", "FLOWERS", "BLOOMS", "HERBS", "GROWING", "SOIL", "SPRING"],
-      10: ["KNITTING", "NEEDLES", "YARN", "STITCHES", "LOOPS", "PATTERN", "WOOL", "ROWS"],
-      11: ["FISHING", "RIVER", "TROUT", "CAST", "FLIES", "WATERS", "REEL", "CATCH"],
-      12: ["PRAYER", "FAITH", "PEACE", "GRACE", "SPIRIT", "SOUL", "LOVE", "HOPE"],
-      13: ["BOOKS", "PAGES", "STORIES", "READING", "FICTION", "AUTHOR", "PLOT", "ADVENTURE"],
-      14: ["ANIMALS", "DOGS", "CATS", "PETS", "FURRY", "LOYAL", "PAWS", "CUDDLE"],
-      15: ["FLOWERS", "GROWTH", "RENEWAL", "BRIGHT", "AWAKENS", "FRESH", "BLOOMS", "SEEDS"],
-      16: ["BEACH", "HEAT", "SWIM", "SUNSHINE", "RELAX", "WAVES", "SAND", "SUMMER"],
-      17: ["LEAVES", "HARVEST", "COLORS", "AUTUMN", "COOL", "CHANGE", "FALLING", "SEASON"],
-      18: ["SNOW", "FROST", "COLD", "SILENT", "ICY", "FROZEN", "PEACE", "REST"],
-      19: ["MYSTERY", "CLUES", "SOLVE", "SECRET", "HIDDEN", "DETECT", "TRUTH", "PUZZLE"],
-      20: ["LETTER", "MISSING", "HIDDEN", "SEARCH", "SECRETS", "FOUND", "CLUE", "DISCOVER"],
-      21: ["GARDEN", "MIDNIGHT", "MYSTERY", "SHADOWS", "HIDDEN", "SECRETS", "PUZZLE", "SOLVE"],
-      22: ["HERBS", "REMEDIES", "HEALING", "ROOTS", "PLANTS", "MEDICINE", "NATURE", "CURE"],
-      23: ["HISTORY", "STORIES", "ANCIENT", "PAST", "HERITAGE", "LEGACY", "OLD", "MEMORIES"],
-      24: ["JOURNEY", "ADVENTURE", "EXPLORE", "DISTANCE", "PLACES", "DISCOVER", "TRAVEL", "ESCAPE"],
-      25: ["COOKING", "RECIPE", "KITCHEN", "FLAVORS", "HERBS", "DELICIOUS", "TASTE", "FEAST"],
-      26: ["COMFORT", "WARMTH", "COZY", "FIRESIDE", "STORIES", "FAMILY", "CUDDLE", "PEACE"],
-      27: ["TREASURES", "ANTIQUES", "VINTAGE", "COLLECT", "FINDS", "VALUE", "RARE", "PRECIOUS"],
-      28: ["RESOLUTIONS", "CHANGE", "FUTURE", "DREAMS", "GOALS", "BEGIN", "NEW", "START"],
-      29: ["BIRDS", "WINGS", "FEATHERS", "FLIGHT", "WATCHING", "TREES", "SINGING", "NATURE"]
+<a class="skip-link" href="#board">Skip to the puzzle</a>
+<div class="wrap">
+  <header>
+    <h1>The Daily Clue</h1>
+    <div class="rule"></div>
+    <p class="tagline">A free word search, every day</p>
+    <p class="issue" id="issue"></p>
+  </header>
+  <main id="app"></main>
+  <p class="about">
+    One puzzle a day, the same for everyone, from
+    <a href="https://hearthandclue.etsy.com" target="_blank" rel="noopener">Hearth&nbsp;&amp;&nbsp;Clue</a>.
+  </p>
+</div>
+<div aria-live="polite" class="sr-only" id="live"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var SIZE = 10;
+  var EPOCH = Date.UTC(2026, 0, 1);
+  var DIRS = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]];
+
+  var THEMES = [{"title":"Out Under Canvas","note":"When the tent stakes hold and the lantern glows","subject":"Camping & RV","url":"https://etsy.com/listing/4554896237","kind":"ever","months":[],"days":null,"words":["CANVAS","CAMPFIRE","LANTERN","SLEEPING","TENT","STAKES","NATURE","ESCAPE"]},{"title":"The Fuel Receipt Kept in the Folder","note":"Chrome and miles; each one counts","subject":"Vintage Cars","url":null,"kind":"ever","months":[],"days":null,"words":["CHROME","MILES","VINTAGE","HIGHWAY","FUEL","JOURNEY","ROAD","MEMORY"]},{"title":"Letters in the Blue Envelope","note":"Word by word, across the distance","subject":"Correspondence","url":null,"kind":"ever","months":[],"days":null,"words":["LETTER","MAIL","ENVELOPE","STAMPS","DISTANT","WORDS","HEART","WAITING"]},{"title":"The Quiet Before","note":"Wrapping, baking, waiting","subject":"Christmas","url":"https://etsy.com/listing/4551500612","kind":"dated","months":[12],"days":[18,26],"words":["WRAPPING","BAKING","COOKIES","CAROLS","SNOW","LIGHTS","TREE","FAMILY"]},{"title":"The Porch Light","note":"One night to dress up and find what's hiding","subject":"Halloween","url":"https://etsy.com/listing/4551703062","kind":"dated","months":[10],"days":[25,31],"words":["COSTUME","MASK","CANDY","PUMPKIN","NIGHT","TRICK","TREAT","SPOOKY"]},{"title":"Something Handwritten","note":"Small tokens for a day about affection","subject":"Valentine's","url":"https://etsy.com/listing/4551939199","kind":"dated","months":[2],"days":[8,14],"words":["ROSES","HEART","LOVE","CUPID","SWEET","DATE","ADMIRE","CHERISH"]},{"title":"The Fairway","note":"Line up the shot; the grass is perfect today","subject":"Golf","url":"https://etsy.com/listing/4555025178","kind":"ever","months":[],"days":null,"words":["FAIRWAY","PUTT","GOLF","GREEN","COURSE","DRIVE","BIRDIE","SWING"]},{"title":"In the Loop","note":"Where the needle goes, the thread follows","subject":"Quilting","url":"https://etsy.com/listing/4554868140","kind":"ever","months":[],"days":null,"words":["NEEDLE","FABRIC","THREADS","STITCHES","PATTERN","SQUARES","COLORS","DESIGN"]},{"title":"Sawdust and Light","note":"Wood speaks if you listen","subject":"Woodworking","url":"https://etsy.com/listing/4554679490","kind":"ever","months":[],"days":null,"words":["HAMMER","WOOD","CHISEL","CRAFT","GRAIN","JOINTS","BUILD","FINISH"]},{"title":"Green Thumb","note":"Seeds become seasons","subject":"Gardening","url":"https://etsy.com/listing/4552628958","kind":"ever","months":[],"days":null,"words":["GARDEN","SEEDS","FLOWERS","BLOOMS","HERBS","GROWING","SOIL","SPRING"]},{"title":"Stitches Across Time","note":"One loop builds on another","subject":"Knitting","url":null,"kind":"ever","months":[],"days":null,"words":["KNITTING","NEEDLES","YARN","STITCHES","LOOPS","PATTERN","WOOL","ROWS"]},{"title":"The Fly Cast","note":"Where the river knows your rhythm","subject":"Fishing","url":null,"kind":"ever","months":[],"days":null,"words":["FISHING","RIVER","TROUT","CAST","FLIES","WATERS","REEL","CATCH"]},{"title":"Breakfast on the Porch","note":"Coffee cools slower when you're not in a hurry","subject":"Devotional","url":null,"kind":"ever","months":[],"days":null,"words":["PRAYER","FAITH","PEACE","GRACE","SPIRIT","SOUL","LOVE","HOPE"]},{"title":"Pages Turned","note":"Every word carries someone else's world","subject":"Reading","url":null,"kind":"ever","months":[],"days":null,"words":["BOOKS","PAGES","STORIES","READING","FICTION","AUTHOR","PLOT","ADVENTURE"]},{"title":"Paws and Prints","note":"They live in the moment; we follow","subject":"Pets","url":null,"kind":"ever","months":[],"days":null,"words":["ANIMALS","DOGS","CATS","PETS","FURRY","LOYAL","PAWS","CUDDLE"]},{"title":"First Green","note":"Everything wakes at once","subject":"Spring","url":"https://etsy.com/listing/4552005575","kind":"season","months":[3,4,5],"days":[1,30],"words":["FLOWERS","GROWTH","RENEWAL","BRIGHT","AWAKENS","FRESH","BLOOMS","SEEDS"]},{"title":"Salt and Shade","note":"Summer asks only that you stay awhile","subject":"Summer","url":"https://etsy.com/listing/4551947429","kind":"season","months":[6,7,8],"days":[1,31],"words":["BEACH","HEAT","SWIM","SUNSHINE","RELAX","WAVES","SAND","SUMMER"]},{"title":"Leaves Turning","note":"Letting go looks beautiful","subject":"Autumn","url":null,"kind":"season","months":[9,10,11],"days":[1,30],"words":["LEAVES","HARVEST","COLORS","AUTUMN","COOL","CHANGE","FALLING","SEASON"]},{"title":"The Frost Holds","note":"Quiet before the thaw","subject":"Winter","url":null,"kind":"season","months":[12,1,2],"days":[1,31],"words":["SNOW","FROST","COLD","SILENT","ICY","FROZEN","PEACE","REST"]},{"title":"Mystery at the Manor","note":"Clues hide in plain sight","subject":"Mystery #1","url":"https://etsy.com/listing/4550924621","kind":"ever","months":[],"days":null,"words":["MYSTERY","CLUES","SOLVE","SECRET","HIDDEN","DETECT","TRUTH","PUZZLE"]},{"title":"The Lost Letter","note":"Someone's secret, waiting to be found","subject":"Mystery #2","url":null,"kind":"ever","months":[],"days":null,"words":["LETTER","MISSING","HIDDEN","SEARCH","SECRETS","FOUND","CLUE","DISCOVER"]},{"title":"Midnight Garden","note":"Not all puzzles solve themselves","subject":"Mystery #3","url":null,"kind":"ever","months":[],"days":null,"words":["GARDEN","MIDNIGHT","MYSTERY","SHADOWS","HIDDEN","SECRETS","PUZZLE","SOLVE"]},{"title":"The Apothecary","note":"Roots, leaves, flowers\u2014each one matters","subject":"Herbalism","url":null,"kind":"ever","months":[],"days":null,"words":["HERBS","REMEDIES","HEALING","ROOTS","PLANTS","MEDICINE","NATURE","CURE"]},{"title":"Under the Thatch","note":"Old houses hold old stories","subject":"History","url":null,"kind":"ever","months":[],"days":null,"words":["HISTORY","STORIES","ANCIENT","PAST","HERITAGE","LEGACY","OLD","MEMORIES"]},{"title":"On the Platform","note":"Every journey starts with leaving","subject":"Travel","url":null,"kind":"ever","months":[],"days":null,"words":["JOURNEY","ADVENTURE","EXPLORE","DISTANCE","PLACES","DISCOVER","TRAVEL","ESCAPE"]},{"title":"The Feast","note":"Butter, herbs, time, and care","subject":"Cooking","url":null,"kind":"ever","months":[],"days":null,"words":["COOKING","RECIPE","KITCHEN","FLAVORS","HERBS","DELICIOUS","TASTE","FEAST"]},{"title":"By the Fire","note":"Where the hours slow and stories linger","subject":"Comfort","url":null,"kind":"ever","months":[],"days":null,"words":["COMFORT","WARMTH","COZY","FIRESIDE","STORIES","FAMILY","CUDDLE","PEACE"]},{"title":"The Auction Block","note":"Treasures live second lives","subject":"Collecting","url":null,"kind":"ever","months":[],"days":null,"words":["TREASURES","ANTIQUES","VINTAGE","COLLECT","FINDS","VALUE","RARE","PRECIOUS"]},{"title":"Resolutions","note":"Every day is January 1st if you need it to be","subject":"New Year","url":null,"kind":"ever","months":[],"days":null,"words":["PROMISE","CHANGE","FUTURE","DREAMS","GOALS","BEGIN","NEW","START"]},{"title":"On the Branch","note":"They return every year like promises kept","subject":"Birdwatching","url":null,"kind":"ever","months":[],"days":null,"words":["BIRDS","WINGS","FEATHERS","FLIGHT","WATCHING","TREES","SINGING","NATURE"]}];
+
+  /* ---------- deterministic randomness ---------- */
+
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
-    
-    class DailyClue {
-      constructor() {
-        this.today = new Date();
-        this.today.setHours(0, 0, 0, 0);
-        this.dayNumber = this.getDaysSince(new Date(2026, 0, 1));
-        this.currentTheme = this.selectTheme();
-        this.words = WORD_LISTS[THEMES.indexOf(this.currentTheme)] || [];
-        this.grid = [];
-        this.found = new Set();
-        this.revealed = new Set();
-        this.startTime = Date.now();
-        this.selectedCells = [];
-        this.gameComplete = false;
-        this.userName = localStorage.getItem('dailyClue_userName') || 'Anonymous';
-        
-        this.generateGrid();
-        this.render();
+  }
+
+  /* ---------- which puzzle is today's ---------- */
+
+  function dayNumber(d) {
+    return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - EPOCH) / 86400000);
+  }
+
+  var EVERGREEN = THEMES.filter(function (t) { return t.kind === "ever"; });
+
+  function themeFor(d) {
+    var m = d.getMonth() + 1, day = d.getDate(), i;
+    for (i = 0; i < THEMES.length; i++) {
+      var t = THEMES[i];
+      if (t.kind === "dated" && t.months.indexOf(m) !== -1 && day >= t.days[0] && day <= t.days[1]) return t;
+    }
+    var season = null;
+    for (i = 0; i < THEMES.length; i++) {
+      if (THEMES[i].kind === "season" && THEMES[i].months.indexOf(m) !== -1) { season = THEMES[i]; break; }
+    }
+    var pool = season ? EVERGREEN.concat([season]) : EVERGREEN;
+    var n = dayNumber(d);
+    return pool[((n % pool.length) + pool.length) % pool.length];
+  }
+
+  /* ---------- grid construction ---------- */
+
+  function place(grid, word, rng) {
+    for (var attempt = 0; attempt < 400; attempt++) {
+      var dir = DIRS[Math.floor(rng() * DIRS.length)];
+      var sx = Math.floor(rng() * SIZE), sy = Math.floor(rng() * SIZE);
+      var ok = true, i, x, y;
+      for (i = 0; i < word.length; i++) {
+        x = sx + dir[0] * i; y = sy + dir[1] * i;
+        if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) { ok = false; break; }
+        var cur = grid[y][x];
+        if (cur !== null && cur !== word.charAt(i)) { ok = false; break; }
       }
-      
-      getDaysSince(date) {
-        const start = new Date(2026, 0, 1);
-        const diff = this.today - start;
-        return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+      if (!ok) continue;
+      var cells = [];
+      for (i = 0; i < word.length; i++) {
+        x = sx + dir[0] * i; y = sy + dir[1] * i;
+        grid[y][x] = word.charAt(i);
+        cells.push(y * SIZE + x);
       }
-      
-      selectTheme() {
-        const now = new Date();
-        const month = now.getMonth() + 1;
-        const day = now.getDate();
-        
-        const seasonalThemes = THEMES.filter(t => {
-          if (!t.seasonal) return false;
-          const inMonth = t.months.includes(month);
-          if (!inMonth) return false;
-          const [start, end] = t.days[0];
-          return day >= start && day <= end;
-        });
-        
-        if (seasonalThemes.length > 0) {
-          return seasonalThemes[0];
+      return cells;
+    }
+    return null;
+  }
+
+  function findable(grid, word) {
+    for (var y = 0; y < SIZE; y++) for (var x = 0; x < SIZE; x++) {
+      for (var d = 0; d < DIRS.length; d++) {
+        var ok = true;
+        for (var i = 0; i < word.length; i++) {
+          var nx = x + DIRS[d][0] * i, ny = y + DIRS[d][1] * i;
+          if (nx < 0 || nx >= SIZE || ny < 0 || ny >= SIZE || grid[ny][nx] !== word.charAt(i)) { ok = false; break; }
         }
-        
-        const nonSeasonalThemes = THEMES.filter(t => !t.seasonal);
-        return nonSeasonalThemes[this.dayNumber % nonSeasonalThemes.length];
-      }
-      
-      generateGrid() {
-        // Initialize 10x10 grid with random letters
-        this.grid = Array(10).fill().map(() => 
-          Array(10).fill().map(() => 
-            String.fromCharCode(65 + Math.floor(Math.random() * 26))
-          )
-        );
-        
-        // Place words in grid (simplified for demo)
-        const directions = [
-          {x: 1, y: 0},   // horizontal
-          {x: 0, y: 1},   // vertical
-          {x: 1, y: 1},   // diagonal
-          {x: -1, y: 1}   // anti-diagonal
-        ];
-        
-        this.words.forEach((word, index) => {
-          let placed = false;
-          let attempts = 0;
-          
-          while (!placed && attempts < 50) {
-            const dir = directions[Math.floor(Math.random() * directions.length)];
-            const startX = Math.floor(Math.random() * 10);
-            const startY = Math.floor(Math.random() * 10);
-            
-            let canPlace = true;
-            for (let i = 0; i < word.length; i++) {
-              const x = startX + (dir.x * i);
-              const y = startY + (dir.y * i);
-              if (x < 0 || x >= 10 || y < 0 || y >= 10) {
-                canPlace = false;
-                break;
-              }
-            }
-            
-            if (canPlace) {
-              for (let i = 0; i < word.length; i++) {
-                this.grid[startY + (dir.y * i)][startX + (dir.x * i)] = word[i];
-              }
-              placed = true;
-            }
-            
-            attempts++;
-          }
-        });
-      }
-      
-      toggleCell(index) {
-        this.selectedCells.includes(index) 
-          ? this.selectedCells = this.selectedCells.filter(i => i !== index)
-          : this.selectedCells.push(index);
-        this.render();
-      }
-      
-      clearSelection() {
-        this.selectedCells = [];
-        this.render();
-      }
-      
-      revealHint() {
-        if (this.words.length > 0) {
-          const randomWord = this.words[Math.floor(Math.random() * this.words.length)];
-          this.found.add(randomWord);
-          this.gameComplete = this.found.size === this.words.length;
-          this.render();
-        }
-      }
-      
-      getElapsedTime() {
-        const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
-        const minutes = Math.floor(elapsed / 60);
-        const seconds = elapsed % 60;
-        return `${minutes}:${String(seconds).padStart(2, '0')}`;
-      }
-      
-      render() {
-        const content = document.getElementById('content');
-        
-        if (this.gameComplete) {
-          content.innerHTML = this.renderFinishScreen();
-        } else {
-          content.innerHTML = this.renderGame();
-        }
-        
-        this.attachEventListeners();
-      }
-      
-      renderGame() {
-        const gridHTML = this.grid.map((row, y) => 
-          row.map((cell, x) => {
-            const index = y * 10 + x;
-            const isSelected = this.selectedCells.includes(index);
-            const classes = ['grid-cell', isSelected && 'selected'].filter(Boolean).join(' ');
-            return `<button class="${classes}" data-index="${index}" aria-label="Cell ${x + 1}, ${y + 1}: ${cell}">${cell}</button>`;
-          }).join('')
-        ).join('');
-        
-        const wordsHTML = this.words.map((word, i) => {
-          const iFound = this.found.has(word);
-          const classes = ['word-item', iFound && 'found'].filter(Boolean).join(' ');
-          return `<div class="${classes}" data-word="${word}">${word}</div>`;
-        }).join('');
-        
-        return `
-          <div class="theme-info" id="game">
-            <div class="theme-title">${this.currentTheme.title}</div>
-            <div class="theme-note">${this.currentTheme.note}</div>
-          </div>
-          
-          <div class="game-container">
-            <div class="timer">Time: ${this.getElapsedTime()}</div>
-            
-            <div class="grid-container">
-              ${gridHTML}
-            </div>
-            
-            <div class="words-container">
-              ${wordsHTML}
-            </div>
-            
-            <div class="controls">
-              <button class="btn-secondary" id="clear-btn">Clear</button>
-              <button class="btn-primary" id="hint-btn">Reveal One</button>
-            </div>
-          </div>
-        `;
-      }
-      
-      renderFinishScreen() {
-        const time = this.getElapsedTime();
-        const score = Math.max(0, 100 - Math.floor((Date.now() - this.startTime) / 1000));
-        
-        let shareEmoji = '';
-        this.words.forEach(word => {
-          shareEmoji += this.found.has(word) ? '🟩 ' : '⬜ ';
-        });
-        
-        const bookLink = this.currentTheme.url 
-          ? `<p><a href="${this.currentTheme.url}" target="_blank">Read the ${this.currentTheme.subject} book →</a></p>`
-          : '';
-        
-        return `
-          <div class="finish-screen">
-            <h2>You Found Them All!</h2>
-            
-            <div class="finish-stats">
-              <div class="stat">
-                <div class="stat-label">Time</div>
-                <div>${time}</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Score</div>
-                <div>${score} points</div>
-              </div>
-            </div>
-            
-            <div class="share-section">
-              <div class="share-title">Share Your Result</div>
-              <div class="share-grid" id="share-grid">${shareEmoji}</div>
-              <div class="share-text">Copy grid above to share</div>
-              <div class="share-buttons">
-                <button class="share-btn" id="share-twitter">Share on X</button>
-                <button class="share-btn" id="share-copy">Copy</button>
-              </div>
-            </div>
-            
-            ${bookLink}
-            
-            <div class="footer-cta">
-              <p>Another puzzle tomorrow, same time</p>
-            </div>
-          </div>
-        `;
-      }
-      
-      attachEventListeners() {
-        document.querySelectorAll('.grid-cell').forEach(cell => {
-          cell.addEventListener('click', (e) => {
-            this.toggleCell(parseInt(e.target.dataset.index));
-          });
-        });
-        
-        document.querySelectorAll('.word-item').forEach(item => {
-          item.addEventListener('click', () => {
-            const word = item.dataset.word;
-            this.found.add(word);
-            this.gameComplete = this.found.size === this.words.length;
-            this.render();
-          });
-        });
-        
-        document.getElementById('clear-btn')?.addEventListener('click', () => this.clearSelection());
-        document.getElementById('hint-btn')?.addEventListener('click', () => this.revealHint());
-        document.getElementById('share-copy')?.addEventListener('click', () => {
-          const grid = document.getElementById('share-grid').innerText;
-          navigator.clipboard.writeText(grid);
-          alert('Copied!');
-        });
-        document.getElementById('share-twitter')?.addEventListener('click', () => {
-          const grid = document.getElementById('share-grid').innerText;
-          const url = `https://twitter.com/intent/tweet?text=I%20solved%20today%27s%20Daily%20Clue%20in%20${this.getElapsedTime()}%0A${encodeURIComponent(grid)}%0Ahttps://hearthandclue.com`;
-          window.open(url);
-        });
+        if (ok) return true;
       }
     }
-    
-    // Analytics (Plausible)
-    function trackEvent(event, props = {}) {
-      if (window.plausible) {
-        window.plausible(event, { props });
+    return false;
+  }
+
+  // Same seed, same puzzle — everywhere, every time. Never returns an unsolvable grid.
+  function buildPuzzle(words, seed) {
+    var ordered = words.slice().sort(function (a, b) { return b.length - a.length; });
+    for (var round = 0; round < 60; round++) {
+      var rng = mulberry32(seed + round * 7919);
+      var grid = [], y;
+      for (y = 0; y < SIZE; y++) { grid.push(new Array(SIZE).fill(null)); }
+      var spots = {}, failed = false;
+      for (var i = 0; i < ordered.length; i++) {
+        var cells = place(grid, ordered[i], rng);
+        if (!cells) { failed = true; break; }
+        spots[ordered[i]] = cells;
       }
+      if (failed) continue;
+      for (y = 0; y < SIZE; y++) for (var x = 0; x < SIZE; x++) {
+        if (grid[y][x] === null) grid[y][x] = String.fromCharCode(65 + Math.floor(rng() * 26));
+      }
+      var allOk = words.every(function (w) { return findable(grid, w); });
+      if (allOk) return { grid: grid, spots: spots };
     }
-    
-    // Leaderboard system
-    class Leaderboard {
-      constructor() {
-        this.scores = JSON.parse(localStorage.getItem('dailyClue_leaderboard') || '[]');
-      }
-      
-      addScore(name, time, dayNumber) {
-        const entry = { name, time, dayNumber, date: Date.now() };
-        this.scores.push(entry);
-        this.scores.sort((a, b) => a.time - b.time);
-        this.scores = this.scores.slice(0, 50); // Keep top 50
-        localStorage.setItem('dailyClue_leaderboard', JSON.stringify(this.scores));
-        trackEvent('game_complete', { time, dayNumber });
-      }
-      
-      getTodaysScores(dayNumber) {
-        return this.scores.filter(s => s.dayNumber === dayNumber).slice(0, 10);
-      }
-      
-      renderLeaderboard(dayNumber) {
-        const scores = this.getTodaysScores(dayNumber);
-        if (scores.length === 0) return '';
-        
-        return `
-          <div class="leaderboard">
-            <div class="leaderboard-title">Today's Best Times</div>
-            <div class="leaderboard-list">
-              ${scores.map((s, i) => `
-                <div class="leaderboard-entry">
-                  <div class="leaderboard-rank">#${i + 1}</div>
-                  <div class="leaderboard-name">${s.name}</div>
-                  <div class="leaderboard-time">${this.formatTime(s.time)}</div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-      }
-      
-      formatTime(seconds) {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m}:${String(s).padStart(2, '0')}`;
-      }
+    return null;
+  }
+
+  /* ---------- state ---------- */
+
+  var today = new Date();
+  var theme = themeFor(today);
+  var seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+  var puzzle = buildPuzzle(theme.words, seed);
+  var issueNo = dayNumber(today) + 1;
+
+  var found = {};        // word -> cell indices
+  var hinted = {};       // word -> true, revealed rather than found
+  var startedAt = null;
+  var elapsed = 0;
+  var ticker = null;
+  var complete = false;
+  var anchor = null;     // first cell of an in-progress selection
+  var current = [];      // cells currently highlighted
+
+  var app = document.getElementById("app");
+  var live = document.getElementById("live");
+  document.getElementById("issue").textContent = "No. " + issueNo + " · " + today.toDateString();
+
+  function remaining() {
+    return theme.words.filter(function (w) { return !found[w]; });
+  }
+  function fmt(s) {
+    var m = Math.floor(s / 60);
+    return m + ":" + String(s % 60).padStart(2, "0");
+  }
+  function say(msg) { live.textContent = msg; }
+
+  /* ---------- selection geometry ---------- */
+
+  function pathBetween(a, b) {
+    var x1 = a % SIZE, y1 = Math.floor(a / SIZE);
+    var x2 = b % SIZE, y2 = Math.floor(b / SIZE);
+    var dx = Math.sign(x2 - x1), dy = Math.sign(y2 - y1);
+    var lx = Math.abs(x2 - x1), ly = Math.abs(y2 - y1);
+    if (lx !== 0 && ly !== 0 && lx !== ly) return null;   // not a straight line
+    var len = Math.max(lx, ly), path = [];
+    for (var i = 0; i <= len; i++) path.push((y1 + dy * i) * SIZE + (x1 + dx * i));
+    return path;
+  }
+
+  function letters(path) {
+    return path.map(function (i) { return puzzle.grid[Math.floor(i / SIZE)][i % SIZE]; }).join("");
+  }
+
+  function commit(path) {
+    if (!path || path.length < 2) return false;
+    var word = letters(path);
+    var reversed = word.split("").reverse().join("");
+    var hit = remaining().filter(function (w) { return w === word || w === reversed; })[0];
+    if (!hit) return false;
+    found[hit] = path.slice();
+    say(hit + " found. " + remaining().length + " to go.");
+    if (remaining().length === 0) finish();
+    return true;
+  }
+
+  /* ---------- timing ---------- */
+
+  function beginTimer() {
+    if (startedAt !== null) return;
+    startedAt = Date.now();
+    ticker = setInterval(function () {
+      elapsed = Math.floor((Date.now() - startedAt) / 1000);
+      var el = document.getElementById("clock");
+      if (el) el.textContent = fmt(elapsed);
+    }, 1000);
+  }
+
+  function finish() {
+    complete = true;
+    if (ticker) { clearInterval(ticker); ticker = null; }
+    if (startedAt !== null) elapsed = Math.floor((Date.now() - startedAt) / 1000);
+    recordStreak();
+    track("puzzle_completed", { issue: issueNo, seconds: elapsed, hints: Object.keys(hinted).length });
+    renderDone();
+  }
+
+  /* ---------- streak (this device only, and labelled as such) ---------- */
+
+  function store(key, value) {
+    try { if (value === undefined) return localStorage.getItem(key); localStorage.setItem(key, value); }
+    catch (e) { return null; }
+  }
+
+  function recordStreak() {
+    var last = store("dc_last_day");
+    var streak = parseInt(store("dc_streak") || "0", 10);
+    var n = dayNumber(today);
+    if (last === String(n)) return;
+    streak = (last !== null && parseInt(last, 10) === n - 1) ? streak + 1 : 1;
+    store("dc_streak", String(streak));
+    store("dc_last_day", String(n));
+  }
+
+  function currentStreak() {
+    var last = store("dc_last_day");
+    var streak = parseInt(store("dc_streak") || "0", 10);
+    if (last === null) return 0;
+    var n = dayNumber(today), l = parseInt(last, 10);
+    return (l === n || l === n - 1) ? streak : 0;
+  }
+
+  /* ---------- analytics (no-op unless Plausible is configured) ---------- */
+
+  function track(name, props) {
+    if (typeof window.plausible === "function") window.plausible(name, { props: props || {} });
+  }
+
+  /* ---------- rendering ---------- */
+
+  function cellClass(i) {
+    var cls = "cell";
+    if (current.indexOf(i) !== -1) cls += " sel";
+    for (var w in found) if (found[w].indexOf(i) !== -1) return cls + (hinted[w] ? " hint" : " found");
+    return cls;
+  }
+
+  function renderPlay() {
+    var cells = "";
+    for (var y = 0; y < SIZE; y++) for (var x = 0; x < SIZE; x++) {
+      var i = y * SIZE + x;
+      cells += '<button class="' + cellClass(i) + '" data-i="' + i + '" type="button" ' +
+               'aria-label="Row ' + (y + 1) + ', column ' + (x + 1) + ', letter ' + puzzle.grid[y][x] + '">' +
+               puzzle.grid[y][x] + '</button>';
     }
-    
-    // Email capture
-    class EmailCapture {
-      static show() {
-        const modal = document.createElement('div');
-        modal.className = 'modal-overlay';
-        modal.innerHTML = `
-          <div class="modal">
-            <button class="modal-close" aria-label="Close">&times;</button>
-            <h3>Get Tomorrow's Puzzle</h3>
-            <p>Join 1000+ solvers. One puzzle each day, delivered to your inbox.</p>
-            <form class="email-form" id="email-signup">
-              <input type="email" placeholder="your@email.com" required aria-label="Email address">
-              <button type="submit" class="btn-primary">Subscribe</button>
-            </form>
-          </div>
-        `;
-        document.body.appendChild(modal);
-        
-        modal.querySelector('.modal-close').addEventListener('click', () => modal.remove());
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) modal.remove();
-        });
-        
-        modal.querySelector('#email-signup').addEventListener('submit', (e) => {
-          e.preventDefault();
-          const email = e.target.querySelector('input[type="email"]').value;
-          EmailCapture.captureEmail(email);
-          modal.remove();
-        });
-      }
-      
-      static captureEmail(email) {
-        // Store locally for now; would connect to Mailchimp/ConvertKit via API
-        let subscribers = JSON.parse(localStorage.getItem('dailyClue_subscribers') || '[]');
-        if (!subscribers.includes(email)) {
-          subscribers.push(email);
-          localStorage.setItem('dailyClue_subscribers', JSON.stringify(subscribers));
-          trackEvent('email_signup', { email });
-        }
-      }
+    var words = theme.words.map(function (w) {
+      return '<div class="word' + (found[w] ? " done" : "") + '">' + w + "</div>";
+    }).join("");
+
+    app.innerHTML =
+      '<section class="card"><h2>' + esc(theme.title) + "</h2><p>" + esc(theme.note) + "</p></section>" +
+      '<div class="status"><span>Time <span id="clock">' + fmt(elapsed) + "</span></span>" +
+      "<span>Found " + Object.keys(found).length + " of " + theme.words.length + "</span></div>" +
+      '<div class="board" id="board"><div class="grid" id="grid">' + cells + "</div></div>" +
+      '<div class="words">' + words + "</div>" +
+      '<div class="controls">' +
+      '<button class="btn btn-ghost" id="restart" type="button">Start over</button>' +
+      '<button class="btn btn-primary" id="reveal" type="button">Reveal a word</button>' +
+      "</div>";
+
+    wireGrid();
+    document.getElementById("restart").onclick = restart;
+    document.getElementById("reveal").onclick = revealOne;
+    var rb = document.getElementById("restart");
+    rb.disabled = Object.keys(found).length === 0 && startedAt === null;
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function paint() {
+    var nodes = document.querySelectorAll(".cell");
+    for (var k = 0; k < nodes.length; k++) nodes[k].className = cellClass(Number(nodes[k].dataset.i));
+    var st = document.querySelector(".status");
+    if (st) st.children[1].textContent = "Found " + Object.keys(found).length + " of " + theme.words.length;
+    var ws = document.querySelectorAll(".word");
+    for (var j = 0; j < ws.length; j++) {
+      ws[j].className = "word" + (found[ws[j].textContent] ? " done" : "");
     }
-    
-    // Clip generation
-    class ClipGenerator {
-      static generateShareImage(theme, time, found, total) {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1080;
-        canvas.height = 1350;
-        const ctx = canvas.getContext('2d');
-        
-        // Background
-        ctx.fillStyle = '#F8F3ED';
-        ctx.fillRect(0, 0, 1080, 1350);
-        
-        // Top section
-        ctx.fillStyle = '#8E2A2A';
-        ctx.fillRect(0, 0, 1080, 300);
-        
-        ctx.fillStyle = 'white';
-        ctx.font = 'bold 48px Fraunces';
-        ctx.textAlign = 'center';
-        ctx.fillText('I Solved It', 540, 80);
-        
-        ctx.font = 'italic 32px Spectral';
-        ctx.fillText(theme.title, 540, 140);
-        
-        // Stats
-        ctx.fillStyle = '#2F4B3C';
-        ctx.font = '48px Fraunces';
-        ctx.textAlign = 'center';
-        ctx.fillText(time, 540, 250);
-        
-        ctx.font = '20px Spectral';
-        ctx.fillText('in', 540, 280);
-        
-        // Grid representation
-        ctx.fillStyle = 'white';
-        const gridSize = 40;
-        const startX = 540 - (gridSize * 5 / 2);
-        const startY = 400;
-        
-        for (let i = 0; i < total; i++) {
-          const x = startX + ((i % 5) * gridSize * 1.2);
-          const y = startY + (Math.floor(i / 5) * gridSize * 1.2);
-          
-          if (i < found) {
-            ctx.fillStyle = '#2F4B3C';
-          } else {
-            ctx.fillStyle = '#E8D9C3';
-          }
-          ctx.fillRect(x, y, gridSize, gridSize);
-        }
-        
-        // CTA
-        ctx.fillStyle = '#2F4B3C';
-        ctx.font = 'bold 28px Spectral';
-        ctx.textAlign = 'center';
-        ctx.fillText('Play Daily at', 540, 1200);
-        
-        ctx.font = '36px Fraunces';
-        ctx.fillText('hearthandclue.com', 540, 1280);
-        
-        return canvas.toDataURL('image/png');
-      }
-      
-      static downloadImage(dataUrl, filename = 'daily-clue.png') {
-        const link = document.createElement('a');
-        link.href = dataUrl;
-        link.download = filename;
-        link.click();
-      }
+    var rb = document.getElementById("restart");
+    if (rb) rb.disabled = Object.keys(found).length === 0 && startedAt === null;
+  }
+
+  function indexFromPoint(clientX, clientY) {
+    var el = document.elementFromPoint(clientX, clientY);
+    if (el && el.classList && el.classList.contains("cell")) return Number(el.dataset.i);
+    return null;
+  }
+
+  function wireGrid() {
+    var grid = document.getElementById("grid");
+    var dragging = false;
+
+    function start(i) {
+      beginTimer();
+      dragging = true; anchor = i; current = [i]; paint();
     }
-    
-    // Archive support
-    class Archive {
-      static getPuzzleURL(dayNumber) {
-        return `?day=${dayNumber}`;
-      }
-      
-      static renderArchiveLink() {
-        return `<div class="footer-cta"><a href="?archive">Browse past puzzles →</a></div>`;
-      }
+    function move(i) {
+      if (!dragging || anchor === null || i === null) return;
+      var p = pathBetween(anchor, i);
+      if (p) { current = p; paint(); }
     }
-    
-    // Extended DailyClue with growth features
-    class DailyClueGrowth extends DailyClue {
-      constructor() {
-        super();
-        this.leaderboard = new Leaderboard();
-        this.checkForEmailCapture();
-      }
-      
-      checkForEmailCapture() {
-        if (!localStorage.getItem('dailyClue_emailAsked')) {
-          setTimeout(() => {
-            EmailCapture.show();
-            localStorage.setItem('dailyClue_emailAsked', Date.now());
-          }, 8000); // Show after 8 seconds
-        }
-      }
-      
-      renderFinishScreen() {
-        const time = Math.floor((Date.now() - this.startTime) / 1000);
-        const timeStr = this.formatTime(time);
-        const score = Math.max(0, 100 - Math.floor(time / 10));
-        
-        let shareEmoji = '';
-        this.words.forEach(word => {
-          shareEmoji += this.found.has(word) ? '🟩 ' : '⬜ ';
-        });
-        
-        // Add score to leaderboard
-        this.leaderboard.addScore(this.userName, time, this.dayNumber);
-        
-        const bookLink = this.currentTheme.url 
-          ? `<div class="footer-cta">
-              <p>Loved this theme?</p>
-              <p><a href="${this.currentTheme.url}" target="_blank">Get the full ${this.currentTheme.subject} puzzle book →</a></p>
-            </div>`
-          : '';
-        
-        const clipImage = ClipGenerator.generateShareImage(this.currentTheme, timeStr, this.found.size, this.words.length);
-        
-        return `
-          <div class="finish-screen">
-            <h2>You Found Them All!</h2>
-            
-            <div class="finish-stats">
-              <div class="stat">
-                <div class="stat-label">Time</div>
-                <div>${timeStr}</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Score</div>
-                <div>${score} points</div>
-              </div>
-            </div>
-            
-            ${this.leaderboard.renderLeaderboard(this.dayNumber)}
-            
-            <div class="share-section">
-              <div class="share-title">Share Your Victory</div>
-              <div class="share-grid" id="share-grid">${shareEmoji}</div>
-              <div class="share-text">Copy to share your result</div>
-              <div class="share-buttons">
-                <button class="share-btn" id="share-twitter">Post on X</button>
-                <button class="share-btn" id="share-tiktok">Share as Image</button>
-                <button class="share-btn" id="share-copy">Copy Grid</button>
-              </div>
-            </div>
-            
-            ${bookLink}
-            
-            <div class="footer-cta">
-              <p>Another puzzle tomorrow at midnight, your time</p>
-            </div>
-          </div>
-        `;
-      }
-      
-      formatTime(seconds) {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m}:${String(s).padStart(2, '0')}`;
-      }
-      
-      attachEventListeners() {
-        super.attachEventListeners();
-        
-        document.getElementById('share-tiktok')?.addEventListener('click', () => {
-          const time = this.formatTime(Math.floor((Date.now() - this.startTime) / 1000));
-          const dataUrl = ClipGenerator.generateShareImage(this.currentTheme, time, this.found.size, this.words.length);
-          ClipGenerator.downloadImage(dataUrl);
-          trackEvent('clip_downloaded');
-        });
-        
-        document.getElementById('share-copy')?.addEventListener('click', () => {
-          const grid = document.getElementById('share-grid').innerText;
-          const text = `I solved "The Daily Clue: ${this.currentTheme.title}" in ${this.formatTime(Math.floor((Date.now() - this.startTime) / 1000))}\n\n${grid}\n\nhttps://hearthandclue.com`;
-          navigator.clipboard.writeText(text);
-          alert('Copied to clipboard!');
-          trackEvent('result_shared');
-        });
-        
-        document.getElementById('share-twitter')?.addEventListener('click', () => {
-          const time = this.formatTime(Math.floor((Date.now() - this.startTime) / 1000));
-          const text = `I solved "The Daily Clue: ${this.currentTheme.title}" in ${time}`;
-          const grid = document.getElementById('share-grid').innerText;
-          const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}\n\n${encodeURIComponent(grid)}&url=https://hearthandclue.com`;
-          window.open(url);
-          trackEvent('twitter_share');
-        });
-      }
+    function end() {
+      if (!dragging) return;
+      dragging = false;
+      var matched = commit(current);
+      current = []; anchor = null;
+      if (!complete) paint();
     }
-    
-    // Load Plausible analytics
-    window.plausible = window.plausible || function() {};
-    
-    // Initialize game with growth features
-    new DailyClueGrowth();
-  </script>
+
+    grid.addEventListener("pointerdown", function (e) {
+      var i = indexFromPoint(e.clientX, e.clientY);
+      if (i === null) return;
+      e.preventDefault();
+      grid.setPointerCapture(e.pointerId);
+      start(i);
+    });
+    grid.addEventListener("pointermove", function (e) {
+      if (!dragging) return;
+      e.preventDefault();
+      move(indexFromPoint(e.clientX, e.clientY));
+    });
+    grid.addEventListener("pointerup", end);
+    grid.addEventListener("pointercancel", function () { dragging = false; current = []; anchor = null; paint(); });
+
+    // Keyboard and assistive route: focus a cell, press Enter to set the start, Enter again to set the end.
+    grid.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        if (cancelSelection()) say("Selection cancelled.");
+        return;
+      }
+      if (e.key !== "Enter" && e.key !== " ") return;
+      var el = document.activeElement;
+      if (!el || !el.classList.contains("cell")) return;
+      e.preventDefault();
+      var i = Number(el.dataset.i);
+      beginTimer();
+      if (anchor === null) { anchor = i; current = [i]; say("Start of word set. Move to the last letter and press Enter."); }
+      else {
+        var p = pathBetween(anchor, i);
+        if (!p) { say("Words run in a straight line. Try again."); }
+        else { current = p; if (!commit(p)) say("That is not one of today's words."); }
+        anchor = null; current = [];
+      }
+      if (!complete) paint();
+    });
+  }
+
+  function cancelSelection() {
+    if (anchor === null && current.length === 0) return false;
+    anchor = null; current = [];
+    paint();
+    return true;
+  }
+
+  // Same puzzle, fresh attempt: today's grid never changes, so only progress resets.
+  function restart() {
+    found = {}; hinted = {};
+    anchor = null; current = [];
+    complete = false;
+    if (ticker) { clearInterval(ticker); ticker = null; }
+    startedAt = null; elapsed = 0;
+    say("Cleared. The puzzle is the same; your progress has been reset.");
+    track("restarted", { issue: issueNo });
+    renderPlay();
+  }
+
+  function revealOne() {
+    var left = remaining();
+    if (!left.length) return;
+    var word = left[0];
+    found[word] = puzzle.spots[word].slice();
+    hinted[word] = true;
+    beginTimer();
+    say(word + " revealed.");
+    track("hint_used", { issue: issueNo });
+    if (remaining().length === 0) finish(); else paint();
+  }
+
+  function emojiRow() {
+    return theme.words.map(function (w) { return hinted[w] ? "🟨" : "🟩"; }).join("");
+  }
+
+  function shareText() {
+    return "The Daily Clue No. " + issueNo + " — " + theme.title + "\n" +
+           emojiRow() + "\n" + fmt(elapsed) + "\nhearthandclue.com";
+  }
+
+  function renderDone() {
+    var solvedUnaided = theme.words.length - Object.keys(hinted).length;
+    var streak = currentStreak();
+    var shop = theme.url
+      ? '<div class="shop-note">Liked this one? There is a full ' + esc(theme.subject) +
+        ' book — 55 puzzles, print at home. <a href="' + esc(theme.url) +
+        '" target="_blank" rel="noopener">See the book</a></div>'
+      : "";
+
+    app.innerHTML =
+      '<div class="done-panel">' +
+      "<h2>Solved</h2>" +
+      '<p class="done-sub">' + esc(theme.title) + "</p>" +
+      '<div class="figures">' +
+      '<div><div class="figure-label">Time</div><div class="figure-value">' + fmt(elapsed) + "</div></div>" +
+      '<div><div class="figure-label">Unaided</div><div class="figure-value">' + solvedUnaided + "/" + theme.words.length + "</div></div>" +
+      (streak > 1 ? '<div><div class="figure-label">Day streak</div><div class="figure-value">' + streak + "</div></div>" : "") +
+      "</div>" +
+      '<div class="emoji-grid">' + emojiRow() + "</div>" +
+      '<div class="controls">' +
+      '<button class="btn btn-primary" id="share" type="button">Share result</button>' +
+      '<button class="btn btn-ghost" id="review" type="button">See the grid</button>' +
+      "</div>" +
+      shop +
+      '<p class="tomorrow">A new puzzle at midnight, wherever you are.</p>' +
+      "</div>";
+
+    document.getElementById("share").onclick = doShare;
+    document.getElementById("review").onclick = function () { complete = false; renderPlay(); paint(); };
+  }
+
+  function toast(msg) {
+    var t = document.createElement("div");
+    t.className = "toast"; t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 1800);
+  }
+
+  function doShare() {
+    var text = shareText();
+    if (navigator.share) {
+      navigator.share({ text: text }).then(function () { track("result_shared", { how: "sheet" }); }).catch(function () {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        toast("Result copied");
+        track("result_shared", { how: "clipboard" });
+      }).catch(function () { toast("Could not copy"); });
+      return;
+    }
+    toast("Copying is not available here");
+  }
+
+  /* ---------- go ---------- */
+
+  if (!puzzle) {
+    app.innerHTML = '<section class="card"><h2>Today\'s puzzle did not build</h2>' +
+      "<p>Try again in a moment, or come back tomorrow for a fresh one.</p></section>";
+  } else {
+    renderPlay();
+  }
+})();
+</script>
 </body>
 </html>
