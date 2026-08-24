@@ -21,7 +21,8 @@
     background:transparent; color:var(--green); }
   button.primary { background:var(--oxblood); color:#fff; border-color:var(--oxblood); }
   select { text-transform:none; letter-spacing:0; }
-  canvas { width:100%; height:auto; border:1px solid var(--rule); border-radius:3px; display:block; margin-bottom:14px; }
+  canvas { display:none; }
+  #out { width:100%; height:auto; border:1px solid var(--rule); border-radius:3px; display:block; margin-bottom:14px; background:#FFFDFA; }
   .caption { background:#FFFDFA; border:1px solid var(--rule); border-radius:3px; padding:12px; font-size:14px; line-height:1.55; white-space:pre-wrap; }
   .hint { font-size:12px; color:#6C665E; margin-top:10px; line-height:1.5; }
 </style>
@@ -32,12 +33,13 @@
   <p class="lede">Today's puzzle, ready to post.</p>
   <div class="row">
     <select id="day"></select>
-    <button class="primary" id="save" type="button">Save image</button>
+    <button class="primary" id="save" type="button">Save or share</button>
     <button id="copy" type="button">Copy caption</button>
   </div>
   <canvas id="c" width="1000" height="1500"></canvas>
+  <img id="out" alt="Today's Daily Clue puzzle">
   <div class="caption" id="cap"></div>
-  <p class="hint">On iPhone: tap Save, or press and hold the image and choose Add to Photos. Then post from the Pinterest app with the caption above and the link hearthandclue.com.</p>
+  <p class="hint">Press and hold the image above and choose Add to Photos. Or tap Save or share to open the share sheet. Then post from the Pinterest app with the caption and the link hearthandclue.com.</p>
 </div>
 
 <script>
@@ -170,17 +172,30 @@
     o.value=i; o.textContent=(i===0?"Today · ":"")+d.toDateString();
     sel.appendChild(o);
   }
+  var out=document.getElementById("out");
   function refresh(){
     var d=new Date(); d.setDate(d.getDate()+Number(sel.value));
     current=draw(d); cap.textContent=caption(current);
+    out.src=cv.toDataURL("image/png");
+    out.alt="The Daily Clue No. "+current.issue+" \u2014 "+current.theme.t;
   }
   sel.onchange=refresh;
 
   document.getElementById("save").onclick=function(){
     cv.toBlob(function(b){
+      if(!b){return;}
+      var name="daily-clue-"+current.issue+".png";
+      try{
+        var file=new File([b],name,{type:"image/png"});
+        if(navigator.canShare&&navigator.canShare({files:[file]})&&navigator.share){
+          navigator.share({files:[file]}).catch(function(){});
+          return;
+        }
+      }catch(e){}
       var url=URL.createObjectURL(b),a=document.createElement("a");
-      a.href=url; a.download="daily-clue-"+current.issue+".png"; a.click();
-      setTimeout(function(){URL.revokeObjectURL(url);},2000);
+      a.href=url; a.download=name; a.rel="noopener";
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},2000);
     },"image/png");
   };
   document.getElementById("copy").onclick=function(){
