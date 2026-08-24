@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Pin image — The Daily Clue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@72,600;72,700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --cream:#F8F3ED; --oxblood:#8E2A2A; --green:#2F4B3C; --brass:#C6A266; --ink:#33302C; --rule:#E4DCD0; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Spectral",Georgia,serif; background:var(--cream); color:var(--ink); padding:24px 16px 60px; }
+  .wrap { max-width:520px; margin:0 auto; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-size:26px; margin-bottom:4px; }
+  .lede { font-size:14px; color:var(--green); font-style:italic; margin-bottom:18px; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+  button, select { font-family:"Spectral",Georgia,serif; font-size:13px; font-weight:600; letter-spacing:.06em;
+    text-transform:uppercase; padding:9px 16px; border-radius:2px; cursor:pointer; border:1px solid var(--green);
+    background:transparent; color:var(--green); }
+  button.primary { background:var(--oxblood); color:#fff; border-color:var(--oxblood); }
+  select { text-transform:none; letter-spacing:0; }
+  canvas { width:100%; height:auto; border:1px solid var(--rule); border-radius:3px; display:block; margin-bottom:14px; }
+  .caption { background:#FFFDFA; border:1px solid var(--rule); border-radius:3px; padding:12px; font-size:14px; line-height:1.55; white-space:pre-wrap; }
+  .hint { font-size:12px; color:#6C665E; margin-top:10px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Pin image</h1>
+  <p class="lede">Today's puzzle, ready to post.</p>
+  <div class="row">
+    <select id="day"></select>
+    <button class="primary" id="save" type="button">Save image</button>
+    <button id="copy" type="button">Copy caption</button>
+  </div>
+  <canvas id="c" width="1000" height="1500"></canvas>
+  <div class="caption" id="cap"></div>
+  <p class="hint">On iPhone: tap Save, or press and hold the image and choose Add to Photos. Then post from the Pinterest app with the caption above and the link hearthandclue.com.</p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var SIZE = 10, EPOCH = Date.UTC(2026, 0, 1);
+  var DIRS = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]];
+  var T = null, SHOP = {};
+
+  function mulberry32(a){return function(){a|=0;a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
+  function dayNumber(d){return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-EPOCH)/86400000);}
+  var EVER = [];
+
+  function themeFor(d){
+    var m=d.getMonth()+1, day=d.getDate(), i;
+    for(i=0;i<T.length;i++){var t=T[i];if(t.k==="dated"&&t.m.indexOf(m)!==-1&&day>=t.d[0]&&day<=t.d[1])return t;}
+    var s=null;
+    for(i=0;i<T.length;i++){if(T[i].k==="season"&&T[i].m.indexOf(m)!==-1){s=T[i];break;}}
+    var pool=s?EVER.concat([s]):EVER, n=dayNumber(d);
+    return pool[((n%pool.length)+pool.length)%pool.length];
+  }
+  function place(g,w,rng){
+    for(var a=0;a<400;a++){
+      var dir=DIRS[Math.floor(rng()*8)],sx=Math.floor(rng()*SIZE),sy=Math.floor(rng()*SIZE),ok=true,i,x,y;
+      for(i=0;i<w.length;i++){x=sx+dir[0]*i;y=sy+dir[1]*i;
+        if(x<0||x>=SIZE||y<0||y>=SIZE){ok=false;break;}
+        var c=g[y][x]; if(c!==null&&c!==w.charAt(i)){ok=false;break;}}
+      if(!ok)continue;
+      for(i=0;i<w.length;i++){g[sy+dir[1]*i][sx+dir[0]*i]=w.charAt(i);}
+      return true;
+    }
+    return false;
+  }
+  function findable(g,w){
+    for(var y=0;y<SIZE;y++)for(var x=0;x<SIZE;x++)for(var d=0;d<8;d++){
+      var ok=true;
+      for(var i=0;i<w.length;i++){var nx=x+DIRS[d][0]*i,ny=y+DIRS[d][1]*i;
+        if(nx<0||nx>=SIZE||ny<0||ny>=SIZE||g[ny][nx]!==w.charAt(i)){ok=false;break;}}
+      if(ok)return true;
+    }
+    return false;
+  }
+  function build(words,seed){
+    var ord=words.slice().sort(function(a,b){return b.length-a.length;});
+    for(var r=0;r<60;r++){
+      var rng=mulberry32(seed+r*7919),g=[],y;
+      for(y=0;y<SIZE;y++)g.push(new Array(SIZE).fill(null));
+      var bad=false;
+      for(var i=0;i<ord.length;i++){if(!place(g,ord[i],rng)){bad=true;break;}}
+      if(bad)continue;
+      for(y=0;y<SIZE;y++)for(var x=0;x<SIZE;x++)if(g[y][x]===null)g[y][x]=String.fromCharCode(65+Math.floor(rng()*26));
+      if(words.every(function(w){return findable(g,w);}))return g;
+    }
+    return null;
+  }
+
+  var CREAM="#F8F3ED",PAPER="#FFFDFA",OX="#8E2A2A",GREEN="#2F4B3C",BRASS="#C6A266",RULE="#E4DCD0",INK="#33302C",BAND="#F3EAE0",CELL="#FBF8F3";
+  var cv=document.getElementById("c"),ctx=cv.getContext("2d");
+
+  function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+  function draw(d){
+    var t=themeFor(d);
+    var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+    var grid=build(t.w,seed), issue=dayNumber(d)+1;
+
+    ctx.fillStyle=CREAM;ctx.fillRect(0,0,1000,1500);
+    ctx.textAlign="center";
+
+    ctx.fillStyle=INK;ctx.font='700 76px Fraunces, Georgia, serif';
+    ctx.fillText("The Daily Clue",500,148);
+    ctx.strokeStyle=BRASS;ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(456,180);ctx.lineTo(544,180);ctx.moveTo(456,189);ctx.lineTo(544,189);ctx.stroke();
+    ctx.fillStyle=GREEN;ctx.font='italic 30px Spectral, Georgia, serif';
+    ctx.fillText("A free word search, every day",500,240);
+
+    ctx.fillStyle=BAND;roundRect(70,282,860,128,4);ctx.fill();
+    ctx.fillStyle=OX;ctx.font='600 42px Fraunces, Georgia, serif';
+    ctx.fillText(t.t,500,340);
+    ctx.fillStyle=GREEN;ctx.font='italic 25px Spectral, Georgia, serif';
+    ctx.fillText(t.n,500,388);
+
+    var top=440,cell=64,gap=5,board=10*cell+9*gap,left=(1000-board)/2;
+    ctx.fillStyle=PAPER;roundRect(left-16,top-16,board+32,board+32,4);ctx.fill();
+    ctx.strokeStyle=RULE;ctx.lineWidth=2;ctx.stroke();
+    ctx.font='600 33px Spectral, Georgia, serif';
+    for(var y=0;y<10;y++)for(var x=0;x<10;x++){
+      var cx=left+x*(cell+gap),cy=top+y*(cell+gap);
+      ctx.fillStyle=CELL;roundRect(cx,cy,cell,cell,3);ctx.fill();
+      ctx.strokeStyle=RULE;ctx.lineWidth=1;ctx.stroke();
+      ctx.fillStyle=INK;ctx.fillText(grid[y][x],cx+cell/2,cy+cell/2+12);
+    }
+
+    var wy=top+board+42;ctx.font='400 24px Spectral, Georgia, serif';
+    for(var row=0;row<2;row++){
+      var chunk=t.w.slice(row*4,row*4+4),widths=[],total=0,i;
+      for(i=0;i<chunk.length;i++){var bw=ctx.measureText(chunk[i]).width+40;widths.push(bw);total+=bw;}
+      total+=14*(chunk.length-1);
+      var x2=(1000-total)/2;
+      for(i=0;i<chunk.length;i++){
+        ctx.fillStyle=PAPER;roundRect(x2,wy,widths[i],50,3);ctx.fill();
+        ctx.strokeStyle=RULE;ctx.lineWidth=1;ctx.stroke();
+        ctx.fillStyle=INK;ctx.fillText(chunk[i],x2+widths[i]/2,wy+34);
+        x2+=widths[i]+14;
+      }
+      wy+=64;
+    }
+
+    ctx.strokeStyle=RULE;ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(180,1310);ctx.lineTo(820,1310);ctx.stroke();
+    ctx.fillStyle=OX;ctx.font='600 38px Fraunces, Georgia, serif';
+    ctx.fillText("hearthandclue.com",500,1372);
+    ctx.fillStyle=BRASS;ctx.font='400 20px Spectral, Georgia, serif';
+    ctx.fillText("NO. "+issue+"  ·  "+d.toDateString().toUpperCase(),500,1418);
+
+    return { theme:t, issue:issue };
+  }
+
+  function caption(info){
+    var base = info.theme.t + " — " + info.theme.n.charAt(0).toLowerCase() + info.theme.n.slice(1) +
+      ". Eight words to find. A free word search, new every day, no login. Today's is No. " + info.issue + ".";
+    if (info.theme.s && SHOP[info.theme.s]) base += "\n\nThere is a full " + info.theme.s + " book too: " + SHOP[info.theme.s];
+    return base + "\n\nhearthandclue.com";
+  }
+
+  var sel=document.getElementById("day"), cap=document.getElementById("cap"), current=null;
+  for (var i=0;i<14;i++){
+    var d=new Date(); d.setDate(d.getDate()+i);
+    var o=document.createElement("option");
+    o.value=i; o.textContent=(i===0?"Today · ":"")+d.toDateString();
+    sel.appendChild(o);
+  }
+  function refresh(){
+    var d=new Date(); d.setDate(d.getDate()+Number(sel.value));
+    current=draw(d); cap.textContent=caption(current);
+  }
+  sel.onchange=refresh;
+
+  document.getElementById("save").onclick=function(){
+    cv.toBlob(function(b){
+      var url=URL.createObjectURL(b),a=document.createElement("a");
+      a.href=url; a.download="daily-clue-"+current.issue+".png"; a.click();
+      setTimeout(function(){URL.revokeObjectURL(url);},2000);
+    },"image/png");
+  };
+  document.getElementById("copy").onclick=function(){
+    navigator.clipboard.writeText(cap.textContent).then(function(){
+      var b=document.getElementById("copy"); b.textContent="Copied"; setTimeout(function(){b.textContent="Copy caption";},1400);
+    });
+  };
+
+  fetch("/index.html", { cache: "no-cache" })
+    .then(function (r) { return r.text(); })
+    .then(function (txt) {
+      var m = txt.match(/var THEMES = (\[.*?\]);/);
+      if (!m) throw new Error("theme data not found");
+      var full = JSON.parse(m[1]);
+      T = full.map(function (x) {
+        return { t:x.title, n:x.note, s:x.subject, k:x.kind, m:x.months, d:x.days, w:x.words };
+      });
+      EVER = T.filter(function (x) { return x.k === "ever"; });
+      full.forEach(function (x) { if (x.url) SHOP[x.subject] = x.url; });
+      if (document.fonts && document.fonts.ready) return document.fonts.ready.then(refresh);
+      refresh();
+    })
+    .catch(function (e) {
+      cap.textContent = "Could not load today's puzzle data. Reload the page, or check that index.html is deployed.";
+    });
+})();
+</script>
+</body>
+</html>
