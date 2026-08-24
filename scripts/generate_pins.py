@@ -17,27 +17,102 @@ GREEN, BRASS, RULE = (47, 75, 60), (198, 162, 102), (228, 220, 208)
 INK, BAND, CELL = (51, 48, 44), (243, 234, 224), (251, 248, 243)
 
 FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
-FALLBACK = "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"
-FALLBACK_B = "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
-FALLBACK_I = "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Italic.ttf"
+
+# Fonts are fetched at run time. Every step degrades rather than raising, so a
+# missing font changes how the pin looks but never fails the build.
+FONT_SOURCES = {
+    "Fraunces.ttf": [
+        "https://raw.githubusercontent.com/google/fonts/main/ofl/fraunces/Fraunces%5BSOFT%2CWONK%2Copsz%2Cwght%5D.ttf",
+    ],
+    "Spectral-Regular.ttf": [
+        "https://raw.githubusercontent.com/google/fonts/main/ofl/spectral/Spectral-Regular.ttf",
+    ],
+    "Spectral-Italic.ttf": [
+        "https://raw.githubusercontent.com/google/fonts/main/ofl/spectral/Spectral-Italic.ttf",
+    ],
+    "Spectral-SemiBold.ttf": [
+        "https://raw.githubusercontent.com/google/fonts/main/ofl/spectral/Spectral-SemiBold.ttf",
+    ],
+    "Spectral-Bold.ttf": [
+        "https://raw.githubusercontent.com/google/fonts/main/ofl/spectral/Spectral-Bold.ttf",
+    ],
+}
+
+SYSTEM_FALLBACKS = [
+    "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
+    "/usr/share/fonts/truetype/freefont/FreeSerif.ttf",
+]
 
 
-def pick(*names):
-    for n in names:
-        p = os.path.join(FONT_DIR, n)
-        if os.path.exists(p):
+def fetch_fonts():
+    import urllib.request
+    os.makedirs(FONT_DIR, exist_ok=True)
+    for name, urls in FONT_SOURCES.items():
+        dest = os.path.join(FONT_DIR, name)
+        if os.path.exists(dest) and os.path.getsize(dest) > 1000:
+            continue
+        for url in urls:
+            try:
+                urllib.request.urlretrieve(url, dest)
+                if os.path.getsize(dest) > 1000:
+                    print("font ok:", name)
+                    break
+                os.remove(dest)
+            except Exception as e:
+                print("font miss:", name, type(e).__name__)
+
+
+def loadable(path, size=24):
+    """A font only counts if Pillow can actually open it."""
+    if not path or not os.path.exists(path):
+        return False
+    try:
+        ImageFont.truetype(path, size)
+        return True
+    except Exception:
+        return False
+
+
+def resolve(*candidates):
+    for c in candidates:
+        p = c if os.path.isabs(c) else os.path.join(FONT_DIR, c)
+        if loadable(p):
             return p
-    return None
+    for p in SYSTEM_FALLBACKS:
+        if loadable(p):
+            return p
+    return None            # last resort: PIL's built-in face
 
 
-DISPLAY = pick("Fraunces-Bold.ttf", "Fraunces.ttf") or FALLBACK_B
-BODY = pick("Spectral-Regular.ttf", "Spectral.ttf") or FALLBACK
-BODY_I = pick("Spectral-Italic.ttf") or FALLBACK_I
-BODY_SB = pick("Spectral-SemiBold.ttf") or BODY
+DISPLAY = BODY = BODY_I = BODY_SB = None
 
 
-def font(path, size):
-    return ImageFont.truetype(path, size)
+def choose_fonts():
+    global DISPLAY, BODY, BODY_I, BODY_SB
+    DISPLAY = resolve("Fraunces.ttf", "Spectral-Bold.ttf")
+    BODY = resolve("Spectral-Regular.ttf")
+    BODY_I = resolve("Spectral-Italic.ttf", "Spectral-Regular.ttf")
+    BODY_SB = resolve("Spectral-SemiBold.ttf", "Spectral-Regular.ttf")
+    print("display font:", DISPLAY or "PIL default")
+    print("body font   :", BODY or "PIL default")
+
+
+def font(path, size, bold=False):
+    if not path:
+        try:
+            return ImageFont.load_default(size=size)
+        except TypeError:
+            return ImageFont.load_default()
+    f = ImageFont.truetype(path, size)
+    if bold:
+        # Fraunces ships as a variable font; ask for its bold instance if available.
+        try:
+            f.set_variation_by_name("Bold")
+        except Exception:
+            pass
+    return f
 
 
 def centre(d, y, text, f, fill, tracking=0):
@@ -56,13 +131,13 @@ def render(theme, grid, issue, date, out_path):
     img = Image.new("RGB", (W, H), CREAM)
     d = ImageDraw.Draw(img)
 
-    centre(d, 78, "The Daily Clue", font(DISPLAY, 76), INK)
+    centre(d, 78, "The Daily Clue", font(DISPLAY, 76, bold=True), INK)
     d.line([(W / 2 - 44, 186), (W / 2 + 44, 186)], fill=BRASS, width=3)
     d.line([(W / 2 - 44, 194), (W / 2 + 44, 194)], fill=BRASS, width=3)
     centre(d, 214, "A free word search, every day", font(BODY_I, 30), GREEN)
 
     d.rounded_rectangle([70, 282, W - 70, 410], radius=4, fill=BAND)
-    centre(d, 306, theme["title"], font(DISPLAY, 40), OX)
+    centre(d, 306, theme["title"], font(DISPLAY, 40, bold=True), OX)
     centre(d, 362, theme["note"], font(BODY_I, 25), GREEN)
 
     top, size, gap = 440, 64, 5
@@ -92,7 +167,7 @@ def render(theme, grid, issue, date, out_path):
         wy += 64
 
     d.line([(180, H - 190), (W - 180, H - 190)], fill=RULE, width=2)
-    centre(d, H - 164, "hearthandclue.com", font(DISPLAY, 38), OX)
+    centre(d, H - 164, "hearthandclue.com", font(DISPLAY, 38, bold=True), OX)
     centre(d, H - 100, "NO. %d  \u00b7  %s" % (issue, date.strftime("%a %b %d %Y").upper()),
            font(BODY, 20), BRASS, tracking=2)
 
@@ -103,6 +178,9 @@ def main():
     days = int(sys.argv[1]) if len(sys.argv) > 1 else 30
     index = sys.argv[2] if len(sys.argv) > 2 else "index.html"
     outdir = sys.argv[3] if len(sys.argv) > 3 else "pins"
+
+    fetch_fonts()
+    choose_fonts()
 
     themes = load_themes(index)
     os.makedirs(outdir, exist_ok=True)
@@ -143,7 +221,6 @@ def main():
                 pass
 
     print("done: %d new image(s), %d in manifest" % (made, len(manifest)))
-    print("fonts:", os.path.basename(DISPLAY), os.path.basename(BODY))
 
 
 if __name__ == "__main__":
