@@ -2,8 +2,9 @@
 """
 Daily Clue puzzle engine — exact port of the browser engine in index.html.
 
-Theme data is read from index.html so this can never disagree with the game.
-Verified byte-identical to the JS engine across 180 consecutive days.
+Theme data is read from the DEPLOYED page, so the pins always match the puzzle
+people are actually served. Verified byte-identical to the JS engine across 180
+consecutive days.
 """
 import json, re, sys, datetime
 
@@ -104,12 +105,47 @@ def build(words, seed):
     return None
 
 
-def load_themes(index_path):
-    src = open(index_path, encoding="utf-8").read()
+LIVE_URL = "https://hearthandclue.com/index.html"
+
+
+def _extract(src, where):
     m = re.search(r"var THEMES = (\[.*?\]);", src)
     if not m:
-        raise SystemExit("theme data not found in " + index_path)
-    return json.loads(m.group(1))
+        return None
+    try:
+        return json.loads(m.group(1))
+    except ValueError as e:
+        print("theme data in %s did not parse: %s" % (where, e))
+        return None
+
+
+def load_themes(index_path=None):
+    """Prefer the deployed page: the pins must match the puzzle people are served,
+    not whatever happens to be sitting in the repo."""
+    try:
+        import urllib.request
+        with urllib.request.urlopen(LIVE_URL, timeout=20) as r:
+            themes = _extract(r.read().decode("utf-8"), LIVE_URL)
+        if themes:
+            print("theme source: %s (%d themes)" % (LIVE_URL, len(themes)))
+            return themes
+        print("live page reachable but theme data not in the expected format")
+    except Exception as e:
+        print("could not read live page (%s), falling back to the repo copy" % type(e).__name__)
+
+    if index_path:
+        try:
+            themes = _extract(open(index_path, encoding="utf-8").read(), index_path)
+        except OSError as e:
+            raise SystemExit("cannot open %s: %s" % (index_path, e))
+        if themes:
+            print("theme source: %s (%d themes)" % (index_path, len(themes)))
+            return themes
+
+    raise SystemExit(
+        "No usable theme data. Checked %s and %s. The deployed index.html must "
+        "contain a single-line `var THEMES = [...]` JSON array." % (LIVE_URL, index_path)
+    )
 
 
 if __name__ == "__main__":
