@@ -1,12 +1,4 @@
 {
- "237": {
-  "date": "2026-08-25",
-  "image": "/pins/237.png",
-  "note": "Treasures live second lives",
-  "subject": "Collecting",
-  "title": "The Auction Block",
-  "url": null
- },
  "238": {
   "date": "2026-08-26",
   "image": "/pins/238.png",
@@ -237,6 +229,14 @@
   "note": "Chrome and miles; each one counts",
   "subject": "Vintage Cars",
   "title": "The Fuel Receipt Kept in the Folder",
+  "url": null
+ },
+ "267": {
+  "date": "2026-09-24",
+  "image": "/pins/267.png",
+  "note": "Word by word, across the distance",
+  "subject": "Correspondence",
+  "title": "Letters in the Blue Envelope",
   "url": null
  }
 }
