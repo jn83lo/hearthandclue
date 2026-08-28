@@ -1,20 +1,4 @@
 {
- "238": {
-  "date": "2026-08-26",
-  "image": "/pins/238.png",
-  "note": "Every day is January 1st if you need it to be",
-  "subject": "New Year",
-  "title": "Resolutions",
-  "url": null
- },
- "239": {
-  "date": "2026-08-27",
-  "image": "/pins/239.png",
-  "note": "They return every year like promises kept",
-  "subject": "Birdwatching",
-  "title": "On the Branch",
-  "url": null
- },
  "240": {
   "date": "2026-08-28",
   "image": "/pins/240.png",
@@ -238,5 +222,21 @@
   "subject": "Correspondence",
   "title": "Letters in the Blue Envelope",
   "url": null
+ },
+ "268": {
+  "date": "2026-09-25",
+  "image": "/pins/268.png",
+  "note": "Line up the shot; the grass is perfect today",
+  "subject": "Golf",
+  "title": "The Fairway",
+  "url": "https://etsy.com/listing/4555025178"
+ },
+ "269": {
+  "date": "2026-09-26",
+  "image": "/pins/269.png",
+  "note": "Where the needle goes, the thread follows",
+  "subject": "Quilting",
+  "title": "In the Loop",
+  "url": "https://etsy.com/listing/4554868140"
  }
 }
