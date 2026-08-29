@@ -1,12 +1,4 @@
 {
- "240": {
-  "date": "2026-08-28",
-  "image": "/pins/240.png",
-  "note": "Summer asks only that you stay awhile",
-  "subject": "Summer",
-  "title": "Salt and Shade",
-  "url": "https://etsy.com/listing/4551947429"
- },
  "241": {
   "date": "2026-08-29",
   "image": "/pins/241.png",
@@ -238,5 +230,13 @@
   "subject": "Quilting",
   "title": "In the Loop",
   "url": "https://etsy.com/listing/4554868140"
+ },
+ "270": {
+  "date": "2026-09-27",
+  "image": "/pins/270.png",
+  "note": "Wood speaks if you listen",
+  "subject": "Woodworking",
+  "title": "Sawdust and Light",
+  "url": "https://etsy.com/listing/4554679490"
  }
 }
