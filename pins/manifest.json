@@ -1,12 +1,4 @@
 {
- "242": {
-  "date": "2026-08-30",
-  "image": "/pins/242.png",
-  "note": "Chrome and miles; each one counts",
-  "subject": "Vintage Cars",
-  "title": "The Fuel Receipt Kept in the Folder",
-  "url": null
- },
  "243": {
   "date": "2026-08-31",
   "image": "/pins/243.png",
@@ -238,5 +230,13 @@
   "subject": "Gardening",
   "title": "Green Thumb",
   "url": "https://etsy.com/listing/4552628958"
+ },
+ "272": {
+  "date": "2026-09-29",
+  "image": "/pins/272.png",
+  "note": "One loop builds on another",
+  "subject": "Knitting",
+  "title": "Stitches Across Time",
+  "url": null
  }
 }
