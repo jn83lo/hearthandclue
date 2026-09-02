@@ -1,12 +1,4 @@
 {
- "244": {
-  "date": "2026-09-01",
-  "image": "/pins/244.png",
-  "note": "Line up the shot; the grass is perfect today",
-  "subject": "Golf",
-  "title": "The Fairway",
-  "url": "https://etsy.com/listing/4555025178"
- },
  "245": {
   "date": "2026-09-02",
   "image": "/pins/245.png",
@@ -237,6 +229,14 @@
   "note": "Where the river knows your rhythm",
   "subject": "Fishing",
   "title": "The Fly Cast",
+  "url": null
+ },
+ "274": {
+  "date": "2026-10-01",
+  "image": "/pins/274.png",
+  "note": "Coffee cools slower when you're not in a hurry",
+  "subject": "Devotional",
+  "title": "Breakfast on the Porch",
   "url": null
  }
 }
