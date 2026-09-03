@@ -1,12 +1,4 @@
 {
- "245": {
-  "date": "2026-09-02",
-  "image": "/pins/245.png",
-  "note": "Where the needle goes, the thread follows",
-  "subject": "Quilting",
-  "title": "In the Loop",
-  "url": "https://etsy.com/listing/4554868140"
- },
  "246": {
   "date": "2026-09-03",
   "image": "/pins/246.png",
@@ -237,6 +229,14 @@
   "note": "Coffee cools slower when you're not in a hurry",
   "subject": "Devotional",
   "title": "Breakfast on the Porch",
+  "url": null
+ },
+ "275": {
+  "date": "2026-10-02",
+  "image": "/pins/275.png",
+  "note": "Every word carries someone else's world",
+  "subject": "Reading",
+  "title": "Pages Turned",
   "url": null
  }
 }
