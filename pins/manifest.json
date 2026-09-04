@@ -1,12 +1,4 @@
 {
- "246": {
-  "date": "2026-09-03",
-  "image": "/pins/246.png",
-  "note": "Wood speaks if you listen",
-  "subject": "Woodworking",
-  "title": "Sawdust and Light",
-  "url": "https://etsy.com/listing/4554679490"
- },
  "247": {
   "date": "2026-09-04",
   "image": "/pins/247.png",
@@ -237,6 +229,14 @@
   "note": "Every word carries someone else's world",
   "subject": "Reading",
   "title": "Pages Turned",
+  "url": null
+ },
+ "276": {
+  "date": "2026-10-03",
+  "image": "/pins/276.png",
+  "note": "They live in the moment; we follow",
+  "subject": "Pets",
+  "title": "Paws and Prints",
   "url": null
  }
 }
