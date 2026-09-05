@@ -57,9 +57,10 @@ jobs:
             echo "nothing new to commit"
           else
             git commit -m "Render pin images ($(date -u +%Y-%m-%d))"
+              git pull --rebase --autostash origin main
             git push
           fi
-          - name: Post to Pinterest
+      - name: Post to Pinterest
         env:
           PINTEREST_TOKEN: ${{ secrets.PINTEREST_TOKEN }}
         run: python scripts/post_pin.py pins
