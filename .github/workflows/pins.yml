@@ -59,3 +59,7 @@ jobs:
             git commit -m "Render pin images ($(date -u +%Y-%m-%d))"
             git push
           fi
+          - name: Post to Pinterest
+        env:
+          PINTEREST_TOKEN: ${{ secrets.PINTEREST_TOKEN }}
+        run: python scripts/post_pin.py pins
