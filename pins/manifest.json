@@ -1,12 +1,4 @@
 {
- "247": {
-  "date": "2026-09-04",
-  "image": "/pins/247.png",
-  "note": "Seeds become seasons",
-  "subject": "Gardening",
-  "title": "Green Thumb",
-  "url": "https://etsy.com/listing/4552628958"
- },
  "248": {
   "date": "2026-09-05",
   "image": "/pins/248.png",
@@ -238,5 +230,13 @@
   "subject": "Pets",
   "title": "Paws and Prints",
   "url": null
+ },
+ "277": {
+  "date": "2026-10-04",
+  "image": "/pins/277.png",
+  "note": "Clues hide in plain sight",
+  "subject": "Mystery #1",
+  "title": "Mystery at the Manor",
+  "url": "https://etsy.com/listing/4550924621"
  }
 }
