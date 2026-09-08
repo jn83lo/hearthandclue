@@ -1,12 +1,4 @@
 {
- "250": {
-  "date": "2026-09-07",
-  "image": "/pins/250.png",
-  "note": "Coffee cools slower when you're not in a hurry",
-  "subject": "Devotional",
-  "title": "Breakfast on the Porch",
-  "url": null
- },
  "251": {
   "date": "2026-09-08",
   "image": "/pins/251.png",
@@ -237,6 +229,14 @@
   "note": "Not all puzzles solve themselves",
   "subject": "Mystery #3",
   "title": "Midnight Garden",
+  "url": null
+ },
+ "280": {
+  "date": "2026-10-07",
+  "image": "/pins/280.png",
+  "note": "Roots, leaves, flowers\u2014each one matters",
+  "subject": "Herbalism",
+  "title": "The Apothecary",
   "url": null
  }
 }
