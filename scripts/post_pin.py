@@ -15,13 +15,32 @@ Environment:
   PINTEREST_BOARD   optional, defaults to the Word Search Puzzle Books board
   SITE              optional, defaults to https://hearthandclue.com
 """
-import os, sys, json, datetime, urllib.request, urllib.error
+import os, sys, json, datetime, subprocess, urllib.request, urllib.error
 
 API = "https://api.pinterest.com/v5/pins"
 DEFAULT_BOARD = "300615412567048694"
 DEFAULT_SITE = "https://hearthandclue.com"
 
 TITLE_MAX, DESC_MAX, ALT_MAX = 100, 800, 500
+SITE_TZ = "Australia/Sydney"
+
+
+def site_today():
+    """The date the SITE is on, not the runner.
+
+    The puzzle rolls over at local midnight and the runner's clock is UTC.
+    The cron fires at 14:10 UTC, by which time the site is already on the
+    next issue, so datetime.date.today() posts yesterday's puzzle every day.
+    """
+    try:
+        from zoneinfo import ZoneInfo
+        return datetime.datetime.now(ZoneInfo(SITE_TZ)).date()
+    except Exception:
+        # No tzdata available: fall back to a fixed +10. Correct during AEST
+        # and an hour behind during AEDT, which still gives the right DATE
+        # for any run at or after 14:00 UTC.
+        return (datetime.datetime.now(datetime.timezone.utc)
+                + datetime.timedelta(hours=10)).date()
 
 
 def clip(text, limit):
@@ -85,7 +104,8 @@ def remember(record_path, issue, pin_id):
             posted = {}
         posted[str(issue)] = {
             "pin_id": pin_id,
-            "posted_at": datetime.datetime.utcnow().isoformat(timespec="seconds") + "Z",
+            "posted_at": datetime.datetime.now(datetime.timezone.utc)
+                                  .isoformat(timespec="seconds").replace("+00:00", "Z"),
         }
         # Keep the file small: the last 60 entries are plenty to stop repeats.
         for key in sorted(posted, key=int)[:-60]:
@@ -94,6 +114,30 @@ def remember(record_path, issue, pin_id):
             json.dump(posted, f, indent=1, sort_keys=True)
     except Exception as e:
         print("could not update record:", type(e).__name__, e)
+
+
+def commit_record(record_path):
+    """Push the record back, or it dies with the runner.
+
+    The workflow's commit step runs BEFORE this one, so posted.json was being
+    written to a directory that is thrown away, leaving the repeat guard with
+    nothing to read on the next run.
+    """
+    steps = [
+        ["git", "config", "user.name", "daily-clue-bot"],
+        ["git", "config", "user.email", "actions@github.com"],
+        ["git", "add", record_path],
+        ["git", "commit", "-m", "Record posted pin"],
+        ["git", "pull", "--rebase", "--autostash", "origin", "main"],
+        ["git", "push"],
+    ]
+    for step in steps:
+        result = subprocess.run(step, capture_output=True, text=True)
+        if result.returncode != 0:
+            print("could not push the record (%s): %s"
+                  % (" ".join(step), (result.stderr or result.stdout).strip()[:200]))
+            return
+    print("record pushed:", record_path)
 
 
 def post(token, payload):
@@ -129,7 +173,7 @@ def main():
         print("no usable manifest at %s: %s" % (manifest_path, type(e).__name__))
         return
 
-    today = datetime.date.today()
+    today = site_today()
     issue, entry = todays_issue(manifest, today)
     if entry is None:
         print("no manifest entry dated", today.isoformat())
@@ -165,6 +209,7 @@ def main():
     pin_id = result.get("id", "unknown")
     print("posted pin", pin_id)
     remember(record_path, issue, pin_id)
+    commit_record(record_path)
 
 
 if __name__ == "__main__":
