@@ -194,7 +194,8 @@ def main():
         path = os.path.join(outdir, "%d.png" % issue)
         manifest[str(issue)] = {
             "date": d.isoformat(), "title": t["title"], "note": t["note"],
-            "subject": t["subject"], "url": t["url"], "image": "/pins/%d.png" % issue
+            "subject": t["subject"], "url": t["url"], "image": "/pins/%d.png" % issue,
+            "words": list(t["words"])
         }
         if os.path.exists(path):
             continue
