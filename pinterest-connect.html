@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hearth &amp; Clue - Pinterest connection</title>
+<style>
+  :root { --ink:#1f3d2b; --terra:#bc4a2d; --paper:#faf6ec; --muted:#7a6c4e; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:24px 18px 48px; background:var(--paper); color:var(--ink);
+         font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
+  main { max-width:520px; margin:0 auto; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 28px; }
+  .card { background:#fff; border:1px solid #e6ded0; border-radius:12px; padding:20px; margin-bottom:18px; }
+  button { width:100%; padding:16px; font-size:17px; font-weight:600; border:0; border-radius:10px;
+           background:var(--ink); color:#fff; cursor:pointer; }
+  button.alt { background:var(--terra); }
+  button[disabled] { opacity:.45; }
+  .status { font-size:14px; color:var(--muted); margin-top:12px; }
+  .ok { color:#1c6b3a; font-weight:600; }
+  .err { color:#a32d2d; font-weight:600; }
+  pre { background:#f3eee2; border-radius:8px; padding:12px; font-size:12px; overflow:auto;
+        max-height:260px; white-space:pre-wrap; word-break:break-word; }
+  ul { padding-left:18px; margin:8px 0 0; font-size:14px; }
+  .hide { display:none; }
+  .note { font-size:13px; color:var(--muted); border-top:1px solid #e6ded0; padding-top:14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Hearth &amp; Clue</h1>
+  <p class="sub">Daily puzzle pin poster</p>
+
+  <div class="card" id="step1">
+    <p><strong>Step 1 — connect a Pinterest account</strong></p>
+    <p style="font-size:14px;color:var(--muted)">
+      You will be sent to Pinterest to approve access. This app never asks for a
+      Pinterest email or password, and never sees them.
+    </p>
+    <button id="connect">Connect Pinterest</button>
+    <div class="status" id="s1"></div>
+  </div>
+
+  <div class="card hide" id="step2">
+    <p><strong>Step 2 — post today's puzzle</strong></p>
+    <div id="acct" class="status"></div>
+    <button class="alt" id="post">Post today's pin</button>
+    <div class="status" id="s2"></div>
+    <pre id="out" class="hide"></pre>
+  </div>
+
+  <p class="note">
+    Access tokens are exchanged and held server-side and are never readable by
+    this page. Pin creation runs against the Pinterest API sandbox while this app
+    is on Trial access.
+  </p>
+</main>
+
+<script>
+(function () {
+  var APP_ID = "1608410";
+  var REDIRECT = "https://hearthandclue.com/pinterest-connect.html";
+  var SCOPES = "boards:read,boards:write,pins:read,pins:write";
+
+  var s1 = document.getElementById("s1");
+  var s2 = document.getElementById("s2");
+  var out = document.getElementById("out");
+
+  document.getElementById("connect").onclick = function () {
+    var state = Math.random().toString(36).slice(2);
+    try { sessionStorage.setItem("pin_state", state); } catch (e) {}
+    location.href =
+      "https://www.pinterest.com/oauth/?client_id=" + encodeURIComponent(APP_ID) +
+      "&redirect_uri=" + encodeURIComponent(REDIRECT) +
+      "&response_type=code&scope=" + encodeURIComponent(SCOPES) +
+      "&state=" + encodeURIComponent(state);
+  };
+
+  document.getElementById("post").onclick = function () {
+    var btn = this;
+    btn.disabled = true;
+    s2.textContent = "Creating pin...";
+    out.classList.add("hide");
+    fetch("/.netlify/functions/pinterest-pin", { method: "POST" })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        var id = res.j && res.j.response && res.j.response.id;
+        s2.innerHTML = res.ok && id
+          ? '<span class="ok">Pin created. ID ' + id + "</span>"
+          : '<span class="err">Failed</span>';
+        out.textContent = JSON.stringify(res.j, null, 2);
+        out.classList.remove("hide");
+      })
+      .catch(function (e) { s2.innerHTML = '<span class="err">' + e + "</span>"; })
+      .then(function () { btn.disabled = false; });
+  };
+
+  var code = new URLSearchParams(location.search).get("code");
+  if (code) {
+    s1.textContent = "Completing sign-in...";
+    fetch("/.netlify/functions/pinterest-auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: code })
+    })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok || !res.j.connected) {
+          s1.innerHTML = '<span class="err">Could not connect</span>';
+          out.textContent = JSON.stringify(res.j, null, 2);
+          out.classList.remove("hide");
+          document.getElementById("step2").classList.remove("hide");
+          return;
+        }
+        s1.innerHTML = '<span class="ok">Connected</span>';
+        var a = document.getElementById("acct");
+        a.innerHTML = (res.j.username ? "Account: <strong>" + res.j.username + "</strong>" : "Account connected") +
+          (res.j.boards && res.j.boards.length
+            ? "<ul>" + res.j.boards.map(function (b) { return "<li>" + b.name + "</li>"; }).join("") + "</ul>"
+            : "");
+        document.getElementById("step2").classList.remove("hide");
+        history.replaceState({}, "", REDIRECT);
+      })
+      .catch(function (e) { s1.innerHTML = '<span class="err">' + e + "</span>"; });
+  }
+})();
+</script>
+</body>
+</html>
