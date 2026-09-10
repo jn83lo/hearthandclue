@@ -1,22 +1,4 @@
 {
- "252": {
-  "date": "2026-09-09",
-  "image": "/pins/252.png",
-  "note": "They live in the moment; we follow",
-  "subject": "Pets",
-  "title": "Paws and Prints",
-  "url": null,
-  "words": [
-   "ANIMALS",
-   "DOGS",
-   "CATS",
-   "PETS",
-   "FURRY",
-   "LOYAL",
-   "PAWS",
-   "CUDDLE"
-  ]
- },
  "253": {
   "date": "2026-09-10",
   "image": "/pins/253.png",
@@ -537,6 +519,24 @@
    "LEGACY",
    "OLD",
    "MEMORIES"
+  ]
+ },
+ "282": {
+  "date": "2026-10-09",
+  "image": "/pins/282.png",
+  "note": "Every journey starts with leaving",
+  "subject": "Travel",
+  "title": "On the Platform",
+  "url": null,
+  "words": [
+   "JOURNEY",
+   "ADVENTURE",
+   "EXPLORE",
+   "DISTANCE",
+   "PLACES",
+   "DISCOVER",
+   "TRAVEL",
+   "ESCAPE"
   ]
  }
 }
