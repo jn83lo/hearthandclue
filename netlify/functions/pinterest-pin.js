@@ -46,8 +46,10 @@ exports.handler = async (event) => {
     const m = await fetch(MANIFEST);
     if (!m.ok) throw new Error(`manifest HTTP ${m.status}`);
     const mj = await m.json();
-    const items = Array.isArray(mj) ? mj : mj.pins || mj.items || [];
-    entry = items.find((p) => (p.date || "").slice(0, 10) === today) || items[0] || null;
+    // manifest is an object keyed by issue number, not an array
+    const items = Array.isArray(mj) ? mj : Object.values(mj);
+    const dated = items.filter((p) => p && p.date).sort((a, b) => a.date.localeCompare(b.date));
+    entry = dated.find((p) => p.date.slice(0, 10) === today) || dated[dated.length - 1] || null;
   } catch (err) {
     return { statusCode: 502, body: JSON.stringify({ error: `manifest: ${err}` }) };
   }
@@ -55,7 +57,8 @@ exports.handler = async (event) => {
     return { statusCode: 404, body: JSON.stringify({ error: "no entry in manifest" }) };
   }
 
-  const imageUrl = entry.image_url || entry.url || entry.image;
+  let imageUrl = entry.image_url || entry.image || entry.url;
+  if (imageUrl && imageUrl.startsWith("/")) imageUrl = "https://hearthandclue.com" + imageUrl;
   if (!imageUrl) {
     return {
       statusCode: 500,
@@ -91,14 +94,14 @@ exports.handler = async (event) => {
     return { statusCode: 502, body: JSON.stringify({ error: `boards: ${err}` }) };
   }
 
-  const title = entry.title || `The Daily Clue - ${entry.theme || "word search"}`;
+  const title = entry.title || `The Daily Clue - ${entry.subject || entry.theme || "word search"}`;
   const words = Array.isArray(entry.words) ? entry.words.join(", ") : "";
   const body = {
     board_id: boardId,
     title: title.slice(0, 100),
     description: (
       entry.description ||
-      `Today's free word search from The Daily Clue. Theme: ${entry.theme || "daily"}. Play it free at hearthandclue.com`
+      `Today's free word search from The Daily Clue. Theme: ${entry.subject || entry.theme || "daily"}. Play it free at hearthandclue.com`
     ).slice(0, 500),
     alt_text: (words
       ? `A word search grid with eight hidden words: ${words}`
