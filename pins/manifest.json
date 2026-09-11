@@ -1,22 +1,4 @@
 {
- "253": {
-  "date": "2026-09-10",
-  "image": "/pins/253.png",
-  "note": "Clues hide in plain sight",
-  "subject": "Mystery #1",
-  "title": "Mystery at the Manor",
-  "url": "https://etsy.com/listing/4550924621",
-  "words": [
-   "MYSTERY",
-   "CLUES",
-   "SOLVE",
-   "SECRET",
-   "HIDDEN",
-   "DETECT",
-   "TRUTH",
-   "PUZZLE"
-  ]
- },
  "254": {
   "date": "2026-09-11",
   "image": "/pins/254.png",
@@ -537,6 +519,24 @@
    "DISCOVER",
    "TRAVEL",
    "ESCAPE"
+  ]
+ },
+ "283": {
+  "date": "2026-10-10",
+  "image": "/pins/283.png",
+  "note": "Butter, herbs, time, and care",
+  "subject": "Cooking",
+  "title": "The Feast",
+  "url": null,
+  "words": [
+   "COOKING",
+   "RECIPE",
+   "KITCHEN",
+   "FLAVORS",
+   "HERBS",
+   "DELICIOUS",
+   "TASTE",
+   "FEAST"
   ]
  }
 }
