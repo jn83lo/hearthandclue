@@ -1,22 +1,4 @@
 {
- "254": {
-  "date": "2026-09-11",
-  "image": "/pins/254.png",
-  "note": "Someone's secret, waiting to be found",
-  "subject": "Mystery #2",
-  "title": "The Lost Letter",
-  "url": null,
-  "words": [
-   "LETTER",
-   "MISSING",
-   "HIDDEN",
-   "SEARCH",
-   "SECRETS",
-   "FOUND",
-   "CLUE",
-   "DISCOVER"
-  ]
- },
  "255": {
   "date": "2026-09-12",
   "image": "/pins/255.png",
@@ -537,6 +519,24 @@
    "DELICIOUS",
    "TASTE",
    "FEAST"
+  ]
+ },
+ "284": {
+  "date": "2026-10-11",
+  "image": "/pins/284.png",
+  "note": "Where the hours slow and stories linger",
+  "subject": "Comfort",
+  "title": "By the Fire",
+  "url": null,
+  "words": [
+   "COMFORT",
+   "WARMTH",
+   "COZY",
+   "FIRESIDE",
+   "STORIES",
+   "FAMILY",
+   "CUDDLE",
+   "PEACE"
   ]
  }
 }
