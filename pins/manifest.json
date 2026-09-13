@@ -1,22 +1,4 @@
 {
- "255": {
-  "date": "2026-09-12",
-  "image": "/pins/255.png",
-  "note": "Not all puzzles solve themselves",
-  "subject": "Mystery #3",
-  "title": "Midnight Garden",
-  "url": null,
-  "words": [
-   "GARDEN",
-   "MIDNIGHT",
-   "MYSTERY",
-   "SHADOWS",
-   "HIDDEN",
-   "SECRETS",
-   "PUZZLE",
-   "SOLVE"
-  ]
- },
  "256": {
   "date": "2026-09-13",
   "image": "/pins/256.png",
@@ -537,6 +519,24 @@
    "FAMILY",
    "CUDDLE",
    "PEACE"
+  ]
+ },
+ "285": {
+  "date": "2026-10-12",
+  "image": "/pins/285.png",
+  "note": "Treasures live second lives",
+  "subject": "Collecting",
+  "title": "The Auction Block",
+  "url": null,
+  "words": [
+   "TREASURES",
+   "ANTIQUES",
+   "VINTAGE",
+   "COLLECT",
+   "FINDS",
+   "VALUE",
+   "RARE",
+   "PRECIOUS"
   ]
  }
 }
