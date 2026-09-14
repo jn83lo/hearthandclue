@@ -346,10 +346,27 @@
     return (l === n || l === n - 1) ? streak : 0;
   }
 
-  /* ---------- analytics (no-op unless Plausible is configured) ---------- */
+  /* ---------- analytics ---------- */
+  /* Anonymous counts only: an event name goes to our own Netlify function, which
+     keeps a per-day tally. No cookie, no identifier, no IP is stored. Plausible
+     is still called if it is ever configured. */
 
   function track(name, props) {
     if (typeof window.plausible === "function") window.plausible(name, { props: props || {} });
+    try {
+      var payload = JSON.stringify({ name: name });
+      var url = "/.netlify/functions/event";
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(url, new Blob([payload], { type: "application/json" }));
+      } else if (window.fetch) {
+        fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: payload,
+          keepalive: true
+        }).catch(function () {});
+      }
+    } catch (e) {}
   }
 
   /* ---------- rendering ---------- */
@@ -576,6 +593,7 @@
       "<p>Try again in a moment, or come back tomorrow for a fresh one.</p></section>";
   } else {
     renderPlay();
+    track("visit");
   }
 })();
 </script>
