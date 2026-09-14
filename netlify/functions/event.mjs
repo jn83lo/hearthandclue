@@ -27,10 +27,16 @@ export default async (req) => {
 
   try {
     const day = new Date().toISOString().slice(0, 10);
-    const id = crypto.randomUUID();
+    const id = Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
     await getStore("clue-events").set(`${day}/${name}/${id}`, "1");
   } catch (e) {
-    // Never let analytics break the page.
+    // The browser sends this with sendBeacon and never reads the response, so a
+    // non-2xx here cannot affect the page. Surfacing the reason is worth more
+    // than swallowing it.
+    return new Response(JSON.stringify({ error: String(e && e.message ? e.message : e) }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   return new Response(null, { status: 204 });
