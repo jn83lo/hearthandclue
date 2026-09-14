@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Daily Clue - stats</title>
+<style>
+  :root { --ink:#2b2118; --cream:#fbf6ec; --rule:#e0d5c2; --accent:#8a5a2b; }
+  body { margin:0; padding:24px 16px 48px; background:var(--cream); color:var(--ink);
+         font-family:Georgia,'Times New Roman',serif; }
+  .wrap { max-width:640px; margin:0 auto; }
+  h1 { font-size:1.5rem; margin:0 0 4px; }
+  p.sub { margin:0 0 24px; color:#6b5a46; font-size:.95rem; }
+  table { width:100%; border-collapse:collapse; font-size:.95rem; }
+  th, td { padding:8px 6px; border-bottom:1px solid var(--rule); text-align:right; }
+  th:first-child, td:first-child { text-align:left; white-space:nowrap; }
+  th { font-weight:normal; color:#6b5a46; font-size:.8rem; text-transform:uppercase; letter-spacing:.05em; }
+  tfoot td { font-weight:bold; border-top:2px solid var(--rule); border-bottom:none; }
+  .msg { padding:16px; background:#fff; border:1px solid var(--rule); border-radius:6px; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The Daily Clue - stats</h1>
+  <p class="sub">Anonymous event counts. No visitor is identified or tracked between days.</p>
+  <div id="out" class="msg">Loading...</div>
+  <p><a href="/">Back to the puzzle</a></p>
+</div>
+<script>
+(function () {
+  var COLS = ["visit", "puzzle_completed", "result_shared", "hint_used", "restarted"];
+  var LABEL = { visit:"Visits", puzzle_completed:"Solved", result_shared:"Shared",
+                hint_used:"Hints", restarted:"Restarts" };
+  var out = document.getElementById("out");
+
+  fetch("/.netlify/functions/stats", { cache: "no-store" })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.error) { out.textContent = "Error: " + data.error; return; }
+      var days = Object.keys(data).sort().reverse();
+      if (!days.length) { out.textContent = "No events recorded yet."; return; }
+
+      var totals = {};
+      var h = '<table><thead><tr><th>Day</th>';
+      COLS.forEach(function (c) { h += "<th>" + LABEL[c] + "</th>"; });
+      h += "</tr></thead><tbody>";
+
+      days.forEach(function (d) {
+        h += "<tr><td>" + d + "</td>";
+        COLS.forEach(function (c) {
+          var v = data[d][c] || 0;
+          totals[c] = (totals[c] || 0) + v;
+          h += "<td>" + (v || "-") + "</td>";
+        });
+        h += "</tr>";
+      });
+
+      h += "</tbody><tfoot><tr><td>Total</td>";
+      COLS.forEach(function (c) { h += "<td>" + (totals[c] || 0) + "</td>"; });
+      h += "</tr></tfoot></table>";
+
+      out.className = "";
+      out.innerHTML = h;
+    })
+    .catch(function (e) { out.textContent = "Could not load stats: " + e; });
+})();
+</script>
+</body>
+</html>
