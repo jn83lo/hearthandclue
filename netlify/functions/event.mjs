@@ -12,11 +12,11 @@ export default async (req) => {
   try {
     body = await req.json();
   } catch (e) {
-    return new Response("", { status: 204 });
+    return new Response(null, { status: 204 });
   }
 
   const name = typeof body.name === "string" ? body.name : "";
-  if (ALLOWED.indexOf(name) === -1) return new Response("", { status: 204 });
+  if (ALLOWED.indexOf(name) === -1) return new Response(null, { status: 204 });
 
   const day = new Date().toISOString().slice(0, 10);
   const store = getStore("clue-events");
@@ -29,5 +29,5 @@ export default async (req) => {
     // Never let analytics break the page.
   }
 
-  return new Response("", { status: 204 });
+  return new Response(null, { status: 204 });
 };
