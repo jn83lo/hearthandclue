@@ -1,0 +1,8 @@
+{
+  "name": "hearthandclue",
+  "private": true,
+  "description": "The Daily Clue - site and Netlify functions",
+  "dependencies": {
+    "@netlify/blobs": "*"
+  }
+}
