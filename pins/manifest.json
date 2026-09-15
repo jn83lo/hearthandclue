@@ -1,22 +1,4 @@
 {
- "257": {
-  "date": "2026-09-14",
-  "image": "/pins/257.png",
-  "note": "Old houses hold old stories",
-  "subject": "History",
-  "title": "Under the Thatch",
-  "url": null,
-  "words": [
-   "HISTORY",
-   "STORIES",
-   "ANCIENT",
-   "PAST",
-   "HERITAGE",
-   "LEGACY",
-   "OLD",
-   "MEMORIES"
-  ]
- },
  "258": {
   "date": "2026-09-15",
   "image": "/pins/258.png",
@@ -537,6 +519,24 @@
    "BEGIN",
    "NEW",
    "START"
+  ]
+ },
+ "287": {
+  "date": "2026-10-14",
+  "image": "/pins/287.png",
+  "note": "They return every year like promises kept",
+  "subject": "Birdwatching",
+  "title": "On the Branch",
+  "url": null,
+  "words": [
+   "BIRDS",
+   "WINGS",
+   "FEATHERS",
+   "FLIGHT",
+   "WATCHING",
+   "TREES",
+   "SINGING",
+   "NATURE"
   ]
  }
 }
