@@ -1,22 +1,4 @@
 {
- "258": {
-  "date": "2026-09-15",
-  "image": "/pins/258.png",
-  "note": "Every journey starts with leaving",
-  "subject": "Travel",
-  "title": "On the Platform",
-  "url": null,
-  "words": [
-   "JOURNEY",
-   "ADVENTURE",
-   "EXPLORE",
-   "DISTANCE",
-   "PLACES",
-   "DISCOVER",
-   "TRAVEL",
-   "ESCAPE"
-  ]
- },
  "259": {
   "date": "2026-09-16",
   "image": "/pins/259.png",
@@ -537,6 +519,24 @@
    "TREES",
    "SINGING",
    "NATURE"
+  ]
+ },
+ "288": {
+  "date": "2026-10-15",
+  "image": "/pins/288.png",
+  "note": "Letting go looks beautiful",
+  "subject": "Autumn",
+  "title": "Leaves Turning",
+  "url": null,
+  "words": [
+   "LEAVES",
+   "HARVEST",
+   "COLORS",
+   "AUTUMN",
+   "COOL",
+   "CHANGE",
+   "FALLING",
+   "SEASON"
   ]
  }
 }
