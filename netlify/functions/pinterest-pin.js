@@ -4,7 +4,7 @@
 
 const SANDBOX = "https://api-sandbox.pinterest.com";
 const MANIFEST = "https://hearthandclue.com/pins/manifest.json";
-const BOARD_NAME = "Word Search Puzzle Books";
+const BOARD_NAME = "The Daily Clue (API demo)";
 
 function readCookie(header, name) {
   if (!header) return null;
@@ -66,29 +66,41 @@ exports.handler = async (event) => {
     };
   }
 
-  // sandbox boards are separate from production ones, so find or create one
+  // Sandbox boards are separate from production ones, but board NAMES still clash
+  // with the real account ("You already have a board with this name", code 58),
+  // so the demo uses its own name and falls back to a dated one on a clash.
   let boardId = null;
+  let boardNote = null;
   try {
-    const br = await fetch(`${SANDBOX}/v5/boards?page_size=25`, { headers: auth });
-    if (br.ok) {
+    let bookmark = null;
+    for (let page = 0; page < 5 && !boardId; page++) {
+      const q = `${SANDBOX}/v5/boards?page_size=100` + (bookmark ? `&bookmark=${encodeURIComponent(bookmark)}` : "");
+      const br = await fetch(q, { headers: auth });
+      if (!br.ok) { boardNote = `board list HTTP ${br.status}`; break; }
       const bj = await br.json();
       const hit = (bj.items || []).find((b) => b.name === BOARD_NAME);
       if (hit) boardId = hit.id;
+      bookmark = bj.bookmark;
+      if (!bookmark) break;
     }
-    if (!boardId) {
+    const tryNames = [BOARD_NAME, `${BOARD_NAME} ${today}`, `${BOARD_NAME} ${Date.now()}`];
+    for (const name of tryNames) {
+      if (boardId) break;
       const mk = await fetch(`${SANDBOX}/v5/boards`, {
         method: "POST",
         headers: { ...auth, "Content-Type": "application/json" },
-        body: JSON.stringify({ name: BOARD_NAME, privacy: "PUBLIC" }),
+        body: JSON.stringify({ name, privacy: "PUBLIC" }),
       });
       const mj = await mk.json();
-      if (!mk.ok) {
-        return {
-          statusCode: mk.status,
-          body: JSON.stringify({ error: "could not create board", detail: mj }),
-        };
-      }
-      boardId = mj.id;
+      if (mk.ok) { boardId = mj.id; break; }
+      if (mj && mj.code === 58) continue; // name clash, try the next name
+      return {
+        statusCode: mk.status,
+        body: JSON.stringify({ error: "could not create board", detail: mj, boardNote }),
+      };
+    }
+    if (!boardId) {
+      return { statusCode: 500, body: JSON.stringify({ error: "no usable board name", boardNote }) };
     }
   } catch (err) {
     return { statusCode: 502, body: JSON.stringify({ error: `boards: ${err}` }) };
