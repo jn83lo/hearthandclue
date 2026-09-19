@@ -1,22 +1,4 @@
 {
- "261": {
-  "date": "2026-09-18",
-  "image": "/pins/261.png",
-  "note": "Treasures live second lives",
-  "subject": "Collecting",
-  "title": "The Auction Block",
-  "url": null,
-  "words": [
-   "TREASURES",
-   "ANTIQUES",
-   "VINTAGE",
-   "COLLECT",
-   "FINDS",
-   "VALUE",
-   "RARE",
-   "PRECIOUS"
-  ]
- },
  "262": {
   "date": "2026-09-19",
   "image": "/pins/262.png",
@@ -537,6 +519,24 @@
    "JOURNEY",
    "ROAD",
    "MEMORY"
+  ]
+ },
+ "291": {
+  "date": "2026-10-18",
+  "image": "/pins/291.png",
+  "note": "Word by word, across the distance",
+  "subject": "Correspondence",
+  "title": "Letters in the Blue Envelope",
+  "url": null,
+  "words": [
+   "LETTER",
+   "MAIL",
+   "ENVELOPE",
+   "STAMPS",
+   "DISTANT",
+   "WORDS",
+   "HEART",
+   "WAITING"
   ]
  }
 }
