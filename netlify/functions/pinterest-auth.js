@@ -34,10 +34,13 @@ exports.handler = async (event) => {
 
   const basic = Buffer.from(`${appId}:${appSecret}`).toString("base64");
 
-  // Token exchange always goes to the production host, even on Trial access.
+  // Trial access: the code must be exchanged at the SANDBOX token endpoint, or the
+  // sandbox rejects the token with "Authentication failed" (code 2). Verified
+  // 19 Sept 2026 against developers.pinterest.com/docs/developer-tools/sandbox/.
+  // Switch this to https://api.pinterest.com once Standard access is granted.
   let tokenRes, tokenJson;
   try {
-    tokenRes = await fetch("https://api.pinterest.com/v5/oauth/token", {
+    tokenRes = await fetch(`${SANDBOX}/v5/oauth/token`, {
       method: "POST",
       headers: {
         Authorization: `Basic ${basic}`,
