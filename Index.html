@@ -288,6 +288,8 @@
     return path.map(function (i) { return puzzle.grid[Math.floor(i / SIZE)][i % SIZE]; }).join("");
   }
 
+  var firstWordSent = false, firstAttemptSent = false;
+
   function commit(path) {
     if (!path || path.length < 2) return false;
     var word = letters(path);
@@ -295,6 +297,7 @@
     var hit = remaining().filter(function (w) { return w === word || w === reversed; })[0];
     if (!hit) return false;
     found[hit] = path.slice();
+    if (!firstWordSent) { firstWordSent = true; track("first_word", { issue: issueNo }); }
     say(hit + " found. " + remaining().length + " to go.");
     if (remaining().length === 0) finish();
     return true;
@@ -485,7 +488,7 @@
       else {
         var p = pathBetween(anchor, i);
         if (!p) { say("Words run in a straight line. Try again."); }
-        else { current = p; if (!commit(p)) say("That is not one of today's words."); }
+        else { current = p; if (!firstAttemptSent) { firstAttemptSent = true; track("first_attempt", { issue: issueNo }); } if (!commit(p)) say("That is not one of today's words."); }
         anchor = null; current = [];
       }
       if (!complete) paint();
