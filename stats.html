@@ -30,9 +30,10 @@
 </div>
 <script>
 (function () {
-  var COLS = ["visit", "puzzle_completed", "result_shared", "hint_used", "restarted"];
-  var LABEL = { visit:"Visits", puzzle_completed:"Solved", result_shared:"Shared",
-                hint_used:"Hints", restarted:"Restarts" };
+  var COLS = ["visit", "first_attempt", "first_word", "puzzle_completed", "hint_used", "restarted", "result_shared"];
+  var LABEL = { visit:"Visits", first_attempt:"Tried", first_word:"1st word",
+                puzzle_completed:"Solved", hint_used:"Hints", restarted:"Restarts",
+                result_shared:"Shared" };
   var out = document.getElementById("out");
 
   fetch("/.netlify/functions/stats", { cache: "no-store" })
