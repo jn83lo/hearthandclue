@@ -1,22 +1,4 @@
 {
- "267": {
-  "date": "2026-09-24",
-  "image": "/pins/267.png",
-  "note": "Word by word, across the distance",
-  "subject": "Correspondence",
-  "title": "Letters in the Blue Envelope",
-  "url": null,
-  "words": [
-   "LETTER",
-   "MAIL",
-   "ENVELOPE",
-   "STAMPS",
-   "DISTANT",
-   "WORDS",
-   "HEART",
-   "WAITING"
-  ]
- },
  "268": {
   "date": "2026-09-25",
   "image": "/pins/268.png",
@@ -537,6 +519,24 @@
    "PATTERN",
    "WOOL",
    "ROWS"
+  ]
+ },
+ "297": {
+  "date": "2026-10-24",
+  "image": "/pins/297.png",
+  "note": "Where the river knows your rhythm",
+  "subject": "Fishing",
+  "title": "The Fly Cast",
+  "url": null,
+  "words": [
+   "FISHING",
+   "RIVER",
+   "TROUT",
+   "CAST",
+   "FLIES",
+   "WATERS",
+   "REEL",
+   "CATCH"
   ]
  }
 }
