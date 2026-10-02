@@ -1,22 +1,4 @@
 {
- "274": {
-  "date": "2026-10-01",
-  "image": "/pins/274.png",
-  "note": "Coffee cools slower when you're not in a hurry",
-  "subject": "Devotional",
-  "title": "Breakfast on the Porch",
-  "url": null,
-  "words": [
-   "PRAYER",
-   "FAITH",
-   "PEACE",
-   "GRACE",
-   "SPIRIT",
-   "SOUL",
-   "LOVE",
-   "HOPE"
-  ]
- },
  "275": {
   "date": "2026-10-02",
   "image": "/pins/275.png",
@@ -92,19 +74,19 @@
  "279": {
   "date": "2026-10-06",
   "image": "/pins/279.png",
-  "note": "Not all puzzles solve themselves",
-  "subject": "Mystery #3",
-  "title": "Midnight Garden",
-  "url": null,
+  "note": "Four suspects, and one of them is lying",
+  "subject": "Murder Mystery",
+  "title": "The Missing Alibi",
+  "url": "https://etsy.com/listing/4587074636",
   "words": [
-   "GARDEN",
-   "MIDNIGHT",
-   "MYSTERY",
-   "SHADOWS",
-   "HIDDEN",
-   "SECRETS",
-   "PUZZLE",
-   "SOLVE"
+   "ALIBI",
+   "MOTIVE",
+   "SUSPECT",
+   "WITNESS",
+   "INSPECTOR",
+   "VERDICT",
+   "BUTLER",
+   "SLEUTH"
   ]
  },
  "280": {
@@ -524,6 +506,24 @@
  "303": {
   "date": "2026-10-30",
   "image": "/pins/303.png",
+  "note": "One night to dress up and find what's hiding",
+  "subject": "Halloween",
+  "title": "The Porch Light",
+  "url": "https://etsy.com/listing/4551703062",
+  "words": [
+   "COSTUME",
+   "MASK",
+   "CANDY",
+   "PUMPKIN",
+   "NIGHT",
+   "TRICK",
+   "TREAT",
+   "SPOOKY"
+  ]
+ },
+ "304": {
+  "date": "2026-10-31",
+  "image": "/pins/304.png",
   "note": "One night to dress up and find what's hiding",
   "subject": "Halloween",
   "title": "The Porch Light",
