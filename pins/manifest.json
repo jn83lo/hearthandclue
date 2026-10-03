@@ -1,22 +1,4 @@
 {
- "275": {
-  "date": "2026-10-02",
-  "image": "/pins/275.png",
-  "note": "Every word carries someone else's world",
-  "subject": "Reading",
-  "title": "Pages Turned",
-  "url": null,
-  "words": [
-   "BOOKS",
-   "PAGES",
-   "STORIES",
-   "READING",
-   "FICTION",
-   "AUTHOR",
-   "PLOT",
-   "ADVENTURE"
-  ]
- },
  "276": {
   "date": "2026-10-03",
   "image": "/pins/276.png",
@@ -537,6 +519,24 @@
    "TRICK",
    "TREAT",
    "SPOOKY"
+  ]
+ },
+ "305": {
+  "date": "2026-11-01",
+  "image": "/pins/305.png",
+  "note": "Old houses hold old stories",
+  "subject": "History",
+  "title": "Under the Thatch",
+  "url": null,
+  "words": [
+   "HISTORY",
+   "STORIES",
+   "ANCIENT",
+   "PAST",
+   "HERITAGE",
+   "LEGACY",
+   "OLD",
+   "MEMORIES"
   ]
  }
 }
