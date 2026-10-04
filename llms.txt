@@ -1,0 +1,17 @@
+# The Daily Clue
+
+> A free daily word search puzzle at https://hearthandclue.com/. Every day there is one new 10x10 grid hiding eight words on a theme, and everyone gets the same puzzle that day. No login, no ads, nothing to install.
+
+The Daily Clue is made by Hearth & Clue, which also sells printable word search and puzzle books.
+
+## How it works
+
+- A new puzzle appears at midnight in the player's own time zone.
+- Words run in straight lines: across, down or diagonally, forwards or backwards.
+- Players drag across a word to mark it, can reveal a word if stuck, and can share their result when finished.
+- There are 30 themes, including camping, golf, quilting, gardening, fishing and cozy mysteries, with specials for Halloween, Christmas and Valentine's Day.
+
+## Links
+
+- [Play today's puzzle](https://hearthandclue.com/)
+- [Hearth & Clue printable puzzle books on Etsy](https://hearthandclue.etsy.com)
