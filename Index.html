@@ -115,6 +115,9 @@
 
   .about { margin-top:40px; padding-top:20px; border-top:1px solid var(--rule); font-size:13px; color:#6C665E; text-align:center; }
   .about a { color:var(--oxblood); }
+  .about h2 { font-family:"Fraunces",Georgia,serif; font-size:17px; font-weight:600; color:var(--oxblood); margin-bottom:8px; line-height:1.2; }
+  .about p { margin:0 auto 10px; max-width:440px; text-wrap:pretty; }
+  .about p:last-child { margin-bottom:0; }
   .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:24px; background:var(--green); color:#fff; padding:10px 18px; border-radius:3px; font-size:13px; z-index:300; }
 </style>
 </head>
@@ -128,10 +131,13 @@
     <p class="issue" id="issue"></p>
   </header>
   <main id="app"></main>
-  <p class="about">
-    One puzzle a day, the same for everyone, from
-    <a href="https://hearthandclue.etsy.com" target="_blank" rel="noopener">Hearth&nbsp;&amp;&nbsp;Clue</a>.
-  </p>
+  <section class="about" aria-labelledby="about-title">
+    <h2 id="about-title">About The Daily Clue</h2>
+    <p>A free word search, new every day. Each puzzle is a 10&times;10 grid hiding eight words on one theme, and everyone gets the same puzzle that day. The next one appears at midnight, wherever you are.</p>
+    <p>Words run in straight lines: across, down or diagonally, forwards or backwards. Drag across a word to mark it, or use <em>Reveal a word</em> if you&rsquo;re stuck. When you finish, you can share your result.</p>
+    <p>Themes rotate through camping, golf, quilting, gardening, fishing, cozy mysteries and more, with specials for Halloween, Christmas and Valentine&rsquo;s Day. No login, no ads, nothing to install.</p>
+    <p>Made by <a href="https://hearthandclue.etsy.com" target="_blank" rel="noopener">Hearth&nbsp;&amp;&nbsp;Clue</a>, makers of printable puzzle books.</p>
+  </section>
 </div>
 <div aria-live="polite" class="sr-only" id="live"></div>
 
@@ -452,6 +458,7 @@
     function end() {
       if (!dragging) return;
       dragging = false;
+      if (!firstAttemptSent) { firstAttemptSent = true; track("first_attempt", { issue: issueNo }); }
       var matched = commit(current);
       current = []; anchor = null;
       if (!complete) paint();
