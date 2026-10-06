@@ -156,6 +156,14 @@ def post(token, payload):
 
 
 def main():
+    # RETIRED 6 Oct 2026. Posting moved to the Netlify scheduled function
+    # netlify/functions/pinterest-daily.mjs, which renews its own sign-in and
+    # checks the board before posting. The PINTEREST_TOKEN secret this script
+    # used cannot renew itself, and a second poster risks double pins, so this
+    # now does nothing. Check hearthandclue.com/.netlify/functions/pinterest-status
+    print("post_pin.py is retired - the Netlify function pinterest-daily posts the pin")
+    return
+
     pins_dir = sys.argv[1] if len(sys.argv) > 1 else "pins"
     token = os.environ.get("PINTEREST_TOKEN", "").strip()
     board = os.environ.get("PINTEREST_BOARD", DEFAULT_BOARD).strip()

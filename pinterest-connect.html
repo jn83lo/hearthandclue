@@ -52,8 +52,9 @@
 
   <p class="note">
     Access tokens are exchanged and held server-side and are never readable by
-    this page. Pin creation runs against the Pinterest API sandbox while this app
-    is on Trial access.
+    this page. Once connected, the day's puzzle pin is posted automatically; the
+    button above is only for posting it by hand, and does nothing if today's pin
+    is already on the board.
   </p>
 </main>
 
@@ -85,10 +86,12 @@
     fetch("/.netlify/functions/pinterest-pin", { method: "POST" })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {
-        var id = res.j && res.j.response && res.j.response.id;
-        s2.innerHTML = res.ok && id
-          ? '<span class="ok">Pin created. ID ' + id + "</span>"
-          : '<span class="err">Failed</span>';
+        var j = res.j || {};
+        s2.innerHTML = j.status === "posted"
+          ? '<span class="ok">Pin created. ID ' + j.pin_id + "</span>"
+          : j.status === "skipped"
+            ? '<span class="ok">Nothing to do - today\'s pin is already on the board.</span>'
+            : '<span class="err">Failed</span>';
         out.textContent = JSON.stringify(res.j, null, 2);
         out.classList.remove("hide");
       })
@@ -115,10 +118,10 @@
         }
         s1.innerHTML = '<span class="ok">Connected</span>';
         var a = document.getElementById("acct");
-        a.innerHTML = (res.j.username ? "Account: <strong>" + res.j.username + "</strong>" : "Account connected") +
-          (res.j.boards && res.j.boards.length
-            ? "<ul>" + res.j.boards.map(function (b) { return "<li>" + b.name + "</li>"; }).join("") + "</ul>"
-            : "");
+        a.textContent = res.j.automation
+          ? "Daily posting is on. You do not need to do anything else."
+          : "Daily posting is NOT on: " + (res.j.automation_note || "unknown reason");
+        a.className = "status " + (res.j.automation ? "ok" : "err");
         document.getElementById("step2").classList.remove("hide");
         history.replaceState({}, "", REDIRECT);
       })
