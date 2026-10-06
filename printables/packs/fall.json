@@ -1,0 +1,385 @@
+{
+  "slug": "fall-word-search",
+  "name": "Fall Word Searches",
+  "season": "Fall",
+  "year": 2026,
+  "released": "2026-10-06",
+  "seed": "fall-2026-free",
+  "motif": "fall",
+  "book": {
+    "url": "https://www.etsy.com/listing/4551703062",
+    "label": "the Halloween book",
+    "blurb": "Our Halloween word search book has more large-print puzzles with answer keys, as a PDF you print at home.",
+    "until": "2026-10-31",
+    "after": {
+      "url": "https://hearthandclue.etsy.com",
+      "label": "our puzzle books",
+      "blurb": "Hearth & Clue makes large-print puzzle books you print at home: word searches, sudoku and cozy mysteries."
+    }
+  },
+  "plug": {
+    "text": "Liked these? There is a new free puzzle every day.",
+    "link": "hearthandclue.com"
+  },
+  "related": [
+    {
+      "url": "/halloween-word-search/",
+      "title": "Free printable Halloween word searches",
+      "blurb": "Ten more in the same large print, from trick-or-treating to things that go bump."
+    }
+  ],
+  "puzzles": [
+    {
+      "slug": "turning-trees",
+      "level": "easy",
+      "title": "Turning Trees",
+      "search": "Autumn Trees Word Search",
+      "note": "The maple went first every year, as if it couldn't wait.",
+      "words": [
+        "ASPEN",
+        "BEECH",
+        "BIRCH",
+        "DOGWOOD",
+        "GINKGO",
+        "HICKORY",
+        "LARCH",
+        "MAPLE",
+        "POPLAR",
+        "SUMAC"
+      ]
+    },
+    {
+      "slug": "soup-season",
+      "level": "easy",
+      "title": "Soup Season",
+      "search": "Fall Soup Word Search",
+      "note": "Whatever was in the fridge, and a bay leaf for dignity.",
+      "words": [
+        "BISQUE",
+        "BROTH",
+        "CHILI",
+        "CHOWDER",
+        "CROUTONS",
+        "LADLE",
+        "LENTIL",
+        "NOODLE",
+        "SIMMER",
+        "STEW"
+      ]
+    },
+    {
+      "slug": "knit-and-purl",
+      "level": "easy",
+      "title": "Knit and Purl",
+      "search": "Knitting Word Search",
+      "note": "It started as a scarf and, eventually, finished as one.",
+      "words": [
+        "BEANIE",
+        "CABLE",
+        "CARDIGAN",
+        "MITTEN",
+        "NEEDLES",
+        "PATTERN",
+        "SKEIN",
+        "STITCH",
+        "TASSEL",
+        "YARN"
+      ]
+    },
+    {
+      "slug": "ready-for-winter",
+      "level": "easy",
+      "title": "Getting Ready for Winter",
+      "search": "Fall Animals Word Search",
+      "note": "The squirrel buried forty acorns and found nine.",
+      "words": [
+        "ACORNS",
+        "BEAR",
+        "BEAVER",
+        "BURROW",
+        "CHIPMUNK",
+        "HIBERNATE",
+        "NEST",
+        "SQUIRREL",
+        "STASH",
+        "WOODCHUCK"
+      ]
+    },
+    {
+      "slug": "apple-pie-day",
+      "level": "medium",
+      "title": "Apple Pie Day",
+      "search": "Apple Pie Word Search",
+      "note": "The lattice was ambitious. Nobody minded.",
+      "words": [
+        "APPLES",
+        "BUTTER",
+        "CINNAMON",
+        "CRUMBLE",
+        "CRUST",
+        "DOUGH",
+        "FLOUR",
+        "LATTICE",
+        "NUTMEG",
+        "OVEN",
+        "PEELER",
+        "SLICE",
+        "SUGAR",
+        "VANILLA"
+      ]
+    },
+    {
+      "slug": "football-saturday",
+      "level": "medium",
+      "title": "Football Saturday",
+      "search": "Football Word Search",
+      "note": "Grandpa coached from the couch and was never once wrong.",
+      "words": [
+        "BLEACHERS",
+        "FUMBLE",
+        "HALFTIME",
+        "HUDDLE",
+        "INTERCEPTION",
+        "KICKOFF",
+        "PENNANT",
+        "PLAYBOOK",
+        "PUNT",
+        "QUARTERBACK",
+        "REFEREE",
+        "STADIUM",
+        "TAILGATE",
+        "TOUCHDOWN"
+      ]
+    },
+    {
+      "slug": "county-fair",
+      "level": "medium",
+      "title": "The County Fair",
+      "search": "County Fair Word Search",
+      "note": "The pie judges took their job seriously, and slowly.",
+      "words": [
+        "CAROUSEL",
+        "GRANDSTAND",
+        "JUDGES",
+        "LEMONADE",
+        "LIVESTOCK",
+        "PICKLES",
+        "POULTRY",
+        "PRESERVES",
+        "PRIZE",
+        "QUILTS",
+        "RIBBON",
+        "RODEO",
+        "TICKETS",
+        "TRACTOR"
+      ]
+    },
+    {
+      "slug": "scenic-drive",
+      "level": "hard",
+      "title": "The Scenic Drive",
+      "search": "Fall Foliage Word Search",
+      "note": "Every overlook needed a photo. There were a lot of overlooks.",
+      "words": [
+        "BRIDGE",
+        "BROOK",
+        "CAMERA",
+        "DETOUR",
+        "FARMHOUSE",
+        "FOLIAGE",
+        "HILLSIDE",
+        "LOOKOUT",
+        "OVERLOOK",
+        "PICNIC",
+        "POSTCARD",
+        "SCENIC",
+        "STEEPLE",
+        "SYRUP",
+        "THERMOS",
+        "VALLEY",
+        "VILLAGE",
+        "WINDING"
+      ]
+    },
+    {
+      "slug": "flying-south",
+      "level": "hard",
+      "title": "Flying South",
+      "search": "Bird Migration Word Search",
+      "note": "The geese argued about directions the whole way.",
+      "words": [
+        "CRANE",
+        "FLOCK",
+        "FLYWAY",
+        "FORMATION",
+        "GEESE",
+        "HAWK",
+        "HONKING",
+        "MIGRATE",
+        "NAVIGATE",
+        "ORIOLE",
+        "PELICAN",
+        "PLOVER",
+        "ROBIN",
+        "STOPOVER",
+        "SWALLOW",
+        "TAILWIND",
+        "WARBLER",
+        "WETLAND"
+      ]
+    },
+    {
+      "slug": "autumn-garden",
+      "level": "hard",
+      "title": "The Autumn Garden",
+      "search": "Fall Garden Word Search",
+      "note": "Plant the bulbs now, forget where, and let spring surprise you.",
+      "words": [
+        "ASTERS",
+        "BULBS",
+        "COMPOST",
+        "DAFFODIL",
+        "GOURDS",
+        "HARVEST",
+        "HYDRANGEA",
+        "KALE",
+        "MULCH",
+        "MUMS",
+        "PANSY",
+        "PRUNE",
+        "RAKE",
+        "SQUASH",
+        "SUNFLOWER",
+        "TROWEL",
+        "TULIPS",
+        "WHEELBARROW"
+      ]
+    }
+  ],
+  "pinterest": {
+    "board_id": "300615412567055159",
+    "pins": [
+      {
+        "id": "hub-1",
+        "date": "2026-10-09",
+        "target": "hub",
+        "scheme": "cream",
+        "kind": "hub"
+      },
+      {
+        "id": "soup-season",
+        "date": "2026-10-11",
+        "target": "soup-season",
+        "scheme": "pumpkin"
+      },
+      {
+        "id": "hub-photo",
+        "date": "2026-10-13",
+        "target": "hub",
+        "kind": "hub3",
+        "photo": "barnwood-cider"
+      },
+      {
+        "id": "apple-pie-day",
+        "date": "2026-10-15",
+        "target": "apple-pie-day",
+        "scheme": "harvest"
+      },
+      {
+        "id": "seniors",
+        "date": "2026-10-17",
+        "target": "hub",
+        "scheme": "sage",
+        "kind": "seniors"
+      },
+      {
+        "id": "scenic-drive-photo",
+        "date": "2026-10-19",
+        "target": "scenic-drive",
+        "photo": "maple-quilt"
+      },
+      {
+        "id": "football-saturday",
+        "date": "2026-10-21",
+        "target": "football-saturday",
+        "scheme": "cream"
+      },
+      {
+        "id": "seniors-photo",
+        "date": "2026-10-23",
+        "target": "hub",
+        "kind": "seniors2",
+        "photo": "plaid-acorns"
+      },
+      {
+        "id": "turning-trees",
+        "date": "2026-10-25",
+        "target": "turning-trees",
+        "scheme": "harvest"
+      },
+      {
+        "id": "scenic-drive",
+        "date": "2026-10-27",
+        "target": "scenic-drive",
+        "scheme": "sage"
+      },
+      {
+        "id": "easy-photo",
+        "date": "2026-10-28",
+        "target": "knit-and-purl",
+        "kind": "easy2",
+        "photo": "yarn-tea"
+      },
+      {
+        "id": "county-fair",
+        "date": "2026-10-29",
+        "target": "county-fair",
+        "scheme": "pumpkin"
+      },
+      {
+        "id": "hub-2",
+        "date": "2026-10-30",
+        "target": "hub",
+        "scheme": "harvest",
+        "kind": "hub2"
+      },
+      {
+        "id": "ready-for-winter",
+        "date": "2026-10-31",
+        "target": "ready-for-winter",
+        "scheme": "cream"
+      },
+      {
+        "id": "flying-south",
+        "date": "2026-11-01",
+        "target": "flying-south",
+        "scheme": "sage"
+      },
+      {
+        "id": "apple-pie-day-photo",
+        "date": "2026-11-02",
+        "target": "apple-pie-day",
+        "photo": "apple-basket"
+      },
+      {
+        "id": "knit-and-purl",
+        "date": "2026-11-03",
+        "target": "knit-and-purl",
+        "scheme": "pumpkin"
+      },
+      {
+        "id": "autumn-garden",
+        "date": "2026-11-04",
+        "target": "autumn-garden",
+        "scheme": "cream"
+      },
+      {
+        "id": "easy",
+        "date": "2026-11-06",
+        "target": "hub",
+        "scheme": "sage",
+        "kind": "easy"
+      }
+    ]
+  }
+}

@@ -79,13 +79,33 @@ def _head(title, desc, canonical, image, ld):
 
 
 def _book(pack):
+    """The "want more?" box. A book may say "until" a date (the visitor's own
+    date, read by printables.js) and name what to show "after" it; without
+    JavaScript the first box stays and the second stays hidden."""
     b = pack["book"]
-    return """<section class="book" aria-labelledby="book-h">
-<h2 id="book-h">Want more than ten?</h2>
+    box = """<section class="book" aria-labelledby="book-h%(n)s"%(when)s>
+<h2 id="book-h%(n)s">Want more than ten?</h2>
 <p>%(blurb)s</p>
 <div class="btn-row"><a class="btn btn-primary" href="%(u)s" target="_blank" rel="noopener" data-ev="print_book">See %(label)s on Etsy</a></div>
 </section>
-""" % {"blurb": esc(b["blurb"]), "u": esc(b["url"]), "label": esc(b["label"])}
+"""
+    if not b.get("until"):
+        return box % {"n": "", "when": "", "blurb": esc(b["blurb"]), "u": esc(b["url"]), "label": esc(b["label"])}
+    later = b["after"]
+    return (box % {"n": "", "when": ' data-until="%s"' % esc(b["until"]), "blurb": esc(b["blurb"]), "u": esc(b["url"]),
+                   "label": esc(b["label"])}
+            + box % {"n": "-2", "when": ' data-after="%s" hidden' % esc(b["until"]), "blurb": esc(later["blurb"]),
+                     "u": esc(later["url"]), "label": esc(later["label"])})
+
+
+def _related(pack):
+    """Links to the other free packs."""
+    items = pack.get("related") or []
+    if not items:
+        return ""
+    return ('<section class="plain" aria-labelledby="more-h">\n<h2 id="more-h">More free printables</h2>\n'
+            + "".join('<p><a href="%s">%s</a>. %s</p>\n' % (esc(r["url"]), esc(r["title"]), esc(r["blurb"])) for r in items)
+            + "</section>\n")
 
 
 def _foot(pack):
@@ -125,10 +145,11 @@ def hub(pack):
     total = len(pack["puzzles"])
     u = urls(pack)
     season = pack["season"]
+    low = mid_sentence(season)    # the season in the middle of a sentence: "fall", but "Halloween"
     title = "Free Printable %s Word Searches - Large Print, %d Puzzles | Hearth & Clue" % (season, total)
     sizes = sorted({PROMISED[p["level"]] for p in pack["puzzles"]})
     desc = ("%d free printable %s word searches in large print: %d to %d point letters, three levels, "
-            "answer keys, US Letter and A4. No sign-up, no ads." % (total, season, sizes[0], sizes[-1]))
+            "answer keys, US Letter and A4. No sign-up, no ads." % (total, low, sizes[0], sizes[-1]))
     ld = {"@context": "https://schema.org", "@type": "CollectionPage",
           "name": "Free Printable %s Word Searches (Large Print)" % season, "description": desc,
           "url": ORIGIN + u["page"], "isAccessibleForFree": True,
@@ -137,14 +158,14 @@ def hub(pack):
                       for p in pack["puzzles"]]}
     save = ("https://www.pinterest.com/pin/create/button/?url=%s&media=%s&description=%s"
             % (quote(ORIGIN + u["page"], safe=""), quote(ORIGIN + u["pin"], safe=""),
-               quote("Free printable %s word searches - large print, %d puzzles with answer keys" % (season, total), safe="")))
+               quote("Free printable %s word searches - large print, %d puzzles with answer keys" % (low, total), safe="")))
     out = [_head(title, desc, ORIGIN + u["page"], ORIGIN + u["og"], ld)]
     out.append("""<main id="main">
 <header class="top">
 <p class="kicker">Free &middot; Large print &middot; Answer keys</p>
 <h1>Free Printable %(season)s Word Searches</h1>
 <div class="rule"></div>
-<p class="lede">%(total)d %(season)s word searches you can print right now. No sign-up, no ads, and no clip art eating your ink.</p>
+<p class="lede">%(total)d %(low)s word searches you can print right now. No sign-up, no ads, and no clip art eating your ink.</p>
 <div class="btn-row">
 <a class="btn btn-primary" href="%(letter)s" data-ev="print_pdf">All %(total)d puzzles: US Letter<small>PDF, %(pages)d pages with answers</small></a>
 <a class="btn btn-primary" href="%(a4)s" data-ev="print_pdf">All %(total)d puzzles: A4<small>PDF, %(pages)d pages with answers</small></a>
@@ -161,7 +182,7 @@ def hub(pack):
 <li><strong>Checked by computer.</strong> Every word is in its grid exactly once.</li>
 <li><strong>Made to be read.</strong> Set in Atkinson Hyperlegible, a typeface designed for readers with low vision.</li>
 </ul>
-""" % {"season": esc(season), "total": total, "letter": esc(u["letter"]), "a4": esc(u["a4"]),
+""" % {"season": esc(season), "low": esc(low), "total": total, "letter": esc(u["letter"]), "a4": esc(u["a4"]),
        "pages": 1 + total + -(-total // 2), "wl": int(WORD_PT), "save": esc(save),
        "sz": esc(", ".join(str(s) for s in sorted(sizes, reverse=True)[:-1]) + " or " + str(sizes[0]))})
     for level in ("easy", "medium", "hard"):
@@ -175,13 +196,14 @@ def hub(pack):
         out.extend(_card(pack, p) for p in group)
         out.append("</div>\n")
     out.append(_book(pack))
+    out.append(_related(pack))
     out.append("""<section class="plain">
 <h2>Using them with a group</h2>
 <p>You are welcome to print and photocopy these pages for a classroom, a library, a club or a care home. Please do not sell them or post the files somewhere else; link to this page instead.</p>
 <h2>Questions</h2>
 <dl class="faq">
 <dt>How do I print one?</dt>
-<dd>Choose a paper size and the PDF opens. Print it at 100%% (sometimes called &ldquo;actual size&rdquo;) so the letters stay the size we promise.</dd>
+<dd>Choose a paper size and the PDF opens. Print it at 100% (sometimes called &ldquo;actual size&rdquo;) so the letters stay the size we promise.</dd>
 <dt>Is it really free?</dt>
 <dd>Yes. There is no email address to give and no account to make.</dd>
 <dt>Where are the answers?</dt>
@@ -218,7 +240,7 @@ def puzzle(pack, puz, built, index):
     words = sorted(puz["words"])
     data = json.dumps({"grid": built["grid"], "words": words}, ensure_ascii=True, separators=(",", ":"))
     out = [_head(title, desc, ORIGIN + u["page"], ORIGIN + u["img"], ld)]
-    out.append("""<p class="crumb"><a href="%(hub)s">&larr; All %(total)d %(season)s word searches</a></p>
+    out.append("""<p class="crumb"><a href="%(hub)s">&larr; All %(total)d %(low)s word searches</a></p>
 <main id="main">
 <header class="top">
 <p class="kicker">Free printable &middot; Large print &middot; %(level)s</p>
@@ -251,7 +273,7 @@ def puzzle(pack, puz, built, index):
 %(prev)s
 %(next)s
 </nav>
-""" % {"hub": esc(hubu["page"]), "total": total, "season": esc(pack["season"]), "level": esc(spec["label"]),
+""" % {"hub": esc(hubu["page"]), "total": total, "low": esc(mid_sentence(pack["season"])), "level": esc(spec["label"]),
        "search": esc(puz["search"]), "note": esc(puz["note"]), "letter": esc(u["letter"]), "a4": esc(u["a4"]),
        "meta": esc(meta_line(puz)[0].upper() + meta_line(puz)[1:]), "rule": esc(spec["rule"]), "img": esc(u["img"]),
        "alt": esc("The %s puzzle page: a %d by %d grid of large letters with %d words listed underneath"

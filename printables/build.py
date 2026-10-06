@@ -63,6 +63,7 @@ def _photo_copy(pack, pin, scene):
     flat-colour pin for the same page, so the two are never taken for one."""
     total = len(pack["puzzles"])
     season = pack["season"]
+    low = mid_sentence(season)    # the season in the middle of a sentence: "fall", but "Halloween"
     kind = pin.get("kind", "puzzle")
     easy_pt = pdfs.PROMISED["easy"]
     if kind == "hub3":
@@ -71,25 +72,25 @@ def _photo_copy(pack, pin, scene):
                 "each with its answer key. US Letter and A4, black and white, no sign-up and no ads. "
                 "For adults, seniors, classrooms and care homes." % (season, total))
         alt = ("Two printed %s word search pages with large letters lying on %s, under the words %d Free Printables, "
-               "%s Word Searches, Large Print, 3 Levels, Answer Keys." % (season, scene, total, season))
+               "%s Word Searches, Large Print, 3 Levels, Answer Keys." % (low, scene, total, season))
     elif kind == "seniors2":
         title = "Free Large Print %s Word Search - Easy to Read, %d pt Letters" % (season, easy_pt)
         desc = ("A free large print %s word search that is easy to read: %d pt letters in a typeface designed for "
                 "low-vision readers, words across and down only, and an answer key. For seniors, care homes and activity "
                 "groups. US Letter and A4, black and white, no sign-up. %d free puzzles in three levels."
-                % (season, easy_pt, total))
+                % (low, easy_pt, total))
         alt = ("A printed %s word search page with very large letters lying on %s, under the words Free Printable, "
-               "Large Print %s Word Search, %d pt Letters, Easy, Answer Key." % (season, scene, season, easy_pt))
+               "Large Print %s Word Search, %d pt Letters, Easy, Answer Key." % (low, scene, season, easy_pt))
     elif kind == "easy2":
         puz = next(p for p in pack["puzzles"] if p["slug"] == pin["target"])
         title = "Easy %s Word Search for Kids and Beginners - Free Large Print Printable" % season
         desc = ("An easy %s word search for kids and beginners, free to print: large %d pt letters, %d words, and words "
                 "that only run across and down. Answer key included. US Letter and A4, black and white, no sign-up. "
                 "One of %d free %s word searches from Hearth & Clue."
-                % (season, easy_pt, len(puz["words"]), total, season))
+                % (low, easy_pt, len(puz["words"]), total, low))
         alt = ("A printed easy %s word search page titled %s with large letters lying on %s, under the words "
                "Free Printable, Easy %s Word Search, Across and Down Only, %d pt."
-               % (season, puz["title"], scene, season, easy_pt))
+               % (low, puz["title"], scene, season, easy_pt))
     else:
         puz = next(p for p in pack["puzzles"] if p["slug"] == pin["target"])
         spec = ws.LEVELS[puz["level"]]
@@ -98,7 +99,7 @@ def _photo_copy(pack, pin, scene):
         desc = ("Print this %s free. Large %d pt letters, %d words in a %d by %d grid, and the answer key on the second "
                 "page. %s US Letter and A4, black and white, no sign-up. One of %d free %s word searches from "
                 "Hearth & Clue." % (mid_sentence(puz["search"]), pt, len(puz["words"]), spec["size"], spec["size"],
-                                    spec["rule"], total, season))
+                                    spec["rule"], total, low))
         alt = ("A printed word search page titled %s lying on %s, under the words Free %s Printable, %s, Large Print, "
                "%d pt, Answer Key." % (puz["title"], scene, season, puz["search"], pt))
     return title, desc, alt
@@ -108,6 +109,7 @@ def pin_copy(pack, pin, photos=None):
     """Title, description and alt text for one pin, written the way people search."""
     total = len(pack["puzzles"])
     season = pack["season"]
+    low = mid_sentence(season)    # the season in the middle of a sentence: "fall", but "Halloween"
     kind = pin.get("kind", "puzzle")
     if pin.get("photo"):
         if pin["photo"] not in (photos or {}):
@@ -118,35 +120,36 @@ def pin_copy(pack, pin, photos=None):
             if len(text) > limit:
                 raise AssertionError("pin text over %d characters: %r" % (limit, text))
         return title, desc, alt
-    colour = {"night": "dark purple", "pumpkin": "orange", "cream": "cream"}[pin["scheme"]]
+    colour = {"night": "a dark purple", "pumpkin": "an orange", "cream": "a cream", "harvest": "a deep red",
+              "sage": "an olive green"}[pin["scheme"]]
     if kind == "hub":
         title = "Free Printable %s Word Searches - Large Print, %d Puzzles with Answers" % (season, total)
         desc = ("%d free printable %s word searches in large print (22 to 28 pt letters). Three levels from easy to hard, "
                 "an answer key for every puzzle, US Letter and A4, black and white. No sign-up and no ads. "
-                "Good for adults, seniors, classrooms and care homes." % (total, season))
-        alt = ("Three printed %s word search pages with large letters, fanned out on a %s background, under the words "
-               "%d Free Printables, %s Word Searches, Large Print, 3 Levels, Answer Keys." % (season, colour, total, season))
+                "Good for adults, seniors, classrooms and care homes." % (total, low))
+        alt = ("Three printed %s word search pages with large letters, fanned out on %s background, under the words "
+               "%d Free Printables, %s Word Searches, Large Print, 3 Levels, Answer Keys." % (low, colour, total, season))
     elif kind == "hub2":
         title = "%s Word Search Printables for Adults - Free, Large Print, 3 Levels" % season
         desc = ("%s word search printables for adults, free: %d large print puzzles (22 to 28 pt letters) in three levels, "
                 "from easy grids that only run across and down to hard ones that run in every direction. "
                 "Answer keys, US Letter and A4, black and white, no sign-up." % (season, total))
-        alt = ("Three printed %s word search pages with large letters, fanned out on a %s background, under the words "
-               "%d Free Printables, %s Word Searches, Large Print, 3 Levels, Answer Keys." % (season, colour, total, season))
+        alt = ("Three printed %s word search pages with large letters, fanned out on %s background, under the words "
+               "%d Free Printables, %s Word Searches, Large Print, 3 Levels, Answer Keys." % (low, colour, total, season))
     elif kind == "seniors":
         title = "Large Print %s Word Search for Seniors - Free Printable PDF" % season
         desc = ("Free large print %s word search for seniors: 28 pt letters, words that run across and down only, "
                 "nothing backwards or diagonal, and an answer key. Print on US Letter or A4, black and white, no sign-up. "
-                "%d free puzzles in three levels for care homes and activity groups." % (season, total))
-        alt = ("A printed %s word search page with very large letters on a %s background, under the words Free Printable, "
-               "Large Print %s Word Search, 28 pt Letters, Easy, Answer Key." % (season, colour, season))
+                "%d free puzzles in three levels for care homes and activity groups." % (low, total))
+        alt = ("A printed %s word search page with very large letters on %s background, under the words Free Printable, "
+               "Large Print %s Word Search, 28 pt Letters, Easy, Answer Key." % (low, colour, season))
     elif kind == "easy":
         title = "Easy %s Word Search Printable - Free, Large Print, Across and Down Only" % season
         desc = ("Easy %s word search printable, free: large 28 pt letters and words that only run across and down. "
                 "Answer key included, US Letter and A4, black and white, no sign-up. "
-                "Part of %d free %s word searches in three levels." % (season, total, season))
-        alt = ("Two printed easy %s word search pages with large letters on a %s background, under the words Free Printable, "
-               "Easy %s Word Search, Across and Down Only, 28 pt." % (season, colour, season))
+                "Part of %d free %s word searches in three levels." % (low, total, low))
+        alt = ("Two printed easy %s word search pages with large letters on %s background, under the words Free Printable, "
+               "Easy %s Word Search, Across and Down Only, 28 pt." % (low, colour, season))
     else:
         puz = next(p for p in pack["puzzles"] if p["slug"] == pin["target"])
         spec = ws.LEVELS[puz["level"]]
@@ -155,8 +158,8 @@ def pin_copy(pack, pin, photos=None):
         desc = ("Free printable %s in large print: %d words in a %d by %d grid with %d pt letters. %s "
                 "Answer key included, US Letter and A4, black and white, no sign-up. One of %d free %s word searches "
                 "from Hearth & Clue." % (mid_sentence(puz["search"]), len(puz["words"]), spec["size"], spec["size"], pt,
-                                          spec["rule"], total, season))
-        alt = ("A printed word search page titled %s with a %d by %d grid of large letters and a word list, on a %s "
+                                          spec["rule"], total, low))
+        alt = ("A printed word search page titled %s with a %d by %d grid of large letters and a word list, on %s "
                "background, under the words Free %s Printable, %s, Large Print, %d pt, Answer Key."
                % (puz["title"], spec["size"], spec["size"], colour, season, puz["search"], pt))
     for text, limit in ((title, 100), (desc, 500), (alt, 500)):
@@ -205,7 +208,8 @@ def make_pin(pack, pin, page_img, out_path, photos=None):
         art.photo_pin(out_path, os.path.join(HERE, "photos", pin["photo"] + ".jpg"), info.get("card", "cream"),
                       eyebrow, title, chip, imgs, foot, stack=info.get("stack"), foot=info.get("foot", "centre"))
     else:
-        art.pin(out_path, pin["scheme"], eyebrow, title, chip, imgs, foot, pumpkin=pumpkin)
+        art.pin(out_path, pin["scheme"], eyebrow, title, chip, imgs, foot, pumpkin=pumpkin,
+                motif=pack.get("motif", "halloween"))
 
 
 def sha(path):

@@ -1,0 +1,324 @@
+{
+ "checks": {
+  "grid_words_verified": 136,
+  "letter_sizes_pt": {
+   "grid": {
+    "easy": 28,
+    "hard": 22,
+    "medium": 24
+   },
+   "word_list": 18.0
+  },
+  "pack_a4": {
+   "answers": 10,
+   "pages": 16,
+   "puzzles": 10,
+   "words_checked": 136
+  },
+  "pack_letter": {
+   "answers": 10,
+   "pages": 16,
+   "puzzles": 10,
+   "words_checked": 136
+  },
+  "pages": 11,
+  "pdf_words_resolved": 544,
+  "pins": 19
+ },
+ "files": {
+  "fall-word-search/apple-pie-day/index.html": {
+   "bytes": 7222,
+   "sha256": "8da49d8265d804eeca2b989d1d4f2dc6e9c1000369e94a049c98322dffd46f98"
+  },
+  "fall-word-search/autumn-garden/index.html": {
+   "bytes": 7260,
+   "sha256": "b248fcbd10971e218e2059694580d93a384557f7c99108eade715d6d55462046"
+  },
+  "fall-word-search/county-fair/index.html": {
+   "bytes": 7255,
+   "sha256": "4c4d6c49250e0629340624dc16a55242774808268ff6da5bc5533c4214583f16"
+  },
+  "fall-word-search/flying-south/index.html": {
+   "bytes": 7326,
+   "sha256": "4600b23014b6bd782ef02c390c17b3fa21521b80a3db06986b534aeb53de3b06"
+  },
+  "fall-word-search/football-saturday/index.html": {
+   "bytes": 7306,
+   "sha256": "dd036cab16942d7f5fd34a7cd8e8f3570c74ae2b28e056a0f1e71f256086fe06"
+  },
+  "fall-word-search/img/apple-pie-day-s.png": {
+   "bytes": 37519,
+   "sha256": "d9085591f14203196f759bb446ae22941dcecbd317e3a2be734af0169409f1b4"
+  },
+  "fall-word-search/img/apple-pie-day.png": {
+   "bytes": 103756,
+   "sha256": "429dc3d43fad0710dd2d6ac1916ecd01410041468840c10d3027fc78317cd879"
+  },
+  "fall-word-search/img/autumn-garden-s.png": {
+   "bytes": 41771,
+   "sha256": "63ed19fd99d34c1512220bf7dabe4c174d339f773a2b2278c7d9868af1e723aa"
+  },
+  "fall-word-search/img/autumn-garden.png": {
+   "bytes": 115225,
+   "sha256": "1d084c2ac627b8432b5ff2e3e38e4774c05b408e32a78a09c928fc6cbd3cb556"
+  },
+  "fall-word-search/img/county-fair-s.png": {
+   "bytes": 39193,
+   "sha256": "76ae0119303d0406a270d85869ca5134f50730a73c116cc0f2fcc9c3302fc47d"
+  },
+  "fall-word-search/img/county-fair.png": {
+   "bytes": 108206,
+   "sha256": "fc28b1cd1f7b0904f007567065fc4c99c217b13cee86328117887fa148bca050"
+  },
+  "fall-word-search/img/flying-south-s.png": {
+   "bytes": 41092,
+   "sha256": "00c896ecf4bf3a568ec11f87a6b5db95eb112ba44ef82abfc2e7f07b92d44ca9"
+  },
+  "fall-word-search/img/flying-south.png": {
+   "bytes": 116596,
+   "sha256": "9ca37bef2e422a353012bfdff38643237792798ccf2552702933f2e026c48d51"
+  },
+  "fall-word-search/img/football-saturday-s.png": {
+   "bytes": 39758,
+   "sha256": "9db1bbe3e323b711b07699975fcbdb10a74e4b6712647aff85afa318b90e5d7b"
+  },
+  "fall-word-search/img/football-saturday.png": {
+   "bytes": 109581,
+   "sha256": "d25036a6f73d64ce26aba3d2705ea142280e647c00d87ee1ee3c02fa73c92e43"
+  },
+  "fall-word-search/img/knit-and-purl-s.png": {
+   "bytes": 32774,
+   "sha256": "2a29eb49e5fda516b1774bdb4ac88547e12b640ce398a0f3b64c66a53a16bb81"
+  },
+  "fall-word-search/img/knit-and-purl.png": {
+   "bytes": 90681,
+   "sha256": "ad4e88ab8a76a5a3125b0d2c934342918811c0c61a9d033821cae7e2de0cca89"
+  },
+  "fall-word-search/img/og.png": {
+   "bytes": 239040,
+   "sha256": "36b1226bacdeb5cd3573d46b9e314eff9b80f93747ea7f79549a84ed717193c1"
+  },
+  "fall-word-search/img/ready-for-winter-s.png": {
+   "bytes": 35168,
+   "sha256": "3f928ffc10074fae1d1e0be1d1d58cacee18bc3091d696dbed73780ca3b590cd"
+  },
+  "fall-word-search/img/ready-for-winter.png": {
+   "bytes": 99340,
+   "sha256": "af0125f9d68f02a3cffab74d8ff0d0ff9886c194dea721f2eaf3a15ba2987c73"
+  },
+  "fall-word-search/img/scenic-drive-s.png": {
+   "bytes": 41300,
+   "sha256": "c54e3dcf264d5436ae6369aaa96c873f3f4cb34d98a9d7cd7e391e58927cccd0"
+  },
+  "fall-word-search/img/scenic-drive.png": {
+   "bytes": 111098,
+   "sha256": "4077a9cbd6defc60a5e6250693ae7b422e3fd95f1742adf834cffd97dfac5e2c"
+  },
+  "fall-word-search/img/soup-season-s.png": {
+   "bytes": 33208,
+   "sha256": "d86db0325cec81ba5fe8e85007bc33f01f6d678ebdaad47cf4787c3ea9b513eb"
+  },
+  "fall-word-search/img/soup-season.png": {
+   "bytes": 93353,
+   "sha256": "9c501a24624cfbd4a728f9049d1abe025a262abd6c8b3a731a9a409c01c23dcc"
+  },
+  "fall-word-search/img/turning-trees-s.png": {
+   "bytes": 33775,
+   "sha256": "08f57f23a3cca44506796ada66a1ec5b702d0d9c0dad5f9398303ca1537a5a99"
+  },
+  "fall-word-search/img/turning-trees.png": {
+   "bytes": 94893,
+   "sha256": "e256932db7c7713977170f2c2266afad006ae22c9fedf6df6477c6d8f9f43d79"
+  },
+  "fall-word-search/index.html": {
+   "bytes": 15647,
+   "sha256": "5cf72f3133cf83e29cc8dd8f66b610d4093db2d1a0f6398e4768c275615f1011"
+  },
+  "fall-word-search/knit-and-purl/index.html": {
+   "bytes": 7089,
+   "sha256": "ebdfe336914544ad5256f996ffef7bd68780dc74710cfa871dc3ad0e38525756"
+  },
+  "fall-word-search/pdf/10-fall-word-searches-large-print-a4.pdf": {
+   "bytes": 97750,
+   "sha256": "1d4268a096ebbbf379d484f7a55ad1c0a42e2892dcecd1ea5cc1b18179dc0f64"
+  },
+  "fall-word-search/pdf/10-fall-word-searches-large-print-letter.pdf": {
+   "bytes": 97207,
+   "sha256": "fa0a0798866359866d1abef2fcf7acfb84b1fbbca24a94159c416ca15bab139b"
+  },
+  "fall-word-search/pdf/apple-pie-day-word-search-large-print-a4.pdf": {
+   "bytes": 48346,
+   "sha256": "e79c9c98118b40a8772c4141f9945bc765b4c618dd1423178fd44e480312aff4"
+  },
+  "fall-word-search/pdf/apple-pie-day-word-search-large-print-letter.pdf": {
+   "bytes": 48128,
+   "sha256": "f0c9488f8ca7ae9d825e64615859b33f961d0317d38138290a08227d03214bc5"
+  },
+  "fall-word-search/pdf/autumn-garden-word-search-large-print-a4.pdf": {
+   "bytes": 49163,
+   "sha256": "fe1f30c745f5f1de2c5990a4a64123ce1b85b128a64c93178f1e43aa66c1f526"
+  },
+  "fall-word-search/pdf/autumn-garden-word-search-large-print-letter.pdf": {
+   "bytes": 49089,
+   "sha256": "01217da3a7679ef28c7cb1167b1160dbdd6e14f5e1562a686d13a6e6338bf4ad"
+  },
+  "fall-word-search/pdf/county-fair-word-search-large-print-a4.pdf": {
+   "bytes": 48379,
+   "sha256": "5e39beea7166783b694117e590ea2b57c2795af435ea0b59e0b569e8b695de4e"
+  },
+  "fall-word-search/pdf/county-fair-word-search-large-print-letter.pdf": {
+   "bytes": 48396,
+   "sha256": "cd567a5ac0c0cb8d67b6096b5ce5bcf761603c1d49a408c3528cfab5228ed9d6"
+  },
+  "fall-word-search/pdf/flying-south-word-search-large-print-a4.pdf": {
+   "bytes": 49249,
+   "sha256": "266b6916e6af75e0ac1847e52f643871ecca609cdf63b0f484770d3de9ab1b4f"
+  },
+  "fall-word-search/pdf/flying-south-word-search-large-print-letter.pdf": {
+   "bytes": 49113,
+   "sha256": "6bc47526497f949fb0ec0d8c2908a9334b5de74aa854c76ae18cb8efc266bdb3"
+  },
+  "fall-word-search/pdf/football-saturday-word-search-large-print-a4.pdf": {
+   "bytes": 48359,
+   "sha256": "1a6c4da692c368218c3377cd0e30758079a565f0128e31bed60ce17d5f5f29e9"
+  },
+  "fall-word-search/pdf/football-saturday-word-search-large-print-letter.pdf": {
+   "bytes": 48350,
+   "sha256": "3049b0a5e0d7de05914f6646c9a2e7f3f65f1121d1d797768320d2ca7ddc0c16"
+  },
+  "fall-word-search/pdf/knit-and-purl-word-search-large-print-a4.pdf": {
+   "bytes": 47211,
+   "sha256": "f29f58a5c767e12c38a3ea7c3f3b8a588226f1e9bc77e6feee8f828377dae1b0"
+  },
+  "fall-word-search/pdf/knit-and-purl-word-search-large-print-letter.pdf": {
+   "bytes": 47117,
+   "sha256": "65b3633816bdfa96569ef8896487bdfde718bcbea0ee90400ae28af966699f11"
+  },
+  "fall-word-search/pdf/ready-for-winter-word-search-large-print-a4.pdf": {
+   "bytes": 47215,
+   "sha256": "ffeb64f400539433dd64d6c46d7f7ff2a117e60b42672848a0d45ac051f5ea43"
+  },
+  "fall-word-search/pdf/ready-for-winter-word-search-large-print-letter.pdf": {
+   "bytes": 47335,
+   "sha256": "d969041ed63487845665d69e5b024b1433d8f20929f42b4973a9d7bff7f48c7e"
+  },
+  "fall-word-search/pdf/scenic-drive-word-search-large-print-a4.pdf": {
+   "bytes": 49105,
+   "sha256": "938ef4cb57822c4b8b5a6d0f14d843fd787875fc1bec949bb83e60120bab7abd"
+  },
+  "fall-word-search/pdf/scenic-drive-word-search-large-print-letter.pdf": {
+   "bytes": 49030,
+   "sha256": "7540ece0fdd79b66cdbf1d6ebc48d8c180cfbd52bab7a3fec91ce71a16ee7c2d"
+  },
+  "fall-word-search/pdf/soup-season-word-search-large-print-a4.pdf": {
+   "bytes": 47222,
+   "sha256": "b311cdc0cf43a0683b6869966ca5e089af276f7a666b015dd8bd7832409f42c0"
+  },
+  "fall-word-search/pdf/soup-season-word-search-large-print-letter.pdf": {
+   "bytes": 47134,
+   "sha256": "ea86678f61660315abe87556fbb31eafe7e0846ab7339142cc90d9c982fe091a"
+  },
+  "fall-word-search/pdf/turning-trees-word-search-large-print-a4.pdf": {
+   "bytes": 47286,
+   "sha256": "25af453b799b6b7f23f17182abb907289b3634c2a74727deea6f905379aeb81d"
+  },
+  "fall-word-search/pdf/turning-trees-word-search-large-print-letter.pdf": {
+   "bytes": 47198,
+   "sha256": "1b491e0c79324768b9507ab1ee6c1a46800ecd16e2b04b037e8f18f15a1964a5"
+  },
+  "fall-word-search/pins/apple-pie-day-photo.jpg": {
+   "bytes": 284743,
+   "sha256": "5c3445a12df44793329ffc37e71b8a0283f8546995af70a8248971e9a191c0b4"
+  },
+  "fall-word-search/pins/apple-pie-day.png": {
+   "bytes": 404497,
+   "sha256": "36fbdb5fb49b15bcdc8a8ac8c86f585c3ede6678a9ea469ce85223221aca7789"
+  },
+  "fall-word-search/pins/autumn-garden.png": {
+   "bytes": 437259,
+   "sha256": "ee6e17932a2cacc65cb228cab58d32290cfa16d6bacbd30869a601c8cb972ede"
+  },
+  "fall-word-search/pins/county-fair.png": {
+   "bytes": 411295,
+   "sha256": "8d6f3f0b5999ec67aacb8be658324641084294c8d46be62e6590d11e7dac2a4c"
+  },
+  "fall-word-search/pins/easy-photo.jpg": {
+   "bytes": 311844,
+   "sha256": "8c0bb4eb8800bbd7169ec71660eb5e2a77f339b3860b733dbdc2779a37ac875f"
+  },
+  "fall-word-search/pins/easy.png": {
+   "bytes": 386418,
+   "sha256": "b14764f90d2dadeca0f9b2a44d08d506244b2515e47a44864bdbdc80d824b1b5"
+  },
+  "fall-word-search/pins/flying-south.png": {
+   "bytes": 433914,
+   "sha256": "1112d2c1350f0e30d2e4714a3a952be8df0211827718d2c9e171fd6f8b657fcb"
+  },
+  "fall-word-search/pins/football-saturday.png": {
+   "bytes": 418636,
+   "sha256": "66e36bbd03309bc499750198060920f365a8d24feeac31a7e577ef2e86bd70fe"
+  },
+  "fall-word-search/pins/hub-1.png": {
+   "bytes": 452038,
+   "sha256": "71d553be2cb94c1d038b0c76d2f6ff110750d15a71efb9820e5e310e15716663"
+  },
+  "fall-word-search/pins/hub-2.png": {
+   "bytes": 470984,
+   "sha256": "0e20ab62362245723720d262c49b26fcab0a5b1c0b1df3b0835e6ecfb7e846de"
+  },
+  "fall-word-search/pins/hub-photo.jpg": {
+   "bytes": 432723,
+   "sha256": "b2986ab8592af1f71b4400da8707958c46811029c57fd411af4fa397a76f896a"
+  },
+  "fall-word-search/pins/knit-and-purl.png": {
+   "bytes": 372015,
+   "sha256": "5aa394116c3041a9866c9855847153ff9830aa91afa54dff1aa0fdde74e9a94e"
+  },
+  "fall-word-search/pins/ready-for-winter.png": {
+   "bytes": 403714,
+   "sha256": "5123684bdc7b7ed1f75eb0cc042cbe6806696cc831d50b1a5ea6e162c586c7bd"
+  },
+  "fall-word-search/pins/scenic-drive-photo.jpg": {
+   "bytes": 396303,
+   "sha256": "625e20de2419dff4a8a4a64a506cdab0930d921cd613269dda08f45d5f117dd4"
+  },
+  "fall-word-search/pins/scenic-drive.png": {
+   "bytes": 428968,
+   "sha256": "b7db9ddff94fcc94b57c1fa3b65f16ccb389c75a2970432d23cb7a84f4df002d"
+  },
+  "fall-word-search/pins/seniors-photo.jpg": {
+   "bytes": 395803,
+   "sha256": "f58ec29e3d443fe77fea933ef521177581a899f11a28a449f5a549d13f91217b"
+  },
+  "fall-word-search/pins/seniors.png": {
+   "bytes": 377683,
+   "sha256": "3f4197c900d7039fc4c1e5ed4b7d18c4ee69881c51c5fa761cd48db3f3906667"
+  },
+  "fall-word-search/pins/soup-season.png": {
+   "bytes": 373204,
+   "sha256": "7e0573d324f696726069feeee9900fc0c673a421b1e460599b948fc92dc178ff"
+  },
+  "fall-word-search/pins/turning-trees.png": {
+   "bytes": 388762,
+   "sha256": "c1d46a63320b7ee6a9a357bde310a4b2313d41493b823c2ab75e8314aaff4511"
+  },
+  "fall-word-search/ready-for-winter/index.html": {
+   "bytes": 7164,
+   "sha256": "e856e45b6c16e16d71a4a38386aa8e322549642d43c20074669c705bb82f6ce0"
+  },
+  "fall-word-search/scenic-drive/index.html": {
+   "bytes": 7325,
+   "sha256": "7346d4dbc965ff270149957dd99e6bbe75a01164da38de59943380317bbfecfc"
+  },
+  "fall-word-search/soup-season/index.html": {
+   "bytes": 7062,
+   "sha256": "e5cf7218a36f407532b687e2e688f912c12db33c5e16859cda1b02992cfdcb26"
+  },
+  "fall-word-search/turning-trees/index.html": {
+   "bytes": 7057,
+   "sha256": "7b8d600bdc6369b909f45490104b9386705a2dccdb7a3f4319f6cc115f6f1b0e"
+  }
+ },
+ "pack": "fall-word-search",
+ "puzzles": 10
+}

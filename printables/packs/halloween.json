@@ -11,6 +11,13 @@
     "label": "the Halloween book",
     "blurb": "The full Halloween book has 40 large-print word searches with solutions, as a PDF you print at home."
   },
+  "related": [
+    {
+      "url": "/fall-word-search/",
+      "title": "Free printable fall word searches",
+      "blurb": "Ten more in the same large print, from apple pie to football Saturday."
+    }
+  ],
   "puzzles": [
     {
       "slug": "trick-or-treat",

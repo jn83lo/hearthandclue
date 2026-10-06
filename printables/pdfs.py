@@ -276,12 +276,16 @@ def _cover(c, page, pack, first_answer_page):
     box_y = M_BOT + 16
     # sit the box midway between the text and the footer when there is room
     box_y += max(0.0, (y - floor) / 2.0)
+    # a pack may say something else here, and send people somewhere else
+    plug = pack.get("plug") or {}
+    plug_text = plug.get("text", "Liked these? There is a whole book of them.")
+    plug_link = plug.get("link", link)
     c.setStrokeGray(0.0)
     c.setLineWidth(1.2)
     c.roundRect(M_SIDE, box_y, cw, COVER_BOX_H, 9, stroke=1, fill=0)
-    _centre(c, W / 2, box_y + 34, "Liked these? There is a whole book of them.", "Fr", 18)
-    _centre(c, W / 2, box_y + 12, link, "AtkB", 15)
-    c.linkURL("https://" + link, (M_SIDE, box_y, M_SIDE + cw, box_y + COVER_BOX_H), relative=0)
+    _centre(c, W / 2, box_y + 34, plug_text, "Fr", _fit(plug_text, "Fr", 18, cw - 24))
+    _centre(c, W / 2, box_y + 12, plug_link, "AtkB", 15)
+    c.linkURL("https://" + plug_link, (M_SIDE, box_y, M_SIDE + cw, box_y + COVER_BOX_H), relative=0)
     _footer(c, W, M_BOT - 6, link, "Page 1", COPY + " %d Hearth & Clue" % pack["year"])
     c.showPage()
 

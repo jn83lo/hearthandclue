@@ -26,7 +26,29 @@ SCHEMES = {
     "cream":   {"bg": (248, 243, 237), "title": (51, 48, 44),    "accent": (196, 86, 26),
                 "chip": (51, 48, 44),    "chip_text": (248, 243, 237), "foot": (142, 42, 42),
                 "sub": (95, 90, 82),     "ink": (51, 48, 44),          "moon": (232, 217, 195)},
+    "harvest": {"bg": (124, 44, 34),   "title": (255, 248, 238), "accent": (243, 178, 92),
+                "chip": (243, 178, 92),  "chip_text": (60, 22, 16),    "foot": (255, 248, 238),
+                "sub": (240, 212, 196),  "ink": (60, 22, 16),          "moon": (243, 178, 92)},
+    "sage":    {"bg": (78, 96, 64),    "title": (250, 246, 236), "accent": (238, 190, 98),
+                "chip": (238, 190, 98),  "chip_text": (40, 48, 30),    "foot": (250, 246, 236),
+                "sub": (222, 228, 206),  "ink": (40, 48, 30),          "moon": (238, 190, 98)},
 }
+
+# Falling maple leaves for the autumn pins, in colours that stand out on each
+# background (the Halloween pins draw a moon and bats in the same place).
+LEAVES = {
+    "cream": [(190, 80, 30), (214, 156, 40), (168, 52, 36)],
+    "pumpkin": [(120, 40, 20), (250, 214, 120), (255, 240, 214)],
+    "night": [(226, 113, 29), (243, 178, 92), (190, 80, 30)],
+    "harvest": [(243, 178, 92), (226, 113, 29), (250, 226, 190)],
+    "sage": [(226, 113, 29), (243, 178, 92), (176, 64, 32)],
+}
+
+# A maple leaf: five toothed lobes as (angle from straight up, length, half
+# width in degrees), drawn round the leaf's centre with the stem at the bottom.
+_MAPLE = [(-120, 0.52, 17), (-62, 0.82, 21), (0, 1.0, 22), (62, 0.82, 21), (120, 0.52, 17)]
+_TEETH = ((-1.0, 0.56), (-0.72, 0.80), (-0.52, 0.70), (-0.28, 0.86), (0.0, 1.0),
+          (0.28, 0.86), (0.52, 0.70), (0.72, 0.80), (1.0, 0.56))
 
 # A bat, as points on a unit square: wing tip, wing peak, ears, and a
 # scalloped lower edge. Left to right along the top, then back along the bottom.
@@ -121,6 +143,23 @@ def _bat(d, cx, cy, w, fill, tilt=0.0):
     d.polygon(pts, fill=fill)
 
 
+def _leaf(d, cx, cy, size, fill, tilt=0.0):
+    seq = [(-168, 0.12)]
+    for i, (a, length, half) in enumerate(_MAPLE):
+        if i:
+            seq.append(((_MAPLE[i - 1][0] + a) / 2.0, 0.33))
+        seq.extend((a + f * half, length * r) for f, r in _TEETH)
+    seq.append((168, 0.12))
+    pts = []
+    for a, r in seq:
+        t = math.radians(a + tilt)
+        pts.append((cx + math.sin(t) * r * size, cy - math.cos(t) * r * size))
+    t = math.radians(180 + tilt)
+    d.line([(cx, cy), (cx + math.sin(t) * 0.62 * size, cy - math.cos(t) * 0.62 * size)], fill=fill,
+           width=max(2, int(size * 0.065)))
+    d.polygon(pts, fill=fill)
+
+
 def _moon(img, cx, cy, r, fill, bg):
     d = ImageDraw.Draw(img)
     d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=fill)
@@ -150,19 +189,28 @@ def _page_card(page_img, width, angle, shadow=(0, 0, 0, 110)):
     return card.rotate(angle, resample=Image.BICUBIC, expand=True)
 
 
-def pin(out_path, scheme, eyebrow, title, chip, pages, footer_small, pumpkin=True):
-    """One 1000x1500 pin. `pages` is a list of 1 to 3 PIL page images, front first."""
+def pin(out_path, scheme, eyebrow, title, chip, pages, footer_small, pumpkin=True, motif="halloween"):
+    """One 1000x1500 pin. `pages` is a list of 1 to 3 PIL page images, front first.
+    `motif` is what fills the top corners: "halloween" (a moon and bats) or
+    "fall" (falling maple leaves)."""
     c = SCHEMES[scheme]
     W, H = 1000 * SS, 1500 * SS
     img = Image.new("RGB", (W, H), c["bg"])
     d = ImageDraw.Draw(img)
 
-    # sky: moon and bats, kept clear of the words
-    _moon(img, W - 96 * SS, 92 * SS, 58 * SS, c["moon"], c["bg"])
-    d = ImageDraw.Draw(img)
-    bat = c["ink"] if scheme != "night" else (12, 8, 18)
-    _bat(d, 104 * SS, 96 * SS, 132 * SS, bat, tilt=-10)
-    _bat(d, 232 * SS, 56 * SS, 74 * SS, bat, tilt=12)
+    if motif == "fall":
+        # falling leaves in both top corners, kept clear of the words
+        leaf = LEAVES[scheme]
+        for x, y, size, tilt, k in ((96, 92, 66, -24, 0), (214, 52, 40, 28, 1), (W / SS - 104, 98, 60, 156, 2),
+                                    (W / SS - 222, 50, 36, -48, 0)):
+            _leaf(d, x * SS, y * SS, size * SS, leaf[k], tilt)
+    else:
+        # sky: moon and bats, kept clear of the words
+        _moon(img, W - 96 * SS, 92 * SS, 58 * SS, c["moon"], c["bg"])
+        d = ImageDraw.Draw(img)
+        bat = c["ink"] if scheme != "night" else (12, 8, 18)
+        _bat(d, 104 * SS, 96 * SS, 132 * SS, bat, tilt=-10)
+        _bat(d, 232 * SS, 56 * SS, 74 * SS, bat, tilt=12)
 
     # words, stacked at the top
     y = 166 * SS

@@ -26,6 +26,22 @@
     if (a) track(a.getAttribute("data-ev"));
   });
 
+  /* ---------- boxes that change on a date ----------
+     data-until="YYYY-MM-DD": shown up to and including that day.
+     data-after="YYYY-MM-DD": shown from the day after. The date is the
+     visitor's own. Without this script the first shows and the second
+     stays hidden, which is right until the date. */
+  try {
+    var now = new Date();
+    var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+    var dated = document.querySelectorAll("[data-until], [data-after]");
+    for (var k = 0; k < dated.length; k++) {
+      var until = dated[k].getAttribute("data-until"), after = dated[k].getAttribute("data-after");
+      if (until) dated[k].hidden = today > until;
+      if (after) dated[k].hidden = !(today > after);
+    }
+  } catch (e) {}
+
   /* ---------- play it here ---------- */
   var dataEl = document.getElementById("puzzle-data");
   var root = document.getElementById("play");

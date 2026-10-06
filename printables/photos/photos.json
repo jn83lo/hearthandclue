@@ -46,5 +46,21 @@
   "barnwood-cider": {
     "card": "cream",
     "scene": "weathered wooden planks with autumn leaves, acorns, a red apple, cinnamon sticks and a mug of cider"
+  },
+  "maple-quilt": {
+    "card": "harvest",
+    "scene": "a rustic wooden table with a red and cream patchwork quilt, red and orange maple leaves, a mug of tea and a pencil"
+  },
+  "apple-basket": {
+    "card": "cream",
+    "scene": "a pale wooden table with a basket of red apples, a slice of apple pie, a cup of tea and autumn leaves"
+  },
+  "plaid-acorns": {
+    "card": "cream",
+    "scene": "a green plaid wool blanket with acorns, pine cones, reading glasses, a cup of coffee and yellow leaves"
+  },
+  "yarn-tea": {
+    "card": "sage",
+    "scene": "a light oak table with balls of mustard and rust yarn, wooden knitting needles, a cup of tea and autumn leaves"
   }
 }
