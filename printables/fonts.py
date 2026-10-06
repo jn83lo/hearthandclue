@@ -37,33 +37,59 @@ def _ps_name(file_path):
     return TTFont(file_path, lazy=True)["name"].getDebugName(6)
 
 
+def _cut(name, source, wght, style, ps_name):
+    """Cut one static weight from a variable Fraunces file, unless it is there already."""
+    if os.path.exists(path(name)) and _ps_name(path(name)) == ps_name:
+        return
+    from fontTools.ttLib import TTFont
+    from fontTools.varLib.instancer import instantiateVariableFont
+    # recalcTimestamp=False keeps the source font's own date in the cut,
+    # so building again on another day does not change the PDFs.
+    vf = TTFont(path(source), recalcTimestamp=False)
+    inst = instantiateVariableFont(vf, {"wght": wght, "opsz": 72, "SOFT": 0, "WONK": 0})
+    # The source file calls itself "Fraunces 9pt Black" and so would
+    # every cut. Name each cut for what it is, so that two cuts used
+    # in one PDF can never be taken for the same font.
+    names = inst["name"]
+    for rec in list(names.names):
+        if rec.nameID in (3, 4, 6, 17):
+            text = rec.toUnicode().replace("9pt Black", style).replace("9ptBlack", style).replace("Black", style)
+            names.setName(text, rec.nameID, rec.platformID, rec.platEncID, rec.langID)
+    inst.save(path(name))
+
+
+def _fetch(sources):
+    os.makedirs(FONT_DIR, exist_ok=True)
+    for name, rel in sources.items():
+        if not (os.path.exists(path(name)) and os.path.getsize(path(name)) > 10000):
+            urllib.request.urlretrieve(BASE + rel, path(name))
+
+
 def ensure():
     """Download anything missing and cut the static Fraunces weights."""
     global _ready
     if _ready:
         return FONT_DIR
-    os.makedirs(FONT_DIR, exist_ok=True)
-    for name, rel in SOURCES.items():
-        if not (os.path.exists(path(name)) and os.path.getsize(path(name)) > 10000):
-            urllib.request.urlretrieve(BASE + rel, path(name))
-    for name, wght, style in (("Fraunces-Bold.ttf", 700, "Bold"), ("Fraunces-SemiBold.ttf", 600, "SemiBold")):
-        if not (os.path.exists(path(name)) and _ps_name(path(name)) == "Fraunces-" + style):
-            from fontTools.ttLib import TTFont
-            from fontTools.varLib.instancer import instantiateVariableFont
-            # recalcTimestamp=False keeps the source font's own date in the cut,
-            # so building again on another day does not change the PDFs.
-            vf = TTFont(path("Fraunces-VF.ttf"), recalcTimestamp=False)
-            inst = instantiateVariableFont(vf, {"wght": wght, "opsz": 72, "SOFT": 0, "WONK": 0})
-            # The source file calls itself "Fraunces 9pt Black" and so would
-            # every cut. Name each cut for what it is, so that two cuts used
-            # in one PDF can never be taken for the same font.
-            names = inst["name"]
-            for rec in list(names.names):
-                if rec.nameID in (3, 4, 6, 17):
-                    text = rec.toUnicode().replace("9pt Black", style).replace("9ptBlack", style).replace("Black", style)
-                    names.setName(text, rec.nameID, rec.platformID, rec.platEncID, rec.langID)
-            inst.save(path(name))
+    _fetch(SOURCES)
+    _cut("Fraunces-Bold.ttf", "Fraunces-VF.ttf", 700, "Bold", "Fraunces-Bold")
+    _cut("Fraunces-SemiBold.ttf", "Fraunces-VF.ttf", 600, "SemiBold", "Fraunces-SemiBold")
     _ready = True
+    return FONT_DIR
+
+
+# Faces only a book uses. Kept apart so that building a free pack does not
+# fetch them.
+BOOK_SOURCES = {
+    "Fraunces-Italic-VF.ttf": "fraunces/Fraunces-Italic%5BSOFT%2CWONK%2Copsz%2Cwght%5D.ttf",
+    "Spectral-Regular.ttf": "spectral/Spectral-Regular.ttf",
+    "Spectral-Medium.ttf": "spectral/Spectral-Medium.ttf",
+}
+
+
+def ensure_book():
+    ensure()
+    _fetch(BOOK_SOURCES)
+    _cut("Fraunces-BoldItalic.ttf", "Fraunces-Italic-VF.ttf", 700, "Bold", "Fraunces-BoldItalic")
     return FONT_DIR
 
 
@@ -75,4 +101,15 @@ def register_pdf():
     for short, name in (("Atk", "Atkinson-Regular.ttf"), ("AtkB", "Atkinson-Bold.ttf"),
                         ("Fr", "Fraunces-Bold.ttf"), ("FrS", "Fraunces-SemiBold.ttf"),
                         ("SpI", "Spectral-Italic.ttf"), ("SpS", "Spectral-SemiBold.ttf")):
+        pdfmetrics.registerFont(TTFont(short, path(name)))
+
+
+def register_book():
+    """The pack faces plus the ones only a book uses."""
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+    register_pdf()
+    ensure_book()
+    for short, name in (("FrBI", "Fraunces-BoldItalic.ttf"), ("Sp", "Spectral-Regular.ttf"),
+                        ("SpM", "Spectral-Medium.ttf")):
         pdfmetrics.registerFont(TTFont(short, path(name)))

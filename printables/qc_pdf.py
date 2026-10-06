@@ -183,3 +183,267 @@ def check_pack(path, pack, built_all, promised, list_pt):
     if out["puzzles"] != total or out["answers"] != total or out["words_checked"] == 0:
         raise AssertionError("pack check incomplete: %s" % out)
     return out
+
+
+# ------------------------------------------------------------------ books
+
+def _fraunces(obj):
+    return "".join(ch["text"] for ch in sorted(
+        [ch for ch in obj.chars if "Fraunces" in ch["fontname"]], key=lambda ch: (round(ch["top"]), ch["x0"])))
+
+
+def _flat(text):
+    return " ".join((text or "").split())
+
+
+def page_links(pdf):
+    """Every link in the file, as {page number: [(box, kind, target)]}.
+
+    kind is "web" (target is the address) or "page" (target is the number of
+    the page the link jumps to). A link that leads nowhere is an error.
+    """
+    from pdfminer.pdftypes import PDFObjRef, resolve1
+    ids = {p.page_obj.pageid: p.page_number for p in pdf.pages}
+    out = {}
+    for p in pdf.pages:
+        found = []
+        for a in p.annots:
+            box = (a["x0"], a["top"], a["x1"], a["bottom"])
+            if a.get("uri"):
+                found.append((box, "web", a["uri"]))
+                continue
+            dest = resolve1((a.get("data") or {}).get("Dest"))
+            if isinstance(dest, (list, tuple)) and dest and isinstance(dest[0], PDFObjRef) and dest[0].objid in ids:
+                found.append((box, "page", ids[dest[0].objid]))
+            else:
+                raise AssertionError("page %d has a link that leads nowhere" % p.page_number)
+        out[p.page_number] = found
+    return out
+
+
+def _link_at(links, x, y):
+    """The page links whose box covers the point (x from the left, y from the top)."""
+    return [t for (x0, top, x1, bottom), kind, t in links if kind == "page" and x0 <= x <= x1 and top <= y <= bottom]
+
+
+def fonts_embedded(pdf):
+    """Names of the fonts in the file; raises if any of them is not carried inside it."""
+    from pdfminer.pdftypes import resolve1
+    names = set()
+    for p in pdf.pages:
+        res = resolve1(p.page_obj.attrs.get("Resources")) or {}
+        for ref in (resolve1(res.get("Font")) or {}).values():
+            font = resolve1(ref)
+            desc = resolve1(font.get("FontDescriptor"))
+            if desc is None and font.get("DescendantFonts"):
+                desc = resolve1(resolve1(resolve1(font["DescendantFonts"])[0]).get("FontDescriptor"))
+            name = str(font.get("BaseFont"))
+            if desc is None or not any(k in desc for k in ("FontFile", "FontFile2", "FontFile3")):
+                raise AssertionError("font %s is named but not embedded (page %d)" % (name, p.page_number))
+            names.add(name.strip("/'").split("+")[-1])
+    return sorted(names)
+
+
+def check_book(path, book, built_all, plan, promised, list_pt):
+    """A whole book, read back from the file.
+
+    For every puzzle: the printed grid is the built grid and is solved again
+    from the page; letter and word-list sizes are measured; the title, note,
+    level and word list are the puzzle's own; the footer gives the puzzle's
+    number, the page's real number, and an answer page that really holds that
+    puzzle's answer. Every answer is found, with its bands spelling the words.
+    The contents list gives every puzzle once, with the page it is really on.
+    The tracker has one box for every puzzle. Every link is followed. Every
+    font is embedded. Nothing is printed in the margins, and no figure is set
+    with a slashed zero.
+    """
+    import re
+    total = plan["total"]
+    out = {"pages": 0, "puzzles": 0, "words_checked": 0, "answers": 0, "bands": 0,
+           "contents_entries": 0, "links_followed": 0, "web_links": 0}
+    with pdfplumber.open(path) as pdf:
+        if len(pdf.pages) != plan["pages"]:
+            raise AssertionError("%s: expected %d pages, found %d" % (path, plan["pages"], len(pdf.pages)))
+        out["pages"] = len(pdf.pages)
+        links = page_links(pdf)
+        out["fonts"] = fonts_embedded(pdf)
+
+        # 1. the answers: find out from the pages themselves where each one is
+        where = {}
+        for pno in range(plan["first_answer"], plan["first_answer"] + plan["sheets"]):
+            page = pdf.pages[pno - 1]
+            tops = sorted({round(ch["top"]) for ch in page.chars if "Fraunces" in ch["fontname"]})
+            cut = (tops[-1] - 4) if len(tops) > 1 and tops[-1] - tops[0] > 50 else page.height
+            halves = [page.crop((0, 0, page.width, cut))]
+            if cut < page.height:
+                halves.append(page.crop((0, cut, page.width, page.height)))
+            for half in halves:
+                head = _fraunces(half)
+                m = re.fullmatch(r"Answer (\d+): (.+)", head)
+                if not m or not 1 <= int(m.group(1)) <= total:
+                    raise AssertionError("page %d: answer heading reads %r" % (pno, head))
+                n = int(m.group(1))
+                puz, built = book["puzzles"][n - 1], built_all[n - 1]
+                if m.group(2) != puz["title"]:
+                    raise AssertionError("page %d: answer %d is headed %r" % (pno, n, m.group(2)))
+                if n in where:
+                    raise AssertionError("answer %d is printed twice" % n)
+                size = ws.LEVELS[puz["level"]]["size"]
+                bold = [ch for ch in half.chars if "Atkinson" in ch["fontname"] and "Bold" in ch["fontname"]]
+                rows = _rows(bold, size)
+                grid = ["".join(ch["text"] for ch in row) for row in rows]
+                if grid != built["grid"]:
+                    raise AssertionError("page %d: the grid of answer %d is not the puzzle's grid" % (pno, n))
+                info = {"grid": grid, "centres": [[((ch["x0"] + ch["x1"]) / 2.0, (ch["top"] + ch["bottom"]) / 2.0)
+                                                   for ch in row] for row in rows]}
+                bands = read_bands(half, info)
+                if sorted(bands) != sorted(puz["words"]):
+                    raise AssertionError("page %d: answer %d bands spell %s" % (pno, n, sorted(bands)))
+                out["bands"] += len(bands)
+                # the heading leads back to the puzzle
+                hc = [ch for ch in half.chars if "Fraunces" in ch["fontname"]]
+                hx = (min(ch["x0"] for ch in hc) + max(ch["x1"] for ch in hc)) / 2.0
+                hy = (min(ch["top"] for ch in hc) + max(ch["bottom"] for ch in hc)) / 2.0
+                if _link_at(links[pno], hx, hy) != [plan["first"] + n - 1]:
+                    raise AssertionError("page %d: the heading of answer %d does not lead to its puzzle" % (pno, n))
+                out["links_followed"] += 1
+                where[n] = pno
+                out["answers"] += 1
+            m = re.search(r"Answers Page (\d+)$", _flat(page.extract_text()))
+            if not m or int(m.group(1)) != pno:
+                raise AssertionError("page %d: the footer does not give its page number" % pno)
+        if sorted(where) != list(range(1, total + 1)):
+            raise AssertionError("answers found for %d of %d puzzles" % (len(where), total))
+
+        # 2. every puzzle page
+        for n in range(1, total + 1):
+            pno = plan["first"] + n - 1
+            page = pdf.pages[pno - 1]
+            puz, built = book["puzzles"][n - 1], built_all[n - 1]
+            label = "%s page %d" % (path, pno)
+            res = check_pages(page, None, puz, built, promised[puz["level"]], list_pt, label)
+            if res["words_checked"] != len(puz["words"]):
+                raise AssertionError("%s: checked %d words" % (label, res["words_checked"]))
+            text = _flat(page.extract_text())
+            spec = ws.LEVELS[puz["level"]]
+            if _flat(puz["note"]) not in text:
+                raise AssertionError("%s: the note is not the puzzle's" % label)
+            if spec["label"].upper() not in text or spec["rule"] not in text:
+                raise AssertionError("%s: the level line is missing or wrong" % label)
+            m = re.search(r"Puzzle (\d+) of (\d+) Page (\d+) \S Answer on page (\d+)$", text)
+            if not m:
+                raise AssertionError("%s: footer not found" % label)
+            got = tuple(int(v) for v in m.groups())
+            if got != (n, total, pno, where[n]):
+                raise AssertionError("%s: footer says puzzle %d of %d, page %d, answer on page %d; the answer is on page %d"
+                                     % ((label,) + got + (where[n],)))
+            inner = [t for _, kind, t in links[pno] if kind == "page"]
+            if inner != [where[n]]:
+                raise AssertionError("%s: its answer link leads to %s" % (label, inner))
+            out["links_followed"] += 1
+            out["puzzles"] += 1
+            out["words_checked"] += res["words_checked"]
+
+        # 3. the contents list
+        seen = {}
+        for k in range(len(plan["chunks"])):
+            pno = plan["contents_first"] + k
+            page = pdf.pages[pno - 1]
+            mid = page.width / 2.0
+            for x0, x1 in ((0, mid), (mid, page.width)):
+                col = page.crop((x0, 0, x1, page.height))
+                for line in col.extract_text_lines():
+                    m = re.fullmatch(r"(\d+) (.+) (\d+)", _flat(line["text"]))
+                    if not m:
+                        continue
+                    n, title, target = int(m.group(1)), m.group(2), int(m.group(3))
+                    if n in seen or not 1 <= n <= total:
+                        raise AssertionError("contents: puzzle %d is listed twice or does not exist" % n)
+                    if title != book["puzzles"][n - 1]["title"]:
+                        raise AssertionError("contents: puzzle %d is listed as %r" % (n, title))
+                    if target != plan["first"] + n - 1:
+                        raise AssertionError("contents: puzzle %d is said to be on page %d" % (n, target))
+                    lx, ly = (line["x0"] + line["x1"]) / 2.0, (line["top"] + line["bottom"]) / 2.0
+                    if _link_at(links[pno], lx, ly) != [target]:
+                        raise AssertionError("contents: the line for puzzle %d does not lead to page %d" % (n, target))
+                    out["links_followed"] += 1
+                    seen[n] = target
+            if not re.search(r"Page %d$" % pno, _flat(page.extract_text())):
+                raise AssertionError("page %d: the footer does not give its page number" % pno)
+        if sorted(seen) != list(range(1, total + 1)):
+            raise AssertionError("contents lists %d of %d puzzles" % (len(seen), total))
+        out["contents_entries"] = len(seen)
+
+        # 3b. the tracker: one box for every puzzle, its number leading to that puzzle
+        tno = plan["tracker"]
+        tpage = pdf.pages[tno - 1]
+        ticked = {}
+        for (x0, top, x1, bottom), kind, target in links[tno]:
+            if kind != "page":
+                continue
+            inside = _flat(tpage.crop((x0, top, x1, bottom)).extract_text())
+            if not inside.isdigit() or target != plan["first"] + int(inside) - 1 or int(inside) in ticked:
+                raise AssertionError("tracker: the box marked %r leads to page %d" % (inside, target))
+            boxes = [r for r in tpage.rects if x0 <= (r["x0"] + r["x1"]) / 2.0 <= x1 and top <= (r["top"] + r["bottom"]) / 2.0 <= bottom]
+            if len(boxes) != 1:
+                raise AssertionError("tracker: puzzle %s has %d boxes to tick" % (inside, len(boxes)))
+            ticked[int(inside)] = target
+            out["links_followed"] += 1
+        if sorted(ticked) != list(range(1, total + 1)):
+            raise AssertionError("the tracker has %d of %d puzzles" % (len(ticked), total))
+        out["tracker_boxes"] = len(ticked)
+
+        # 4. every link is one of the above, or goes to one of the book's own addresses
+        inner = sum(1 for found in links.values() for _, kind, _ in found if kind == "page")
+        if inner != out["links_followed"]:
+            raise AssertionError("%d links inside the book, %d of them checked" % (inner, out["links_followed"]))
+        allowed = {"https://" + book[k] for k in ("site", "free", "shop")}
+        for pno, found in links.items():
+            for _, kind, target in found:
+                if kind == "web":
+                    if target not in allowed:
+                        raise AssertionError("page %d links to %s" % (pno, target))
+                    out["web_links"] += 1
+
+        # 4b. the bookmarks a PDF reader lists down its side
+        from pdfminer.pdftypes import PDFObjRef, resolve1
+        ids = {p.page_obj.pageid: p.page_number for p in pdf.pages}
+        got = []
+        for level, title, dest, _action, _ in pdf.doc.get_outlines():
+            dest = resolve1(dest)
+            if not (isinstance(dest, (list, tuple)) and dest and isinstance(dest[0], PDFObjRef) and dest[0].objid in ids):
+                raise AssertionError("the bookmark %r leads nowhere" % title)
+            got.append((level, title, ids[dest[0].objid]))
+        want = [(1, "Cover", 1), (1, "Before you begin", 2), (1, "Contents", plan["contents_first"]),
+                (1, "Puzzle tracker", plan["tracker"])]
+        dash = chr(8211)
+        for g in plan["groups"]:
+            span = "%d%s%d" % (g["first"], dash, g["last"]) if g["first"] != g["last"] else "%d" % g["first"]
+            want.append((1, "%s puzzles, %s" % (ws.LEVELS[g["level"]]["label"], span), plan["first"] + g["first"] - 1))
+            for n in range(g["first"], g["last"] + 1):
+                want.append((2, "%d. %s" % (n, book["puzzles"][n - 1]["title"]), plan["first"] + n - 1))
+        want.append((1, "Answers", plan["first_answer"]))
+        for k in range(plan["sheets"]):
+            a, b = 2 * k + 1, min(total, 2 * k + 2)
+            want.append((2, "Answers %s" % ("%d%s%d" % (a, dash, b) if a != b else "%d" % a), plan["first_answer"] + k))
+        want.append((1, "More from Hearth & Clue", plan["closing"]))
+        if got != want:
+            diff = [(g, w) for g, w in zip(got, want) if g != w][:3]
+            raise AssertionError("bookmarks differ (%d found, %d wanted); first differences: %s" % (len(got), len(want), diff))
+        out["bookmarks"] = len(got)
+
+        # 5. nothing in the margins (the cover is the one page that runs to the edge)
+        for page in pdf.pages[1:]:
+            W, H = float(page.width), float(page.height)
+            for ch in page.chars:
+                if ch["x0"] < 34 or ch["x1"] > W - 34 or ch["top"] < 24 or ch["bottom"] > H - 14:
+                    raise AssertionError("page %d: %r is printed in the margin" % (page.page_number, ch["text"]))
+            for other in (plan["closing"], plan["tracker"], 2):
+                if page.page_number == other and not re.search(r"Page %d$" % other, _flat(page.extract_text())):
+                    raise AssertionError("page %d: the footer does not give its page number" % other)
+            # Atkinson's zero has a slash through it; figures belong in the other face
+            if any(ch["text"] == "0" and "Atkinson" in ch["fontname"] for ch in page.chars):
+                raise AssertionError("page %d prints a slashed zero" % page.page_number)
+    if out["puzzles"] != total or out["answers"] != total or out["words_checked"] == 0:
+        raise AssertionError("book check incomplete: %s" % out)
+    return out
