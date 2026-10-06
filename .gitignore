@@ -1,0 +1,4 @@
+# fetched or generated when a pack is built
+printables/fonts/
+__pycache__/
+node_modules/

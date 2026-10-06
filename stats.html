@@ -4,14 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Daily Clue - stats</title>
+<title>Hearth &amp; Clue - stats</title>
 <style>
   :root { --ink:#2b2118; --cream:#fbf6ec; --rule:#e0d5c2; --accent:#8a5a2b; }
   body { margin:0; padding:24px 16px 48px; background:var(--cream); color:var(--ink);
          font-family:Georgia,'Times New Roman',serif; }
-  .wrap { max-width:640px; margin:0 auto; }
+  .wrap { max-width:680px; margin:0 auto; }
   h1 { font-size:1.5rem; margin:0 0 4px; }
-  p.sub { margin:0 0 24px; color:#6b5a46; font-size:.95rem; }
+  h2 { font-size:1.15rem; margin:34px 0 4px; }
+  p.sub { margin:0 0 14px; color:#6b5a46; font-size:.95rem; }
+  .scroll { overflow-x:auto; }
   table { width:100%; border-collapse:collapse; font-size:.95rem; }
   th, td { padding:8px 6px; border-bottom:1px solid var(--rule); text-align:right; }
   th:first-child, td:first-child { text-align:left; white-space:nowrap; }
@@ -23,18 +25,42 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>The Daily Clue - stats</h1>
-  <p class="sub">Anonymous event counts. No visitor is identified or tracked between days.</p>
+  <h1>Hearth &amp; Clue - stats</h1>
+  <p class="sub">Anonymous event counts. No visitor is identified or tracked between days.
+  Days are counted in UTC, so each one starts at 11am Melbourne time (10am in winter).</p>
   <div id="out" class="msg">Loading...</div>
-  <p><a href="/">Back to the puzzle</a></p>
+  <p><a href="/">The Daily Clue</a> &middot; <a href="/halloween-word-search/">Halloween printables</a></p>
 </div>
 <script>
 (function () {
-  var COLS = ["visit", "first_attempt", "first_word", "puzzle_completed", "hint_used", "restarted", "result_shared"];
-  var LABEL = { visit:"Visits", first_attempt:"Tried", first_word:"1st word",
-                puzzle_completed:"Solved", hint_used:"Hints", restarted:"Restarts",
-                result_shared:"Shared" };
+  var GAME = [["visit", "Visits"], ["first_attempt", "Tried"], ["first_word", "1st word"],
+              ["puzzle_completed", "Solved"], ["hint_used", "Hints"], ["restarted", "Restarts"],
+              ["result_shared", "Shared"]];
+  var PRINT = [["print_view", "Views"], ["print_from_pin", "From pins"], ["print_pdf", "PDFs"],
+               ["print_play", "Played"], ["print_solved", "Solved"], ["print_book", "Book"],
+               ["print_save", "Saved"]];
   var out = document.getElementById("out");
+
+  function table(title, note, cols, days, data) {
+    var totals = {}, rows = "";
+    days.forEach(function (d) {
+      var any = false, r = "<tr><td>" + d + "</td>";
+      cols.forEach(function (c) {
+        var v = (data[d] && data[d][c[0]]) || 0;
+        if (v) any = true;
+        totals[c[0]] = (totals[c[0]] || 0) + v;
+        r += "<td>" + (v || "-") + "</td>";
+      });
+      if (any) rows += r + "</tr>";
+    });
+    var h = "<h2>" + title + "</h2><p class=\"sub\">" + note + "</p>";
+    if (!rows) return h + "<p class=\"msg\">Nothing recorded yet.</p>";
+    h += "<div class=\"scroll\"><table><thead><tr><th>Day</th>";
+    cols.forEach(function (c) { h += "<th>" + c[1] + "</th>"; });
+    h += "</tr></thead><tbody>" + rows + "</tbody><tfoot><tr><td>Total</td>";
+    cols.forEach(function (c) { h += "<td>" + (totals[c[0]] || 0) + "</td>"; });
+    return h + "</tr></tfoot></table></div>";
+  }
 
   fetch("/.netlify/functions/stats", { cache: "no-store" })
     .then(function (r) { return r.json(); })
@@ -42,28 +68,10 @@
       if (data.error) { out.textContent = "Error: " + data.error; return; }
       var days = Object.keys(data).sort().reverse();
       if (!days.length) { out.textContent = "No events recorded yet."; return; }
-
-      var totals = {};
-      var h = '<table><thead><tr><th>Day</th>';
-      COLS.forEach(function (c) { h += "<th>" + LABEL[c] + "</th>"; });
-      h += "</tr></thead><tbody>";
-
-      days.forEach(function (d) {
-        h += "<tr><td>" + d + "</td>";
-        COLS.forEach(function (c) {
-          var v = data[d][c] || 0;
-          totals[c] = (totals[c] || 0) + v;
-          h += "<td>" + (v || "-") + "</td>";
-        });
-        h += "</tr>";
-      });
-
-      h += "</tbody><tfoot><tr><td>Total</td>";
-      COLS.forEach(function (c) { h += "<td>" + (totals[c] || 0) + "</td>"; });
-      h += "</tr></tfoot></table>";
-
       out.className = "";
-      out.innerHTML = h;
+      out.innerHTML =
+        table("Printable pages", "Views of the free printables, files opened, and visits that arrived from our pins.", PRINT, days, data) +
+        table("The Daily Clue", "The daily puzzle. Tried and 1st word only count from 6 Oct 2026.", GAME, days, data);
     })
     .catch(function (e) { out.textContent = "Could not load stats: " + e; });
 })();

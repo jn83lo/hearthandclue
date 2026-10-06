@@ -10,13 +10,16 @@ import { getStore } from "@netlify/blobs";
 //
 // No IP, no cookie, no identifier of any kind is stored.
 
-// Every name Index.html sends through track() must be listed here: anything
+// Every name the pages send through track() must be listed here: anything
 // else is dropped without a trace. first_attempt and first_word were added to
 // the page and to stats.html in September but not to this list, so the
 // "Tried" and "1st word" columns stayed at zero whatever players did.
 const ALLOWED = [
   "visit", "first_attempt", "first_word", "puzzle_completed",
   "restarted", "hint_used", "result_shared",
+  // printable pages (assets/printables.js)
+  "print_view", "print_from_pin", "print_pdf", "print_play",
+  "print_solved", "print_book", "print_save",
 ];
 
 export default async (req) => {

@@ -1,0 +1,304 @@
+{
+ "checks": {
+  "grid_words_verified": 136,
+  "letter_sizes_pt": {
+   "grid": {
+    "easy": 28,
+    "hard": 22,
+    "medium": 24
+   },
+   "word_list": 18.0
+  },
+  "pack_a4": {
+   "answers": 10,
+   "pages": 16,
+   "puzzles": 10,
+   "words_checked": 136
+  },
+  "pack_letter": {
+   "answers": 10,
+   "pages": 16,
+   "puzzles": 10,
+   "words_checked": 136
+  },
+  "pages": 11,
+  "pdf_words_resolved": 544,
+  "pins": 14
+ },
+ "files": {
+  "halloween-word-search/black-cat/index.html": {
+   "bytes": 6639,
+   "sha256": "7314f0d548d197c4ee2118f97540e513960b6e1326da948ee2f2d7f1c86c59d5"
+  },
+  "halloween-word-search/classic-monsters/index.html": {
+   "bytes": 6947,
+   "sha256": "32cea6398a705d02d46251b5dc3a0ae95cbb4c2221262b4d0f867ec44e001273"
+  },
+  "halloween-word-search/costume-box/index.html": {
+   "bytes": 6755,
+   "sha256": "0da5a54de1869aede1d3fbf6719efab3d6b04e12f786daca9aa42ad6bb08d5b9"
+  },
+  "halloween-word-search/halloween-party/index.html": {
+   "bytes": 7031,
+   "sha256": "8163dedd4786aadc118760f4c452e1d0c66826a66957c4d59077641cb622a503"
+  },
+  "halloween-word-search/haunted-house/index.html": {
+   "bytes": 6897,
+   "sha256": "c0c702004fa9f0d82c2e74754aaf9b224f1c97e3c40851bf1c3005376380cc70"
+  },
+  "halloween-word-search/img/black-cat-s.png": {
+   "bytes": 32555,
+   "sha256": "d53a5aa5da64fb5376844cbf4fc9483cbfd77a4aba485fe79f845f32b52e917c"
+  },
+  "halloween-word-search/img/black-cat.png": {
+   "bytes": 94475,
+   "sha256": "ab0ecb4239c751d34a7cfafd936dd6ef5e82f135a4453163fcd52883519a8f8e"
+  },
+  "halloween-word-search/img/classic-monsters-s.png": {
+   "bytes": 41316,
+   "sha256": "15a56773ce86d381b8dca79d95cfb32d838c201a2961bfa7853dfdbf7d31db00"
+  },
+  "halloween-word-search/img/classic-monsters.png": {
+   "bytes": 113397,
+   "sha256": "aa8dee8b031b4672ec7b52658e692d90e739003d03263b9cae3588225480835e"
+  },
+  "halloween-word-search/img/costume-box-s.png": {
+   "bytes": 33582,
+   "sha256": "c5c8e6d47477b0ff3434ecb00a7e9031352e322994357d7f41bfface02684da4"
+  },
+  "halloween-word-search/img/costume-box.png": {
+   "bytes": 96162,
+   "sha256": "e92a7a6c4341375f7ffc1da3f8a5fabc36e3e72fbec217f70f19fc1bd8d805fd"
+  },
+  "halloween-word-search/img/halloween-party-s.png": {
+   "bytes": 41932,
+   "sha256": "92128c4a6cf7c4bef1ec5baaefeb82e9cb08e3ea5acfcb4794f11493510ea80a"
+  },
+  "halloween-word-search/img/halloween-party.png": {
+   "bytes": 115192,
+   "sha256": "0e949c917c32d5988b3320a19bb7523803157a8fffd21bef12f15e12993a7a34"
+  },
+  "halloween-word-search/img/haunted-house-s.png": {
+   "bytes": 38531,
+   "sha256": "31596586954d11f618ff11a6a12d63e6b88f3c2e89cd9bfd5c130c9ff0ac7caf"
+  },
+  "halloween-word-search/img/haunted-house.png": {
+   "bytes": 106771,
+   "sha256": "304e67e46335dbdb6d0e1723cb32ed7a8c49603f4b4df78e838d84a5fcbf7b17"
+  },
+  "halloween-word-search/img/night-creatures-s.png": {
+   "bytes": 38872,
+   "sha256": "6fd0042601b0c81d4236aa98287eb8b160442488465361b832a5e677dcec743e"
+  },
+  "halloween-word-search/img/night-creatures.png": {
+   "bytes": 108792,
+   "sha256": "0b3fff8b7cc471a28ff9ebc8bd09e52439123b2b31c09e4024b8ed4ac0ebd3f9"
+  },
+  "halloween-word-search/img/og.png": {
+   "bytes": 247402,
+   "sha256": "6f1fb620dd7228d2760acaf8fb2de4dcb67583912c8e7b42cf5a00d31b5597ed"
+  },
+  "halloween-word-search/img/pumpkin-patch-s.png": {
+   "bytes": 32855,
+   "sha256": "56dc8addb5a12fccf619a99b65ba229b32218bec3fadf528738eac305ff6a8ef"
+  },
+  "halloween-word-search/img/pumpkin-patch.png": {
+   "bytes": 96004,
+   "sha256": "32f43d64caea304cdbf8a6abfe8ccad689f26ce3fc3a24bd8d8b35bf3a3a6265"
+  },
+  "halloween-word-search/img/things-that-go-bump-s.png": {
+   "bytes": 40292,
+   "sha256": "b843ad16097a5ea2a25bd4c1353e8433894f6d0adb2bacabe69b8af9e7ad6369"
+  },
+  "halloween-word-search/img/things-that-go-bump.png": {
+   "bytes": 109722,
+   "sha256": "2c43db6fd02b8932f36fe6ac7cbae0ef353499f5f55874abed1d4548d194ddc2"
+  },
+  "halloween-word-search/img/trick-or-treat-s.png": {
+   "bytes": 32726,
+   "sha256": "84149ad94df92ce81f00395215fe5ae2334e242678c161c9d327f28710c512d8"
+  },
+  "halloween-word-search/img/trick-or-treat.png": {
+   "bytes": 93642,
+   "sha256": "6770081d9d75498128ba7fcf7b4a1995aa4d50dac2fc458e8d551531b7d16535"
+  },
+  "halloween-word-search/img/witchs-kitchen-s.png": {
+   "bytes": 37803,
+   "sha256": "d58ed4e85c83dc1c62e4d6aa2bcd3731b98bcdf9df4eb79bc65a7600191b7417"
+  },
+  "halloween-word-search/img/witchs-kitchen.png": {
+   "bytes": 103292,
+   "sha256": "6f2e7c7f540766dcf96046ddfb2c4f7486fc2f930474a13e9bb9610cc3f9e1cb"
+  },
+  "halloween-word-search/index.html": {
+   "bytes": 15482,
+   "sha256": "dad7bd9240048b20cb87132a489f31310af4afcdc7c51553b34c1dc822c050d0"
+  },
+  "halloween-word-search/night-creatures/index.html": {
+   "bytes": 6909,
+   "sha256": "914854377238353a96bdbe67d36bf376b9cf320bb7704f5408e50e0d0b9715b6"
+  },
+  "halloween-word-search/pdf/10-halloween-word-searches-large-print-a4.pdf": {
+   "bytes": 97700,
+   "sha256": "867f69aa9418d5b9f23d49d19c1417c6fedb6f844eb7fee507a64fe09055c068"
+  },
+  "halloween-word-search/pdf/10-halloween-word-searches-large-print-letter.pdf": {
+   "bytes": 97013,
+   "sha256": "1cf0a192e3953b7cc029aceabf42e166913daf0d6e41ce45779d730c079d0e99"
+  },
+  "halloween-word-search/pdf/black-cat-word-search-large-print-a4.pdf": {
+   "bytes": 47225,
+   "sha256": "11137db9f08292acdccda5bfa3c03f8fd814e4d7e4b35459ff444a8fa68481db"
+  },
+  "halloween-word-search/pdf/black-cat-word-search-large-print-letter.pdf": {
+   "bytes": 47131,
+   "sha256": "f1ad1fb867af4dc2e831a80df29c806b4a1c046ea74272ec64e44aac346aab57"
+  },
+  "halloween-word-search/pdf/classic-monsters-word-search-large-print-a4.pdf": {
+   "bytes": 49166,
+   "sha256": "61a6caca0452e81f8c6e9ec200f9c835053939afefd540749d1aa055d364ccdc"
+  },
+  "halloween-word-search/pdf/classic-monsters-word-search-large-print-letter.pdf": {
+   "bytes": 49104,
+   "sha256": "86549fbf2e4383ef82c672e59200651a8547b4d44c4a9d1220c4500e14965ec6"
+  },
+  "halloween-word-search/pdf/costume-box-word-search-large-print-a4.pdf": {
+   "bytes": 47286,
+   "sha256": "3c974b429ce91569e99104d00576827f1f15ed3d3dfc221bef88b11b74b86a32"
+  },
+  "halloween-word-search/pdf/costume-box-word-search-large-print-letter.pdf": {
+   "bytes": 47197,
+   "sha256": "a69a110b98306dfd84faed9e096030f30e19f45770df06d9ff37811c622a901d"
+  },
+  "halloween-word-search/pdf/halloween-party-word-search-large-print-a4.pdf": {
+   "bytes": 49286,
+   "sha256": "859a2e7b53ca3e35c0cfabca5dc35a4a2c6201bbdf46ea26a4c9757d0b0c438f"
+  },
+  "halloween-word-search/pdf/halloween-party-word-search-large-print-letter.pdf": {
+   "bytes": 49118,
+   "sha256": "6646f59e981f99f94e97b10337f0bb65aac9d5232ba3f1d8b6534e0e02867a1e"
+  },
+  "halloween-word-search/pdf/haunted-house-word-search-large-print-a4.pdf": {
+   "bytes": 48369,
+   "sha256": "e088ab1ddfa5307b67855bd085432c4591ab78e6fbb74c99873a79ebf84ef7fb"
+  },
+  "halloween-word-search/pdf/haunted-house-word-search-large-print-letter.pdf": {
+   "bytes": 48394,
+   "sha256": "65c8e27b0e83d886fd4572f3f1686d28566ffce8b39d1139c598ce9567b4c001"
+  },
+  "halloween-word-search/pdf/night-creatures-word-search-large-print-a4.pdf": {
+   "bytes": 48382,
+   "sha256": "1823bfc8aeceebb8af9da7c62147c5de09d7b8c7f539c6526681536e43cb4801"
+  },
+  "halloween-word-search/pdf/night-creatures-word-search-large-print-letter.pdf": {
+   "bytes": 48218,
+   "sha256": "22aab320e1b3763dfb98f549af5e6614ab79ee61d930ce99fc241f0610eeffdf"
+  },
+  "halloween-word-search/pdf/pumpkin-patch-word-search-large-print-a4.pdf": {
+   "bytes": 47156,
+   "sha256": "831224f5dde2d05f8dbfd392c435bb3c60a21280d41d72ac1e1d3a98a2daa76e"
+  },
+  "halloween-word-search/pdf/pumpkin-patch-word-search-large-print-letter.pdf": {
+   "bytes": 47066,
+   "sha256": "b202c0dd440e8acf423d6d3cdeafb5d4388143e1503bd49ba7f7793af25572b4"
+  },
+  "halloween-word-search/pdf/things-that-go-bump-word-search-large-print-a4.pdf": {
+   "bytes": 49002,
+   "sha256": "9ffdb675d22d1f57253f998a8090628326e9fe4c716088c84610e3fac7c571e8"
+  },
+  "halloween-word-search/pdf/things-that-go-bump-word-search-large-print-letter.pdf": {
+   "bytes": 48899,
+   "sha256": "db85d8e131d084627e1e8f55f899316e06564c56bc031bf61cebaf821d65d12e"
+  },
+  "halloween-word-search/pdf/trick-or-treat-word-search-large-print-a4.pdf": {
+   "bytes": 47294,
+   "sha256": "8d6bede3437135fc434503a5ea39e5bbb09d6dee3d9e442e60b3228a1b661133"
+  },
+  "halloween-word-search/pdf/trick-or-treat-word-search-large-print-letter.pdf": {
+   "bytes": 47202,
+   "sha256": "a798de00a20147e288f1d8937e33fe339c29c9f2b47ea4ce90d6e81c2572d920"
+  },
+  "halloween-word-search/pdf/witchs-kitchen-word-search-large-print-a4.pdf": {
+   "bytes": 48212,
+   "sha256": "1f0f725ef7e88f07c9ef21978ccf66d910742e94602b8f453674888f2614734e"
+  },
+  "halloween-word-search/pdf/witchs-kitchen-word-search-large-print-letter.pdf": {
+   "bytes": 48204,
+   "sha256": "f4974cd2069a7d3568a52e964514f50f9faaf6e166f9f48f05d748cb47184ef8"
+  },
+  "halloween-word-search/pins/black-cat.png": {
+   "bytes": 375496,
+   "sha256": "b434699e4a3c686df51ccf582d1b384efe8da92d3b1cc54b8f9158c5e1bbcecb"
+  },
+  "halloween-word-search/pins/classic-monsters.png": {
+   "bytes": 430231,
+   "sha256": "2e95198d321818ed0cca37ed9f4e8e914e71eda3b27a20714dd8b44a35d93213"
+  },
+  "halloween-word-search/pins/costume-box.png": {
+   "bytes": 389354,
+   "sha256": "9bcb375ed09c9d6962293eede365911e5852979f19c48fac9a10f7f463e01ad0"
+  },
+  "halloween-word-search/pins/easy.png": {
+   "bytes": 394155,
+   "sha256": "b6d5551c467bfd7eedfe64c73ee58a50fe8c788a411e3bf8e9ebb3a874789456"
+  },
+  "halloween-word-search/pins/halloween-party.png": {
+   "bytes": 431154,
+   "sha256": "87174bfb1701c7b63f31fd400dfa786b7c5fa152e249b4f67623990afba5b94e"
+  },
+  "halloween-word-search/pins/haunted-house.png": {
+   "bytes": 408794,
+   "sha256": "9173bdc81ed228dce1f3f37230d80e3c745f1f7c3b7f65974b819d528f467163"
+  },
+  "halloween-word-search/pins/hub-1.png": {
+   "bytes": 431953,
+   "sha256": "891e237f22cc2351e4a8f62783de53b23c92f69554320f0c7dbdd509071f1a4c"
+  },
+  "halloween-word-search/pins/hub-2.png": {
+   "bytes": 437866,
+   "sha256": "976d01f3df4a0f2310aa290aca05d832762629a95ce4e95fec6e3ee1af1ce06d"
+  },
+  "halloween-word-search/pins/night-creatures.png": {
+   "bytes": 417397,
+   "sha256": "e331fa2755a83b6f40aa42610488a08665688c3cbdddefab158ad856e42999bd"
+  },
+  "halloween-word-search/pins/pumpkin-patch.png": {
+   "bytes": 388034,
+   "sha256": "a361a2ba0e9866336d22cc091ba850494efc22b06d7d6d1c25a2a610ea0245f0"
+  },
+  "halloween-word-search/pins/seniors.png": {
+   "bytes": 387270,
+   "sha256": "112c25b110967c71606bde210752875f94f06d8c131d50580323d61164a2af19"
+  },
+  "halloween-word-search/pins/things-that-go-bump.png": {
+   "bytes": 433257,
+   "sha256": "a9e6320d3c8fbe57b19d6a8b91dc53cf8792cacc672c738ed5ccc648df897ae5"
+  },
+  "halloween-word-search/pins/trick-or-treat.png": {
+   "bytes": 378345,
+   "sha256": "88526cab0fd0db1ac64a6d1fed1eecb6fc7a17ef0931d2b3444c95070048926a"
+  },
+  "halloween-word-search/pins/witchs-kitchen.png": {
+   "bytes": 408032,
+   "sha256": "c12aba8113e23c951f03bb884bf75a88f4fa28b841348f6dc48f51ad57c8eb33"
+  },
+  "halloween-word-search/pumpkin-patch/index.html": {
+   "bytes": 6720,
+   "sha256": "01e5ab1299fabf72773e5b34e9c77742a4e5f14c5fe4bb2d0b938beea8a0d270"
+  },
+  "halloween-word-search/things-that-go-bump/index.html": {
+   "bytes": 6930,
+   "sha256": "9cdbda1370c2bb7ff98fa0725fd64f0c3559310d5eb381c3e6f32919d088d897"
+  },
+  "halloween-word-search/trick-or-treat/index.html": {
+   "bytes": 6703,
+   "sha256": "bc4f42f661c583205471b07965943db975e7ea3191a94e5736730e0fd99772f5"
+  },
+  "halloween-word-search/witchs-kitchen/index.html": {
+   "bytes": 6806,
+   "sha256": "b9f0fe336ceba3bb3c56fede9922829155df42bbfb65b375e1f0c8d3b42ffd0c"
+  }
+ },
+ "pack": "halloween-word-search",
+ "puzzles": 10
+}

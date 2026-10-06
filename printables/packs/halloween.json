@@ -1,0 +1,336 @@
+{
+  "slug": "halloween-word-search",
+  "name": "Halloween Word Searches",
+  "season": "Halloween",
+  "year": 2026,
+  "released": "2026-10-06",
+  "seed": "halloween-2026-free",
+  "book": {
+    "url": "https://www.etsy.com/listing/4551703062",
+    "puzzles": 40,
+    "label": "the Halloween book",
+    "blurb": "The full Halloween book has 40 large-print word searches with solutions, as a PDF you print at home."
+  },
+  "puzzles": [
+    {
+      "slug": "trick-or-treat",
+      "level": "easy",
+      "title": "Trick or Treat",
+      "search": "Trick or Treat Word Search",
+      "note": "One for the bag, two for the walk home.",
+      "words": [
+        "CANDY",
+        "COSTUME",
+        "DOORBELL",
+        "LANTERN",
+        "MASK",
+        "PUMPKIN",
+        "SWEETS",
+        "TREAT",
+        "TRICK",
+        "WITCH"
+      ]
+    },
+    {
+      "slug": "pumpkin-patch",
+      "level": "easy",
+      "title": "The Pumpkin Patch",
+      "search": "Pumpkin Patch Word Search",
+      "note": "We always chose the lopsided one.",
+      "words": [
+        "CARVE",
+        "FIELD",
+        "GOURD",
+        "HARVEST",
+        "ORANGE",
+        "PATCH",
+        "SEEDS",
+        "STEM",
+        "VINE",
+        "WAGON"
+      ]
+    },
+    {
+      "slug": "black-cat",
+      "level": "easy",
+      "title": "Black Cat Crossing",
+      "search": "Black Cat Word Search",
+      "note": "She only looked unlucky.",
+      "words": [
+        "ALLEY",
+        "CREEP",
+        "FENCE",
+        "MIDNIGHT",
+        "PAWS",
+        "PROWL",
+        "PURR",
+        "SHADOW",
+        "TAIL",
+        "WHISKERS"
+      ]
+    },
+    {
+      "slug": "costume-box",
+      "level": "easy",
+      "title": "The Costume Box",
+      "search": "Halloween Costume Word Search",
+      "note": "Everything in it was a pirate if you squinted.",
+      "words": [
+        "CAPE",
+        "CLOWN",
+        "COWBOY",
+        "CROWN",
+        "FAIRY",
+        "GHOST",
+        "PIRATE",
+        "PRINCESS",
+        "ROBOT",
+        "WIZARD"
+      ]
+    },
+    {
+      "slug": "haunted-house",
+      "level": "medium",
+      "title": "The Haunted House",
+      "search": "Haunted House Word Search",
+      "note": "The third stair creaked, every single time.",
+      "words": [
+        "ATTIC",
+        "CELLAR",
+        "CHANDELIER",
+        "COBWEB",
+        "CREAK",
+        "CURTAIN",
+        "DUST",
+        "HALLWAY",
+        "KEYHOLE",
+        "MIRROR",
+        "PORTRAIT",
+        "SHUTTER",
+        "STAIRS",
+        "WINDOW"
+      ]
+    },
+    {
+      "slug": "witchs-kitchen",
+      "level": "medium",
+      "title": "The Witch's Kitchen",
+      "search": "Witch Word Search",
+      "note": "A pinch of this, and nobody asked about that.",
+      "words": [
+        "BREW",
+        "BROOM",
+        "CAULDRON",
+        "CHARM",
+        "HERBS",
+        "LADLE",
+        "POTION",
+        "RECIPE",
+        "SIMMER",
+        "SPELL",
+        "STIR",
+        "TOADSTOOL",
+        "VIAL",
+        "WAND"
+      ]
+    },
+    {
+      "slug": "night-creatures",
+      "level": "medium",
+      "title": "Night Creatures",
+      "search": "Night Animals Word Search",
+      "note": "Something in the hedge had the same idea.",
+      "words": [
+        "BADGER",
+        "BEETLE",
+        "CRICKET",
+        "FIREFLY",
+        "HEDGEHOG",
+        "MOTH",
+        "MOUSE",
+        "NIGHTJAR",
+        "POSSUM",
+        "RACCOON",
+        "SPIDER",
+        "TOAD",
+        "WEASEL",
+        "WOLF"
+      ]
+    },
+    {
+      "slug": "classic-monsters",
+      "level": "hard",
+      "title": "Classic Monsters",
+      "search": "Monster Word Search",
+      "note": "They were scarier in black and white.",
+      "words": [
+        "BANSHEE",
+        "CYCLOPS",
+        "DRACULA",
+        "FRANKENSTEIN",
+        "GARGOYLE",
+        "GHOUL",
+        "GOBLIN",
+        "KRAKEN",
+        "MUMMY",
+        "OGRE",
+        "PHANTOM",
+        "POLTERGEIST",
+        "SKELETON",
+        "TROLL",
+        "VAMPIRE",
+        "WEREWOLF",
+        "WRAITH",
+        "ZOMBIE"
+      ]
+    },
+    {
+      "slug": "halloween-party",
+      "level": "hard",
+      "title": "The Halloween Party",
+      "search": "Halloween Party Word Search",
+      "note": "Someone always bobbed for apples in a good shirt.",
+      "words": [
+        "APPLES",
+        "BALLOONS",
+        "BOBBING",
+        "CIDER",
+        "CONFETTI",
+        "DANCING",
+        "DISGUISE",
+        "DOUGHNUTS",
+        "GAMES",
+        "GARLAND",
+        "GUESTS",
+        "INVITATION",
+        "LANTERNS",
+        "MUSIC",
+        "PRIZES",
+        "PUNCH",
+        "STREAMERS",
+        "TOFFEE"
+      ]
+    },
+    {
+      "slug": "things-that-go-bump",
+      "level": "hard",
+      "title": "Things That Go Bump",
+      "search": "Spooky Sounds Word Search",
+      "note": "The house is settling. That is what we were told.",
+      "words": [
+        "BUMP",
+        "CACKLE",
+        "CLANK",
+        "CRASH",
+        "GROAN",
+        "HISS",
+        "HOWL",
+        "KNOCK",
+        "MOAN",
+        "RATTLE",
+        "RUSTLE",
+        "SCRATCH",
+        "SCREECH",
+        "SHRIEK",
+        "THUD",
+        "WAIL",
+        "WHISPER",
+        "WHISTLE"
+      ]
+    }
+  ],
+  "pinterest": {
+    "board_id": "300615412567055159",
+    "pins": [
+      {
+        "id": "hub-1",
+        "date": "2026-10-06",
+        "target": "hub",
+        "scheme": "cream",
+        "kind": "hub"
+      },
+      {
+        "id": "haunted-house",
+        "date": "2026-10-07",
+        "target": "haunted-house",
+        "scheme": "night"
+      },
+      {
+        "id": "trick-or-treat",
+        "date": "2026-10-08",
+        "target": "trick-or-treat",
+        "scheme": "pumpkin"
+      },
+      {
+        "id": "pumpkin-patch",
+        "date": "2026-10-10",
+        "target": "pumpkin-patch",
+        "scheme": "cream"
+      },
+      {
+        "id": "witchs-kitchen",
+        "date": "2026-10-11",
+        "target": "witchs-kitchen",
+        "scheme": "night"
+      },
+      {
+        "id": "seniors",
+        "date": "2026-10-13",
+        "target": "hub",
+        "scheme": "pumpkin",
+        "kind": "seniors"
+      },
+      {
+        "id": "black-cat",
+        "date": "2026-10-15",
+        "target": "black-cat",
+        "scheme": "night"
+      },
+      {
+        "id": "classic-monsters",
+        "date": "2026-10-17",
+        "target": "classic-monsters",
+        "scheme": "cream"
+      },
+      {
+        "id": "costume-box",
+        "date": "2026-10-18",
+        "target": "costume-box",
+        "scheme": "pumpkin"
+      },
+      {
+        "id": "hub-2",
+        "date": "2026-10-20",
+        "target": "hub",
+        "scheme": "night",
+        "kind": "hub2"
+      },
+      {
+        "id": "halloween-party",
+        "date": "2026-10-22",
+        "target": "halloween-party",
+        "scheme": "pumpkin"
+      },
+      {
+        "id": "night-creatures",
+        "date": "2026-10-24",
+        "target": "night-creatures",
+        "scheme": "night"
+      },
+      {
+        "id": "things-that-go-bump",
+        "date": "2026-10-25",
+        "target": "things-that-go-bump",
+        "scheme": "cream"
+      },
+      {
+        "id": "easy",
+        "date": "2026-10-27",
+        "target": "hub",
+        "scheme": "cream",
+        "kind": "easy"
+      }
+    ],
+    "board_name": "Free Printable Word Searches (Large Print)"
+  }
+}
