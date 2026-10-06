@@ -1,0 +1,9 @@
+# The exact versions the published files were built with. Other versions may
+# draw or compress slightly differently, which changes the bytes of the files
+# (not what is on the page).
+reportlab==5.0.1
+pillow==12.3.0
+fonttools==4.65.0
+pdfplumber>=0.11.9
+# Also needed on the PATH: pdftoppm, from poppler-utils. Versions 24.02 and
+# 25.03 were both used and gave identical page pictures.

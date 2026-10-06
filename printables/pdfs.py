@@ -15,6 +15,7 @@ from reportlab.pdfbase.pdfmetrics import stringWidth
 
 import fonts
 import ws
+from wording import mid_sentence
 
 PAGES = {"letter": (612.0, 792.0), "a4": (595.28, 841.89)}
 PAPER = {"letter": "US Letter", "a4": "A4"}
@@ -377,7 +378,7 @@ def pack_pdf(path, page, pack, built_all):
     total = len(pack["puzzles"])
     link = "%s/%s" % (SITE, pack["slug"])
     c = new_canvas(path, "%d %s - free large print printable" % (total, pack["name"]),
-                   "Free large print %s, %s, with answer keys." % (pack["name"].lower(), PAPER[page]), pack)
+                   "Free large print %s, %s, with answer keys." % (mid_sentence(pack["name"]), PAPER[page]), pack)
     first_answer = 1 + total + 1
     _cover(c, page, pack, first_answer)
     for i, (puz, built) in enumerate(zip(pack["puzzles"], built_all), 1):

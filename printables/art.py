@@ -1,7 +1,9 @@
 """Preview images and Pinterest pins for a printable pack (Pillow).
 
 Everything is drawn at twice the final size and scaled down, so shapes and
-type have smooth edges. Pins are 1000x1500 (Pinterest's 2:3).
+type have smooth edges. Pins are 1000x1500 (Pinterest's 2:3). There are two
+kinds: pin() draws everything itself on a flat colour; photo_pin() lays the
+real pages on one of the table photographs in printables/photos/.
 """
 import math
 import os
@@ -211,6 +213,109 @@ def pin(out_path, scheme, eyebrow, title, chip, pages, footer_small, pumpkin=Tru
     _draw_text(d, W / 2, H - 132 * SS, "hearthandclue.com", font("Fraunces-SemiBold.ttf", 46), c["foot"], anchor="m")
     _draw_text(d, W / 2, H - 70 * SS, footer_small, font("Atkinson-Regular.ttf", 27), c["sub"], anchor="m")
     img.resize((1000, 1500), Image.LANCZOS).save(out_path, optimize=True)
+
+
+def _paper(page_img, width, angle, tint=(252, 249, 243)):
+    """A printed page lying on a table: faintly warm paper and a soft, wide
+    shadow. Returns an RGBA image."""
+    w = int(width)
+    h = int(page_img.height * w / page_img.width)
+    grey = page_img.convert("L").resize((w, h), Image.LANCZOS)
+    page = Image.merge("RGB", [grey.point(lambda v, t=t: int(v * t / 255)) for t in tint])
+    pad = int(w * 0.14)
+    card = Image.new("RGBA", (w + 2 * pad, h + 2 * pad), (0, 0, 0, 0))
+    for blur, off, alpha in ((w * 0.045, w * 0.030, 70), (w * 0.012, w * 0.008, 90)):
+        sh = Image.new("RGBA", card.size, (0, 0, 0, 0))
+        ImageDraw.Draw(sh).rectangle((pad + off * 0.5, pad + off, pad + w + off * 0.5, pad + h + off), fill=(20, 12, 4, alpha))
+        card.alpha_composite(sh.filter(ImageFilter.GaussianBlur(blur)))
+    card.paste(page, (pad, pad))
+    return card.rotate(angle, resample=Image.BICUBIC, expand=True)
+
+
+def _plate(img, box, fill, radius):
+    """A solid rounded panel with a soft shadow, for words on top of a photograph."""
+    x0, y0, x1, y1 = [int(v) for v in box]
+    m = 40 * SS     # room around the panel for its shadow to fade out
+    w, h = x1 - x0, y1 - y0
+    layer = Image.new("RGBA", (w + 2 * m, h + 2 * m), (0, 0, 0, 0))
+    ImageDraw.Draw(layer).rounded_rectangle((m, m + 6 * SS, m + w, m + h + 10 * SS), radius=radius, fill=(10, 6, 2, 80))
+    layer = layer.filter(ImageFilter.GaussianBlur(12 * SS))
+    ImageDraw.Draw(layer).rounded_rectangle((m, m, m + w, m + h), radius=radius, fill=tuple(fill) + (255,))
+    # keep to the part that lies on the picture
+    left, top = max(0, m - x0), max(0, m - y0)
+    right, bottom = min(layer.width, img.width - (x0 - m)), min(layer.height, img.height - (y0 - m))
+    layer = layer.crop((left, top, right, bottom))
+    img.paste(layer, (x0 - m + left, y0 - m + top), layer)
+
+
+def photo_pin(out_path, photo_path, scheme, eyebrow, title, chip, pages, footer_small, stack=None, foot="centre"):
+    """One 1000x1500 pin on a photograph of a table: the real puzzle pages are
+    laid on it, with the words on a panel at the top. `pages` is 1 or 2 PIL
+    page images, front first. `stack` may move or shrink the pages so that
+    something worth seeing in the photograph stays in view."""
+    c = SCHEMES[scheme]
+    stack = stack or {}
+    W, H = 1000 * SS, 1500 * SS
+    photo = Image.open(photo_path).convert("RGB")
+    k = max(W / photo.width, H / photo.height)
+    photo = photo.resize((int(round(photo.width * k)), int(round(photo.height * k))), Image.LANCZOS)
+    left, top = (photo.width - W) // 2, (photo.height - H) // 2
+    img = photo.crop((left, top, left + W, top + H))
+    d = ImageDraw.Draw(img)
+
+    # the words, on a panel across the top
+    M = 40 * SS
+    ef, et = font("Atkinson-Bold.ttf", 33), 5.5
+    if _text_w(d, eyebrow, ef, et) > 760 * SS:
+        ef, et = font("Atkinson-Bold.ttf", 30), 4.5
+    size = 88
+    while True:
+        f = font("Fraunces-Bold.ttf", size)
+        lines = _balanced(d, title, f, 840 * SS)
+        if len(lines) <= 2 or size <= 56:
+            break
+        size -= 4
+    lh = size * 1.06 * SS
+    cf = font("Atkinson-Bold.ttf", 29)
+    ch = 58 * SS
+    panel_h = 84 * SS + len(lines) * lh + 20 * SS + ch + 34 * SS
+    _plate(img, (M, M, W - M, M + panel_h), c["bg"], 30 * SS)
+    d = ImageDraw.Draw(img)
+    y = M + 36 * SS
+    _draw_text(d, W / 2, y, eyebrow, ef, c["accent"], tracking=et, anchor="m")
+    y += 50 * SS
+    for line in lines:
+        _draw_text(d, W / 2, y, line, f, c["title"], anchor="m")
+        y += lh
+    y += 18 * SS
+    cw = _text_w(d, chip, cf, 1.5)
+    d.rounded_rectangle((W / 2 - cw / 2 - 28 * SS, y, W / 2 + cw / 2 + 28 * SS, y + ch), radius=ch / 2, fill=c["chip"])
+    _draw_text(d, W / 2, y + 11 * SS, chip, cf, c["chip_text"], tracking=1.5, anchor="m")
+
+    # the pages, between the two panels
+    fh = 112 * SS
+    foot_top = H - M - fh
+    y0 = M + panel_h + 14 * SS
+    room = foot_top - 14 * SS - y0
+    width = min(590 * SS, room / 1.294 / 1.07) * stack.get("scale", 1.0)
+    pages = pages[:stack.get("pages", 2)]
+    cx = W / 2 + stack.get("dx", 0) * SS
+    cy = y0 + room / 2 + stack.get("dy", 0) * SS
+    if len(pages) >= 2:
+        back = _paper(pages[1], width * 0.97, 5.0)
+        img.paste(back, (int(cx - back.width / 2 + width * 0.115), int(cy - back.height / 2 + 4 * SS)), back)
+        del back
+    front = _paper(pages[0], width, stack.get("angle", -2.5))
+    img.paste(front, (int(cx - front.width / 2 - (width * 0.045 if len(pages) >= 2 else 0)), int(cy - front.height / 2)), front)
+    del front
+
+    # where to get it
+    fx = W / 2 if foot == "centre" else M + 290 * SS
+    _plate(img, (fx - 290 * SS, foot_top, fx + 290 * SS, foot_top + fh), c["bg"], 26 * SS)
+    d = ImageDraw.Draw(img)
+    _draw_text(d, fx, foot_top + 12 * SS, "hearthandclue.com", font("Fraunces-SemiBold.ttf", 42), c["foot"], anchor="m")
+    _draw_text(d, fx, foot_top + 68 * SS, footer_small, font("Atkinson-Regular.ttf", 25), c["sub"], anchor="m")
+    img.resize((1000, 1500), Image.LANCZOS).save(out_path, quality=90, optimize=True)
 
 
 def og(out_path, eyebrow, title, sub, pages):

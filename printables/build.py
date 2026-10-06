@@ -7,7 +7,8 @@ Writes, under <site_root>/<pack slug>/ :
     index.html, <puzzle>/index.html     the pages
     pdf/*.pdf                           every puzzle in US Letter and A4, plus the full pack
     img/*.png                           page previews, thumbnails, link-preview image
-    pins/*.png                          Pinterest images (1000x1500)
+    pins/*.png, pins/*.jpg              Pinterest images (1000x1500); the .jpg ones
+                                        lay the pages on a photograph from photos/
     build.json                          what was built and what was checked
 and merges this pack's pins into <site_root>/assets/pin-schedule.json, which
 the site's scheduled poster reads.
@@ -17,11 +18,17 @@ finished PDF, read back and re-solved by qc_pdf, does not match. A build that
 checked zero words also fails. Publish only the output of a build that ended
 with its "built ..." line.
 """
+import gc
 import hashlib
+import io
 import json
 import os
+import re
+import shutil
 import sys
 from urllib.parse import unquote
+
+from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -31,6 +38,7 @@ import pages    # noqa: E402
 import pdfs     # noqa: E402
 import qc_pdf   # noqa: E402
 import ws       # noqa: E402
+from wording import mid_sentence  # noqa: E402
 
 BULLET = "  " + chr(8226) + "  "
 
@@ -41,11 +49,75 @@ def _ascii(text):
     return text
 
 
-def pin_copy(pack, pin):
+def load_photos():
+    """The table photographs some pins are laid on, and what each one shows."""
+    try:
+        data = json.load(open(os.path.join(HERE, "photos", "photos.json")))
+    except FileNotFoundError:
+        return {}
+    return {name: info for name, info in data.items() if not name.startswith("_")}
+
+
+def _photo_copy(pack, pin, scene):
+    """Words for a pin that is laid on a photograph. Each differs from the
+    flat-colour pin for the same page, so the two are never taken for one."""
+    total = len(pack["puzzles"])
+    season = pack["season"]
+    kind = pin.get("kind", "puzzle")
+    easy_pt = pdfs.PROMISED["easy"]
+    if kind == "hub3":
+        title = "%s Word Search Printables - %d Free Large Print Puzzles with Answer Keys" % (season, total)
+        desc = ("%s word search printables, free to print: %d large print puzzles (22 to 28 pt letters) from easy to hard, "
+                "each with its answer key. US Letter and A4, black and white, no sign-up and no ads. "
+                "For adults, seniors, classrooms and care homes." % (season, total))
+        alt = ("Two printed %s word search pages with large letters lying on %s, under the words %d Free Printables, "
+               "%s Word Searches, Large Print, 3 Levels, Answer Keys." % (season, scene, total, season))
+    elif kind == "seniors2":
+        title = "Free Large Print %s Word Search - Easy to Read, %d pt Letters" % (season, easy_pt)
+        desc = ("A free large print %s word search that is easy to read: %d pt letters in a typeface designed for "
+                "low-vision readers, words across and down only, and an answer key. For seniors, care homes and activity "
+                "groups. US Letter and A4, black and white, no sign-up. %d free puzzles in three levels."
+                % (season, easy_pt, total))
+        alt = ("A printed %s word search page with very large letters lying on %s, under the words Free Printable, "
+               "Large Print %s Word Search, %d pt Letters, Easy, Answer Key." % (season, scene, season, easy_pt))
+    elif kind == "easy2":
+        puz = next(p for p in pack["puzzles"] if p["slug"] == pin["target"])
+        title = "Easy %s Word Search for Kids and Beginners - Free Large Print Printable" % season
+        desc = ("An easy %s word search for kids and beginners, free to print: large %d pt letters, %d words, and words "
+                "that only run across and down. Answer key included. US Letter and A4, black and white, no sign-up. "
+                "One of %d free %s word searches from Hearth & Clue."
+                % (season, easy_pt, len(puz["words"]), total, season))
+        alt = ("A printed easy %s word search page titled %s with large letters lying on %s, under the words "
+               "Free Printable, Easy %s Word Search, Across and Down Only, %d pt."
+               % (season, puz["title"], scene, season, easy_pt))
+    else:
+        puz = next(p for p in pack["puzzles"] if p["slug"] == pin["target"])
+        spec = ws.LEVELS[puz["level"]]
+        pt = pdfs.PROMISED[puz["level"]]
+        title = "Free Printable %s - Large Print, %d pt Letters" % (puz["search"], pt)
+        desc = ("Print this %s free. Large %d pt letters, %d words in a %d by %d grid, and the answer key on the second "
+                "page. %s US Letter and A4, black and white, no sign-up. One of %d free %s word searches from "
+                "Hearth & Clue." % (mid_sentence(puz["search"]), pt, len(puz["words"]), spec["size"], spec["size"],
+                                    spec["rule"], total, season))
+        alt = ("A printed word search page titled %s lying on %s, under the words Free %s Printable, %s, Large Print, "
+               "%d pt, Answer Key." % (puz["title"], scene, season, puz["search"], pt))
+    return title, desc, alt
+
+
+def pin_copy(pack, pin, photos=None):
     """Title, description and alt text for one pin, written the way people search."""
     total = len(pack["puzzles"])
     season = pack["season"]
     kind = pin.get("kind", "puzzle")
+    if pin.get("photo"):
+        if pin["photo"] not in (photos or {}):
+            raise AssertionError("pin %s wants a photograph that is not in photos.json: %s" % (pin["id"], pin["photo"]))
+        title, desc, alt = _photo_copy(pack, pin, photos[pin["photo"]]["scene"])
+        for text, limit in ((title, 100), (desc, 500), (alt, 500)):
+            _ascii(text)
+            if len(text) > limit:
+                raise AssertionError("pin text over %d characters: %r" % (limit, text))
+        return title, desc, alt
     colour = {"night": "dark purple", "pumpkin": "orange", "cream": "cream"}[pin["scheme"]]
     if kind == "hub":
         title = "Free Printable %s Word Searches - Large Print, %d Puzzles with Answers" % (season, total)
@@ -82,7 +154,7 @@ def pin_copy(pack, pin):
         title = "%s - Free Printable, Large Print with Answer Key" % puz["search"]
         desc = ("Free printable %s in large print: %d words in a %d by %d grid with %d pt letters. %s "
                 "Answer key included, US Letter and A4, black and white, no sign-up. One of %d free %s word searches "
-                "from Hearth & Clue." % (puz["search"].lower(), len(puz["words"]), spec["size"], spec["size"], pt,
+                "from Hearth & Clue." % (mid_sentence(puz["search"]), len(puz["words"]), spec["size"], spec["size"], pt,
                                           spec["rule"], total, season))
         alt = ("A printed word search page titled %s with a %d by %d grid of large letters and a word list, on a %s "
                "background, under the words Free %s Printable, %s, Large Print, %d pt, Answer Key."
@@ -94,33 +166,46 @@ def pin_copy(pack, pin):
     return title, desc, alt
 
 
-def make_pin(pack, pin, page_img, out_path):
+def pin_art(pack, pin, page_img):
+    """What one pin shows: eyebrow, title, chip, page images (front first),
+    small footer, and whether the drawn pumpkins belong on it."""
     season = pack["season"]
     total = len(pack["puzzles"])
     kind = pin.get("kind", "puzzle")
     foot = "No sign-up" + BULLET + "US Letter and A4"
     by_level = {lv: [p for p in pack["puzzles"] if p["level"] == lv] for lv in ("easy", "medium", "hard")}
-    if kind in ("hub", "hub2"):
+    if kind in ("hub", "hub2", "hub3"):
         picks = [by_level["easy"][0], by_level["medium"][0], by_level["hard"][0]]
         if kind == "hub2":
             picks = [by_level["medium"][-1], by_level["easy"][1], by_level["hard"][-1]]
-        art.pin(out_path, pin["scheme"], "%d FREE PRINTABLES" % total, "%s Word Searches" % season,
+        return ("%d FREE PRINTABLES" % total, "%s Word Searches" % season,
                 "LARGE PRINT" + BULLET + "3 LEVELS" + BULLET + "ANSWER KEYS",
-                [page_img(p, 1) for p in picks], foot)
-    elif kind == "seniors":
-        puz = by_level["easy"][2]
-        art.pin(out_path, pin["scheme"], "FREE PRINTABLE", "Large Print %s Word Search" % season,
+                [page_img(p, 1) for p in picks], foot, True)
+    if kind in ("seniors", "seniors2"):
+        puz = by_level["easy"][2] if kind == "seniors" else by_level["easy"][1]
+        return ("FREE PRINTABLE", "Large Print %s Word Search" % season,
                 "28 PT LETTERS" + BULLET + "EASY" + BULLET + "ANSWER KEY",
-                [page_img(puz, 1), page_img(puz, 2)], "For seniors, care homes and activity groups", pumpkin=False)
-    elif kind == "easy":
-        art.pin(out_path, pin["scheme"], "FREE PRINTABLE", "Easy %s Word Search" % season,
-                "ACROSS AND DOWN ONLY" + BULLET + "28 PT",
-                [page_img(by_level["easy"][3], 1), page_img(by_level["easy"][1], 1)], foot)
+                [page_img(puz, 1), page_img(puz, 2)], "For seniors, care homes and activity groups", False)
+    if kind == "easy":
+        return ("FREE PRINTABLE", "Easy %s Word Search" % season, "ACROSS AND DOWN ONLY" + BULLET + "28 PT",
+                [page_img(by_level["easy"][3], 1), page_img(by_level["easy"][1], 1)], foot, True)
+    puz = next(p for p in pack["puzzles"] if p["slug"] == pin["target"])
+    if kind == "easy2":
+        return ("FREE PRINTABLE", "Easy %s Word Search" % season, "ACROSS AND DOWN ONLY" + BULLET + "28 PT",
+                [page_img(puz, 1), page_img(puz, 2)], foot, True)
+    return ("FREE %s PRINTABLE" % season.upper(), puz["search"],
+            "LARGE PRINT" + BULLET + "%d PT" % pdfs.PROMISED[puz["level"]] + BULLET + "ANSWER KEY",
+            [page_img(puz, 1), page_img(puz, 2)], foot, pin.get("scheme") != "pumpkin")
+
+
+def make_pin(pack, pin, page_img, out_path, photos=None):
+    eyebrow, title, chip, imgs, foot, pumpkin = pin_art(pack, pin, page_img)
+    if pin.get("photo"):
+        info = (photos or {})[pin["photo"]]
+        art.photo_pin(out_path, os.path.join(HERE, "photos", pin["photo"] + ".jpg"), info.get("card", "cream"),
+                      eyebrow, title, chip, imgs, foot, stack=info.get("stack"), foot=info.get("foot", "centre"))
     else:
-        puz = next(p for p in pack["puzzles"] if p["slug"] == pin["target"])
-        art.pin(out_path, pin["scheme"], "FREE %s PRINTABLE" % season.upper(), puz["search"],
-                "LARGE PRINT" + BULLET + "%d PT" % pdfs.PROMISED[puz["level"]] + BULLET + "ANSWER KEY",
-                [page_img(puz, 1), page_img(puz, 2)], foot, pumpkin=(pin["scheme"] != "pumpkin"))
+        art.pin(out_path, pin["scheme"], eyebrow, title, chip, imgs, foot, pumpkin=pumpkin)
 
 
 def sha(path):
@@ -131,8 +216,19 @@ def build(name, root):
     pack = json.load(open(os.path.join(HERE, "packs", name + ".json")))
     slug, total = pack["slug"], len(pack["puzzles"])
     out = os.path.join(root, slug)
+    # Everything in the pack's folder is made here, so start from nothing:
+    # a file left over from an earlier build would be published as if current.
+    # Only ever empty a folder this build made before (finished or not).
+    if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", slug):
+        raise AssertionError("bad pack slug: %r" % slug)
+    unfinished = os.path.join(out, ".building")
+    if os.path.isdir(out):
+        if not (os.path.exists(os.path.join(out, "build.json")) or os.path.exists(unfinished)):
+            raise AssertionError("%s exists but was not made by this build - leaving it alone" % out)
+        shutil.rmtree(out)
     for sub in ("pdf", "img", "pins"):
         os.makedirs(os.path.join(out, sub), exist_ok=True)
+    open(unfinished, "w").write("A build started here and has not finished. Do not publish this folder.\n")
     report = {"pack": slug, "puzzles": total, "checks": {}, "files": {}}
 
     # 1. grids, each verified from scratch
@@ -170,10 +266,14 @@ def build(name, root):
     cache = {}
 
     def page_img(puz, page_no):
+        # Rendered pages are kept as PNG data, not open pictures: twenty open
+        # pages cost about 75 MB, which is too much on a small build machine.
         key = (puz["slug"], page_no)
         if key not in cache:
-            cache[key] = art.render_page(os.path.join(out, "pdf", pages.pdf_name(pack, puz, "letter")), page_no, 200)
-        return cache[key]
+            buf = io.BytesIO()
+            art.render_page(os.path.join(out, "pdf", pages.pdf_name(pack, puz, "letter")), page_no, 200).save(buf, "PNG")
+            cache[key] = buf.getvalue()
+        return Image.open(io.BytesIO(cache[key]))
 
     for puz in pack["puzzles"]:
         art.save_preview(os.path.join(out, "pdf", pages.pdf_name(pack, puz, "letter")),
@@ -185,22 +285,26 @@ def build(name, root):
 
     # 4. pins and their schedule
     pt = pack["pinterest"]
+    photos = load_photos()
     entries = []
     for pin in pt["pins"]:
-        make_pin(pack, pin, page_img, os.path.join(out, "pins", pin["id"] + ".png"))
-        title, desc, alt = pin_copy(pack, pin)
+        name = "%s.%s" % (pin["id"], "jpg" if pin.get("photo") else "png")
+        make_pin(pack, pin, page_img, os.path.join(out, "pins", name), photos)
+        gc.collect()
+        title, desc, alt = pin_copy(pack, pin, photos)
         target = pages.urls(pack) if pin["target"] == "hub" else pages.urls(pack, next(p for p in pack["puzzles"] if p["slug"] == pin["target"]))
         entries.append({"id": "%s/%s" % (slug, pin["id"]), "date": pin["date"], "board_id": pt["board_id"],
                         "title": title, "description": desc, "alt_text": alt,
                         "link": pages.ORIGIN + target["page"] + "?src=pin",
-                        "image": "%s/%s/pins/%s.png" % (pages.ORIGIN, slug, pin["id"])})
-    # the pin each page offers through its own "Save to Pinterest" link
+                        "image": "%s/%s/pins/%s" % (pages.ORIGIN, slug, name)})
+    if len({p["id"] for p in pt["pins"]}) != len(pt["pins"]):
+        raise AssertionError("two pins in the pack share an id")
+    # the pin each page offers through its own "Save to Pinterest" link:
+    # a flat-colour .png named after the puzzle
     for puz in pack["puzzles"]:
-        own = [p for p in pt["pins"] if p["target"] == puz["slug"]]
-        if not own:
-            raise AssertionError("no pin image for %s" % puz["slug"])
-        if own[0]["id"] != puz["slug"]:
-            raise AssertionError("the pin for %s must be named after it" % puz["slug"])
+        own = [p for p in pt["pins"] if p["id"] == puz["slug"]]
+        if not own or own[0]["target"] != puz["slug"] or own[0].get("photo"):
+            raise AssertionError("%s needs a flat-colour pin named after it" % puz["slug"])
     sched_path = os.path.join(root, "assets", "pin-schedule.json")
     os.makedirs(os.path.dirname(sched_path), exist_ok=True)
     try:
@@ -236,7 +340,6 @@ def build(name, root):
         open(path, "w", newline="\n").write(text)
 
     # 6. every link and image the pages mention must exist in the build
-    import re
     missing = set()
     for path, text in html.items():
         for ref in re.findall(r'(?:href|src)="(/[^"#?]*)', text):
@@ -255,6 +358,7 @@ def build(name, root):
     if missing:
         raise AssertionError("pages link to files that were not built: %s" % sorted(missing))
 
+    os.remove(unfinished)
     for base, _, files in sorted(os.walk(out)):
         for f in sorted(files):
             if f == "build.json":

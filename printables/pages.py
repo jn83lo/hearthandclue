@@ -9,6 +9,7 @@ from urllib.parse import quote
 
 import ws
 from pdfs import PROMISED, WORD_PT
+from wording import mid_sentence
 
 ORIGIN = "https://hearthandclue.com"
 V = "1"   # bump to refresh cached css/js
@@ -202,7 +203,7 @@ def puzzle(pack, puz, built, index):
     n = spec["size"]
     title = "%s - Free Printable, Large Print | Hearth & Clue" % puz["search"]
     desc = ("Free printable %s in large print: %d words in a %d by %d grid, %d point letters, answer key included. "
-            "%s US Letter and A4, or play it online." % (puz["search"].lower(), len(puz["words"]), n, n,
+            "%s US Letter and A4, or play it online." % (mid_sentence(puz["search"]), len(puz["words"]), n, n,
                                                           PROMISED[puz["level"]], spec["rule"]))
     ld = {"@context": "https://schema.org", "@type": "CreativeWork", "name": puz["search"],
           "alternateName": puz["title"], "description": desc, "url": ORIGIN + u["page"],

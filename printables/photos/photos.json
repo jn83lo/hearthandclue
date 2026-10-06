@@ -1,0 +1,50 @@
+{
+  "_note": "Table photographs that some pins lay the real puzzle pages on. They were made for Hearth & Clue with an AI image model on 6 October 2026 and show no real people, brands or text. 'scene' is how the alt text describes the picture; 'card' is the colour of the panels the words sit on; 'stack' moves or shrinks the pages when something in the picture should stay in view.",
+  "walnut-pumpkins": {
+    "card": "cream",
+    "scene": "a dark wooden table with small orange pumpkins, autumn leaves, a mug of coffee and a candle"
+  },
+  "oak-glasses": {
+    "card": "cream",
+    "scene": "a pale wooden table with small white and orange pumpkins, a pair of reading glasses and a cup of tea"
+  },
+  "slate-party": {
+    "card": "night",
+    "scene": "a black slate table with orange pumpkins, a bowl of candy corn, paper bats and fairy lights"
+  },
+  "pine-blanket": {
+    "card": "cream",
+    "scene": "a pine table with a mustard knitted blanket, reading glasses, a mug of hot chocolate and a small pumpkin"
+  },
+  "oak-witch": {
+    "card": "night",
+    "scene": "a dark oak table with a witch's hat, dried herbs, small glass bottles, a tiny cauldron and a candle"
+  },
+  "mahogany-key": {
+    "card": "cream",
+    "scene": "an old dark desk with a brass key, two leather books, round spectacles, a dried rose and a candle",
+    "stack": {
+      "dx": -30
+    }
+  },
+  "gingham-treats": {
+    "card": "night",
+    "scene": "an orange gingham tablecloth with pumpkin buckets of sweets, lollipops and a small pumpkin"
+  },
+  "grey-cat": {
+    "card": "night",
+    "scene": "a pale grey wooden table where a black cat is curled up asleep beside a pumpkin, a ball of orange wool and a mug of tea",
+    "stack": {
+      "dx": -118,
+      "dy": -58,
+      "scale": 0.84,
+      "pages": 1,
+      "angle": -3.5
+    },
+    "foot": "left"
+  },
+  "barnwood-cider": {
+    "card": "cream",
+    "scene": "weathered wooden planks with autumn leaves, acorns, a red apple, cinnamon sticks and a mug of cider"
+  }
+}

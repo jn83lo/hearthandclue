@@ -251,7 +251,7 @@
       },
       {
         "id": "haunted-house",
-        "date": "2026-10-07",
+        "date": "2026-10-10",
         "target": "haunted-house",
         "scheme": "night"
       },
@@ -263,26 +263,26 @@
       },
       {
         "id": "pumpkin-patch",
-        "date": "2026-10-10",
+        "date": "2026-10-12",
         "target": "pumpkin-patch",
         "scheme": "cream"
       },
       {
         "id": "witchs-kitchen",
-        "date": "2026-10-11",
+        "date": "2026-10-14",
         "target": "witchs-kitchen",
         "scheme": "night"
       },
       {
         "id": "seniors",
-        "date": "2026-10-13",
+        "date": "2026-10-15",
         "target": "hub",
         "scheme": "pumpkin",
         "kind": "seniors"
       },
       {
         "id": "black-cat",
-        "date": "2026-10-15",
+        "date": "2026-10-23",
         "target": "black-cat",
         "scheme": "night"
       },
@@ -294,7 +294,7 @@
       },
       {
         "id": "costume-box",
-        "date": "2026-10-18",
+        "date": "2026-10-19",
         "target": "costume-box",
         "scheme": "pumpkin"
       },
@@ -313,13 +313,13 @@
       },
       {
         "id": "night-creatures",
-        "date": "2026-10-24",
+        "date": "2026-10-25",
         "target": "night-creatures",
         "scheme": "night"
       },
       {
         "id": "things-that-go-bump",
-        "date": "2026-10-25",
+        "date": "2026-10-26",
         "target": "things-that-go-bump",
         "scheme": "cream"
       },
@@ -329,6 +329,57 @@
         "target": "hub",
         "scheme": "cream",
         "kind": "easy"
+      },
+      {
+        "id": "seniors-photo",
+        "date": "2026-10-07",
+        "target": "hub",
+        "kind": "seniors2",
+        "photo": "oak-glasses"
+      },
+      {
+        "id": "hub-photo",
+        "date": "2026-10-09",
+        "target": "hub",
+        "kind": "hub3",
+        "photo": "walnut-pumpkins"
+      },
+      {
+        "id": "easy-photo",
+        "date": "2026-10-11",
+        "target": "costume-box",
+        "kind": "easy2",
+        "photo": "pine-blanket"
+      },
+      {
+        "id": "black-cat-photo",
+        "date": "2026-10-13",
+        "target": "black-cat",
+        "photo": "grey-cat"
+      },
+      {
+        "id": "trick-or-treat-photo",
+        "date": "2026-10-16",
+        "target": "trick-or-treat",
+        "photo": "gingham-treats"
+      },
+      {
+        "id": "halloween-party-photo",
+        "date": "2026-10-18",
+        "target": "halloween-party",
+        "photo": "slate-party"
+      },
+      {
+        "id": "haunted-house-photo",
+        "date": "2026-10-21",
+        "target": "haunted-house",
+        "photo": "mahogany-key"
+      },
+      {
+        "id": "witchs-kitchen-photo",
+        "date": "2026-10-24",
+        "target": "witchs-kitchen",
+        "photo": "oak-witch"
       }
     ],
     "board_name": "Free Printable Word Searches (Large Print)"
