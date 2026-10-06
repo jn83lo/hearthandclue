@@ -76,7 +76,7 @@ p + p { margin-top:12px; }
 .faq dt { font-weight:600; margin-top:16px; }
 .faq dd { margin-top:4px; }
 
-.preview { display:block; max-width:520px; margin:22px auto 0; border:1px solid var(--rule); background:#fff; box-shadow:0 6px 22px rgba(51,48,44,.12); }
+.preview { display:block; width:100%; max-width:520px; margin:22px auto 0; border:1px solid var(--rule); background:#fff; box-shadow:0 6px 22px rgba(51,48,44,.12); }
 .words-text { font-size:18px; letter-spacing:.02em; }
 .pager { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:34px; font-size:18px; }
 
