@@ -10,7 +10,14 @@ import { getStore } from "@netlify/blobs";
 //
 // No IP, no cookie, no identifier of any kind is stored.
 
-const ALLOWED = ["visit", "puzzle_completed", "restarted", "hint_used", "result_shared"];
+// Every name Index.html sends through track() must be listed here: anything
+// else is dropped without a trace. first_attempt and first_word were added to
+// the page and to stats.html in September but not to this list, so the
+// "Tried" and "1st word" columns stayed at zero whatever players did.
+const ALLOWED = [
+  "visit", "first_attempt", "first_word", "puzzle_completed",
+  "restarted", "hint_used", "result_shared",
+];
 
 export default async (req) => {
   if (req.method !== "POST") return new Response("POST only", { status: 405 });
