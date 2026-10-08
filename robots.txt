@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://hearthandclue.com/sitemap.xml
+Sitemap: https://hearthandclue.com/daily/sitemap.xml

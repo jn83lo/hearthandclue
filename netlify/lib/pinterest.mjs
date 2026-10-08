@@ -12,14 +12,18 @@ export const API = "https://api.pinterest.com";
 export const SITE = "https://hearthandclue.com";
 export const MANIFEST = SITE + "/pins/manifest.json";
 export const REDIRECT_URI = SITE + "/pinterest-connect.html";
-export const DEFAULT_BOARD = "300615412567048694"; // "Word Search Puzzle Books"
+// The daily pins have their own board since 9 Oct 2026. Until then they went to
+// "Word Search Puzzle Books" (300615412567048694), which now holds the Etsy books.
+export const DEFAULT_BOARD = "300615412567055411"; // "Free Daily Word Search Puzzle"
 export const SITE_TZ = "Australia/Sydney";
 
 const TITLE_MAX = 100, DESC_MAX = 800, ALT_MAX = 500;
 const REFRESH_WHEN_LEFT_MS = 5 * 24 * 3600 * 1000; // renew 5 days before expiry
 
 export function boardId() {
-  return (process.env.PINTEREST_BOARD || DEFAULT_BOARD).trim();
+  // A new variable name, so an old PINTEREST_BOARD setting cannot send the
+  // daily pins back to the books board.
+  return (process.env.PINTEREST_DAILY_BOARD || DEFAULT_BOARD).trim();
 }
 
 // The date the SITE is on. The puzzle rolls over at local midnight.
@@ -68,7 +72,10 @@ export async function loadEntry(today, fetchImpl = fetch) {
 }
 
 // Same wording as the old scripts/post_pin.py: no hashtags, alt text included.
-export function buildPayload(issue, entry, board) {
+// Each pin opens the page for its own day (daily/<issue>/), so a pin found weeks
+// later still leads to the puzzle in its picture. `link` falls back to the home
+// page when that page is missing.
+export function buildPayload(issue, entry, board, link = SITE + "/?src=pin") {
   const note = String(entry.note || "").replace(/[. ]+$/, "");
   const words = Array.isArray(entry.words) && entry.words.length
     ? entry.words.map(titleCase).join(", ")
@@ -79,14 +86,26 @@ export function buildPayload(issue, entry, board) {
     description: clip(
       `${entry.title}. ${note}. Eight words hidden in the grid. ` +
       "A free word search puzzle, new every morning, same puzzle for everyone. " +
-      "No app, no signup, no ads. Play today's at hearthandclue.com. " +
-      `Today's is No. ${issue}.`, DESC_MAX),
+      "No app, no signup, no ads. Play it free at hearthandclue.com. " +
+      `This is No. ${issue}.`, DESC_MAX),
     alt_text: clip(
       `A ten by ten word search grid titled ${entry.title}, issue number ${issue} of The Daily Clue, ` +
       `with eight hidden words listed underneath: ${words}.`, ALT_MAX),
-    link: SITE + "/",
+    link,
     media_source: { source_type: "image_url", url: `${SITE}/pins/${issue}.png` },
   };
+}
+
+// The page for a day, if it is live. Any doubt means "no": the pin then links
+// to the home page, which is never wrong for long.
+export async function dayPageLink(issue, fetchImpl = fetch) {
+  const page = `${SITE}/daily/${issue}/`;
+  try {
+    const r = await fetchImpl(page, { method: "HEAD", headers: { "Cache-Control": "no-cache" } });
+    return r.ok ? page + "?src=pin" : null;
+  } catch (e) {
+    return null;
+  }
 }
 
 // ---- duplicate guard -------------------------------------------------------
@@ -157,7 +176,8 @@ export async function postToday(token, { fetchImpl = fetch, now = new Date() } =
   }
   if (existing) return { ...base, status: "skipped", reason: "today's pin is already on the board", pin_id: existing };
 
-  const payload = buildPayload(issue, entry, board);
+  const link = (await dayPageLink(issue, fetchImpl)) || SITE + "/?src=pin";
+  const payload = buildPayload(issue, entry, board, link);
   let r, j;
   try {
     r = await fetchImpl(`${API}/v5/pins`, {
@@ -172,7 +192,7 @@ export async function postToday(token, { fetchImpl = fetch, now = new Date() } =
   if (!r.ok || !j || !j.id) {
     return { ...base, status: "failed", reason: `Pinterest rejected the pin: HTTP ${r.status}`, detail: j };
   }
-  return { ...base, status: "posted", pin_id: j.id };
+  return { ...base, status: "posted", pin_id: j.id, link };
 }
 
 // ---- tokens ----------------------------------------------------------------

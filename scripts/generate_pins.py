@@ -4,10 +4,12 @@ Render Daily Clue pin images to pins/<issue>.png (1000x1500, Pinterest 2:3).
 
 Usage: python scripts/generate_pins.py [days_ahead] [index.html] [outdir]
 
-Only writes files that do not already exist, so a daily run is cheap and the
-commit is empty on days when nothing changed.
+Only draws an image that is missing, or whose puzzle changed since it was
+drawn (pins/rendered.json keeps a fingerprint of each one), so a daily run is
+cheap, the commit is empty on days when nothing changed, and a change to
+THEMES can never leave a pin showing an old grid.
 """
-import os, sys, json, datetime
+import os, sys, json, datetime, hashlib
 from PIL import Image, ImageDraw, ImageFont
 from engine import load_themes, theme_for, build, day_number
 
@@ -186,6 +188,12 @@ def main():
     os.makedirs(outdir, exist_ok=True)
     today = datetime.date.today()
     manifest, made = {}, 0
+    sig_path = os.path.join(outdir, "rendered.json")
+    try:
+        drawn = json.load(open(sig_path))
+    except (OSError, ValueError):
+        drawn = None   # first run with fingerprints: trust the images already there
+    sigs = {}
 
     for i in range(days):
         d = today + datetime.timedelta(days=i)
@@ -197,18 +205,27 @@ def main():
             "subject": t["subject"], "url": t["url"], "image": "/pins/%d.png" % issue,
             "words": list(t["words"])
         }
+        sig = hashlib.sha1(json.dumps([d.isoformat(), t["title"], t["note"], list(t["words"])]).encode()).hexdigest()[:16]
         if os.path.exists(path):
-            continue
+            if drawn is None or drawn.get(str(issue), sig) == sig:
+                sigs[str(issue)] = sig
+                continue
+            print("redrawing", path, "- its puzzle changed")
         grid = build(t["words"], d.year * 10000 + d.month * 100 + d.day)
         if grid is None:
             print("could not build", d, t["title"])
+            if drawn and str(issue) in drawn:
+                sigs[str(issue)] = drawn[str(issue)]   # still the old drawing
             continue
         render(t, grid, issue, d, path)
+        sigs[str(issue)] = sig
         made += 1
         print("rendered", path, "-", t["title"])
 
     with open(os.path.join(outdir, "manifest.json"), "w") as f:
         json.dump(manifest, f, indent=1, sort_keys=True)
+    with open(sig_path, "w") as f:
+        json.dump(sigs, f, indent=1, sort_keys=True)
 
     # Keep the folder from growing without bound: drop anything older than a week.
     cutoff = day_number(today) + 1 - 7

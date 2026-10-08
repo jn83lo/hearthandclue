@@ -29,16 +29,17 @@
   <p class="sub">Anonymous event counts. No visitor is identified or tracked between days.
   Days are counted in UTC, so each one starts at 11am Melbourne time (10am in winter).</p>
   <div id="out" class="msg">Loading...</div>
-  <p><a href="/">The Daily Clue</a> &middot; <a href="/halloween-word-search/">Halloween printables</a> &middot; <a href="/fall-word-search/">Fall printables</a></p>
+  <p><a href="/">The Daily Clue</a> &middot; <a href="/halloween-word-search/">Halloween printables</a> &middot; <a href="/fall-word-search/">Fall printables</a> &middot; <a href="/daily/">Past puzzles</a></p>
 </div>
 <script>
 (function () {
-  var GAME = [["visit", "Visits"], ["first_attempt", "Tried"], ["first_word", "1st word"],
+  var GAME = [["visit", "Visits"], ["visit_from_pin", "From pins"], ["first_attempt", "Tried"], ["first_word", "1st word"],
               ["puzzle_completed", "Solved"], ["hint_used", "Hints"], ["restarted", "Restarts"],
               ["result_shared", "Shared"]];
   var PRINT = [["print_view", "Views"], ["print_from_pin", "From pins"], ["print_pdf", "PDFs"],
                ["print_play", "Played"], ["print_solved", "Solved"], ["print_book", "Book"],
                ["print_save", "Saved"]];
+  var PAST = [["past_visit", "Views"], ["past_from_pin", "From pins"], ["past_solved", "Solved"]];
   var out = document.getElementById("out");
 
   function table(title, note, cols, days, data) {
@@ -71,7 +72,8 @@
       out.className = "";
       out.innerHTML =
         table("Printable pages", "Views of the free printables, files opened, and visits that arrived from our pins.", PRINT, days, data) +
-        table("The Daily Clue", "The daily puzzle. Tried and 1st word only count from 6 Oct 2026.", GAME, days, data);
+        table("The Daily Clue", "The daily puzzle. Tried and 1st word only count from 6 Oct 2026; From pins from 9 Oct 2026.", GAME, days, data) +
+        table("Past puzzles", "The page for each past day (hearthandclue.com/daily/). Counted from 9 Oct 2026.", PAST, days, data);
     })
     .catch(function (e) { out.textContent = "Could not load stats: " + e; });
 })();

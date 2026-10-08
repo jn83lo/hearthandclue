@@ -10,6 +10,7 @@ on:
   push:
     paths:
       - "index.html"
+      - "Index.html"
       - "scripts/**"
       - ".github/workflows/pins.yml"
   workflow_dispatch:
@@ -48,15 +49,18 @@ jobs:
       - name: Render pins
         run: python scripts/generate_pins.py 30 index.html pins
 
-      - name: Commit new images
+      - name: Pages for each day's puzzle
+        run: python scripts/daily_pages.py Index.html .
+
+      - name: Commit new images and pages
         run: |
           git config user.name "daily-clue-bot"
           git config user.email "actions@github.com"
-          git add pins
+          git add pins daily
           if git diff --cached --quiet; then
             echo "nothing new to commit"
           else
-            git commit -m "Render pin images ($(date -u +%Y-%m-%d))"
+            git commit -m "Render pin images and day pages ($(date -u +%Y-%m-%d))"
               git pull --rebase --autostash origin main
             git push
           fi

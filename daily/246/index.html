@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="The Daily Clue No. 246, Thursday, September 3, 2026: Sawdust and Light. Find Hammer, Wood, Chisel, Craft, Grain, Joints, Build and Finish in a 10x10 word search grid. Free to play in your browser, no app, no sign-up.">
+<meta name="theme-color" content="#F8F3ED">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Woodworking Word Search: Sawdust and Light | The Daily Clue No. 246">
+<meta property="og:description" content="The Daily Clue No. 246, Thursday, September 3, 2026: Sawdust and Light. Find Hammer, Wood, Chisel, Craft, Grain, Joints, Build and Finish in a 10x10 word search grid. Free to play in your browser, no app, no sign-up.">
+<meta property="og:image" content="https://hearthandclue.com/daily/246/pin.png">
+<meta name="twitter:image" content="https://hearthandclue.com/daily/246/pin.png">
+<meta property="og:url" content="https://hearthandclue.com/daily/246/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://hearthandclue.com/daily/246/">
+<link rel="icon" type="image/png" href="/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@72,500;72,700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<title>Woodworking Word Search: Sawdust and Light | The Daily Clue No. 246</title>
+<style>
+  :root {
+    --cream:#F8F3ED; --oxblood:#8E2A2A; --green:#2F4B3C;
+    --brass:#C6A266; --light-brass:#E8D9C3; --ink:#33302C;
+    --paper:#FFFDFA; --rule:#E4DCD0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body {
+    font-family:"Spectral",Georgia,serif; color:var(--ink); background:var(--cream);
+    line-height:1.5; overflow-x:hidden;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none !important; transition:none !important; } }
+
+  .skip-link { position:absolute; left:-9999px; top:0; background:var(--oxblood); color:#fff; padding:10px 14px; z-index:200; }
+  .skip-link:focus { left:0; }
+  .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+
+  .wrap { max-width:560px; margin:0 auto; padding:28px 16px 56px; }
+
+  header { text-align:center; margin-bottom:22px; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(30px,9vw,44px); letter-spacing:-.02em; line-height:1.05; }
+  .rule { border-top:2px solid var(--brass); border-bottom:2px solid var(--brass); height:6px; width:56px; margin:12px auto; }
+  .tagline { font-style:italic; color:var(--green); font-size:clamp(14px,4vw,17px); }
+  .issue { margin-top:10px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--brass); }
+
+  .card { background:rgba(198,162,102,.10); border-radius:3px; padding:14px 16px; text-align:center; margin-bottom:16px; }
+  .card h2 { font-family:"Fraunces",Georgia,serif; font-size:clamp(17px,5vw,21px); font-weight:600; color:var(--oxblood); margin-bottom:4px; line-height:1.2; }
+  .card p { font-style:italic; color:var(--green); font-size:14px; }
+
+  .status { display:flex; justify-content:center; gap:18px; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--green); font-weight:600; margin-bottom:12px; }
+
+  /* Grid — sized so ten columns always fit the viewport */
+  .board {
+    background:var(--paper); border:1px solid var(--rule); border-radius:3px;
+    padding:8px; margin:0 auto 16px;
+    width:100%; max-width:440px;
+    touch-action:none; -webkit-user-select:none; user-select:none;
+  }
+  .grid { display:grid; grid-template-columns:repeat(10,1fr); gap:2px; }
+  .cell {
+    all:unset; box-sizing:border-box;
+    display:flex; align-items:center; justify-content:center;
+    aspect-ratio:1; width:100%;
+    font-family:"Spectral",Georgia,serif; font-weight:600;
+    font-size:clamp(11px,3.1vw,17px); color:var(--ink);
+    background:#FBF8F3; border:1px solid var(--rule); border-radius:2px;
+    cursor:pointer; transition:background .12s ease, color .12s ease;
+  }
+  .cell:focus-visible { outline:2px solid var(--oxblood); outline-offset:1px; }
+  .cell.sel { background:var(--brass); color:#fff; border-color:var(--brass); }
+  .cell.found { background:var(--green); color:#fff; border-color:var(--green); }
+  .cell.hint { background:var(--light-brass); color:var(--oxblood); border-color:var(--brass); }
+
+  .words { display:grid; grid-template-columns:repeat(auto-fill,minmax(96px,1fr)); gap:6px; margin-bottom:16px; }
+  .word { background:var(--paper); border:1px solid var(--rule); border-radius:2px; padding:7px 9px; font-size:13px; letter-spacing:.03em; text-align:center; }
+  .word.done { background:var(--green); color:#fff; border-color:var(--green); text-decoration:line-through; }
+
+  .controls { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .btn {
+    font-family:"Spectral",Georgia,serif; font-size:13px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase;
+    padding:10px 18px; border-radius:2px; cursor:pointer; border:1px solid transparent;
+    transition:background .12s ease, color .12s ease;
+  }
+  .btn:focus-visible { outline:2px solid var(--oxblood); outline-offset:2px; }
+  .btn-primary { background:var(--oxblood); color:#fff; }
+  .btn-primary:hover { background:#712121; }
+  .btn-ghost { background:transparent; color:var(--green); border-color:var(--green); }
+  .btn-ghost:hover { background:rgba(47,75,60,.08); }
+  .btn:disabled { opacity:.45; cursor:default; }
+
+  .done-panel { text-align:center; }
+  .done-panel h2 { font-family:"Fraunces",Georgia,serif; font-size:clamp(24px,7vw,32px); color:var(--oxblood); margin-bottom:6px; }
+  .done-sub { font-style:italic; color:var(--green); margin-bottom:16px; }
+  .figures { display:flex; justify-content:center; gap:28px; background:rgba(198,162,102,.10); border-radius:3px; padding:16px; margin-bottom:18px; }
+  .figure-label { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--green); font-weight:600; }
+  .figure-value { font-family:"Fraunces",Georgia,serif; font-size:24px; color:var(--oxblood); }
+  .emoji-grid { font-size:19px; letter-spacing:3px; line-height:1.6; background:var(--paper); border:1px solid var(--rule); border-radius:3px; padding:12px; margin-bottom:12px; word-break:break-word; }
+  .shop-note { margin-top:18px; padding:16px; background:rgba(142,42,42,.07); border-radius:3px; font-size:14px; }
+  .shop-note a { color:var(--oxblood); font-weight:600; }
+  .tomorrow { margin-top:16px; font-size:13px; color:var(--green); font-style:italic; }
+  .tomorrow a { color:var(--oxblood); }
+
+  .about { margin-top:40px; padding-top:20px; border-top:1px solid var(--rule); font-size:13px; color:#6C665E; text-align:center; }
+  .about a { color:var(--oxblood); }
+  .about h2 { font-family:"Fraunces",Georgia,serif; font-size:17px; font-weight:600; color:var(--oxblood); margin-bottom:8px; line-height:1.2; }
+  .about p { margin:0 auto 10px; max-width:440px; text-wrap:pretty; }
+  .about p:last-child { margin-bottom:0; }
+  .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:24px; background:var(--green); color:#fff; padding:10px 18px; border-radius:3px; font-size:13px; z-index:300; }
+
+  .home-link { color:inherit; text-decoration:none; }
+  .past { text-align:center; font-size:14px; color:var(--green); margin:-8px 0 18px; }
+  .past a { color:var(--oxblood); }
+  .pager { margin-top:4px; font-size:13px; }
+  .nojs { text-align:center; font-size:13px; font-style:italic; color:var(--green); margin-top:4px; }
+  .archive h2 { font-family:"Fraunces",Georgia,serif; font-size:19px; font-weight:600; color:var(--oxblood); margin:24px 0 6px; }
+  .archive ul { list-style:none; }
+  .archive li a { display:flex; align-items:baseline; gap:10px; padding:10px 4px; border-bottom:1px solid var(--rule); color:var(--ink); text-decoration:none; }
+  .archive li a:hover { background:rgba(198,162,102,.10); }
+  .archive .no { flex:0 0 auto; min-width:58px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--brass); }
+  .archive .t { flex:1 1 auto; font-family:"Fraunces",Georgia,serif; font-weight:600; color:var(--oxblood); }
+  .archive .d { flex:0 0 auto; font-size:13px; font-style:italic; color:var(--green); }
+  .intro { text-align:center; font-size:15px; margin:-6px 0 8px; }
+  .intro a { color:var(--oxblood); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#board">Skip to the puzzle</a>
+<div class="wrap">
+  <header>
+    <h1><a class="home-link" href="/">The Daily Clue</a></h1>
+    <div class="rule"></div>
+    <p class="tagline">A free word search, every day</p>
+    <p class="issue" id="issue">No. 246 · Thu Sep 03 2026</p>
+  </header>
+  <nav class="past" aria-label="Past puzzles">
+    <p>The puzzle from Thursday, September 3, 2026. <a href="/">Play today's puzzle</a></p>
+    <p class="pager"><a href="/daily/245/" rel="prev">&larr; No. 245</a> &middot; <a href="/daily/">All past puzzles</a><span data-date="2026-09-04"> &middot; <a href="/daily/247/" rel="next">No. 247 &rarr;</a></span></p>
+  </nav>
+  <main id="app">
+    <section class="card"><h2>Sawdust and Light</h2><p>Wood speaks if you listen</p></section>
+    <div class="board" id="board"><div class="grid"><span class="cell">R</span><span class="cell">B</span><span class="cell">I</span><span class="cell">D</span><span class="cell">L</span><span class="cell">I</span><span class="cell">U</span><span class="cell">B</span><span class="cell">R</span><span class="cell">S</span><span class="cell">W</span><span class="cell">Q</span><span class="cell">A</span><span class="cell">G</span><span class="cell">E</span><span class="cell">F</span><span class="cell">E</span><span class="cell">M</span><span class="cell">H</span><span class="cell">H</span><span class="cell">E</span><span class="cell">X</span><span class="cell">O</span><span class="cell">A</span><span class="cell">S</span><span class="cell">S</span><span class="cell">X</span><span class="cell">I</span><span class="cell">A</span><span class="cell">S</span><span class="cell">O</span><span class="cell">P</span><span class="cell">J</span><span class="cell">E</span><span class="cell">I</span><span class="cell">Y</span><span class="cell">S</span><span class="cell">J</span><span class="cell">M</span><span class="cell">I</span><span class="cell">W</span><span class="cell">O</span><span class="cell">O</span><span class="cell">D</span><span class="cell">H</span><span class="cell">Y</span><span class="cell">R</span><span class="cell">L</span><span class="cell">M</span><span class="cell">N</span><span class="cell">D</span><span class="cell">I</span><span class="cell">I</span><span class="cell">K</span><span class="cell">C</span><span class="cell">E</span><span class="cell">T</span><span class="cell">O</span><span class="cell">E</span><span class="cell">I</span><span class="cell">V</span><span class="cell">A</span><span class="cell">N</span><span class="cell">M</span><span class="cell">X</span><span class="cell">J</span><span class="cell">F</span><span class="cell">X</span><span class="cell">R</span><span class="cell">F</span><span class="cell">E</span><span class="cell">D</span><span class="cell">T</span><span class="cell">J</span><span class="cell">H</span><span class="cell">B</span><span class="cell">A</span><span class="cell">T</span><span class="cell">V</span><span class="cell">U</span><span class="cell">K</span><span class="cell">L</span><span class="cell">S</span><span class="cell">L</span><span class="cell">D</span><span class="cell">B</span><span class="cell">R</span><span class="cell">E</span><span class="cell">I</span><span class="cell">F</span><span class="cell">C</span><span class="cell">G</span><span class="cell">R</span><span class="cell">A</span><span class="cell">I</span><span class="cell">N</span><span class="cell">C</span><span class="cell">N</span><span class="cell">W</span><span class="cell">T</span></div></div>
+    <div class="words"><div class="word">HAMMER</div><div class="word">WOOD</div><div class="word">CHISEL</div><div class="word">CRAFT</div><div class="word">GRAIN</div><div class="word">JOINTS</div><div class="word">BUILD</div><div class="word">FINISH</div></div>
+    <noscript><p class="nojs">Turn on JavaScript to play here, or print this page and play with a pencil.</p></noscript>
+  </main>
+  <section class="about" aria-labelledby="about-title">
+    <h2 id="about-title">About The Daily Clue</h2>
+    <p>A free word search, new every day. Each puzzle is a 10&times;10 grid hiding eight words on one theme, and everyone gets the same puzzle that day. The next one appears at midnight, wherever you are.</p>
+    <p>Missed a day? <a href="/daily/">Play the past puzzles</a>.</p>
+    <p>Words run in straight lines: across, down or diagonally, forwards or backwards. Drag across a word to mark it, or use <em>Reveal a word</em> if you&rsquo;re stuck. When you finish, you can share your result.</p>
+    <p>Themes rotate through camping, golf, quilting, gardening, fishing, cozy mysteries and more, with specials for Halloween, Christmas and Valentine&rsquo;s Day. No login, no ads, nothing to install.</p>
+    <p>New: free printable word searches in large print, with answer keys: <a href="/halloween-word-search/">Halloween</a> and <a href="/fall-word-search/">fall</a>.</p>
+    <p>Made by <a href="https://hearthandclue.etsy.com" target="_blank" rel="noopener">Hearth&nbsp;&amp;&nbsp;Clue</a>, makers of printable puzzle books.</p>
+  </section>
+</div>
+<div aria-live="polite" class="sr-only" id="live"></div>
+
+<script>window.DC_DAY = {"n":246,"date":"2026-09-03","title":"Sawdust and Light","note":"Wood speaks if you listen","subject":"Woodworking","url":"https://etsy.com/listing/4554679490","cta":null,"words":["HAMMER","WOOD","CHISEL","CRAFT","GRAIN","JOINTS","BUILD","FINISH"],"grid":["RBIDLIUBRS","WQAGEFEMHH","EXOASSXIAS","OPJEIYSJMI","WOODHYRLMN","DIIKCETOEI","VANMXJFXRF","EDTJHBATVU","KLSLDBREIF","CGRAINCNWT"]};</script>
+<script src="/assets/clue.js"></script>
+<script>
+(function () {
+  var n = new Date(), t = n.getFullYear() + "-" + ("0" + (n.getMonth() + 1)).slice(-2) + "-" + ("0" + n.getDate()).slice(-2);
+  var els = document.querySelectorAll("[data-date]");
+  for (var i = 0; i < els.length; i++) if (els[i].getAttribute("data-date") > t) els[i].hidden = true;
+})();
+</script>
+</body>
+</html>

@@ -16,7 +16,9 @@ import { getStore } from "@netlify/blobs";
 // "Tried" and "1st word" columns stayed at zero whatever players did.
 const ALLOWED = [
   "visit", "first_attempt", "first_word", "puzzle_completed",
-  "restarted", "hint_used", "result_shared",
+  "restarted", "hint_used", "result_shared", "visit_from_pin",
+  // pages for past days (daily/<issue>/, same script)
+  "past_visit", "past_from_pin", "past_solved",
   // printable pages (assets/printables.js)
   "print_view", "print_from_pin", "print_pdf", "print_play",
   "print_solved", "print_book", "print_save",
