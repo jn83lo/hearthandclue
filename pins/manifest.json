@@ -1,22 +1,4 @@
 {
- "280": {
-  "date": "2026-10-07",
-  "image": "/pins/280.png",
-  "note": "Roots, leaves, flowers\u2014each one matters",
-  "subject": "Herbalism",
-  "title": "The Apothecary",
-  "url": null,
-  "words": [
-   "HERBS",
-   "REMEDIES",
-   "HEALING",
-   "ROOTS",
-   "PLANTS",
-   "MEDICINE",
-   "NATURE",
-   "CURE"
-  ]
- },
  "281": {
   "date": "2026-10-08",
   "image": "/pins/281.png",
@@ -537,6 +519,24 @@
    "VALUE",
    "RARE",
    "PRECIOUS"
+  ]
+ },
+ "310": {
+  "date": "2026-11-06",
+  "image": "/pins/310.png",
+  "note": "Every day is January 1st if you need it to be",
+  "subject": "New Year",
+  "title": "Resolutions",
+  "url": null,
+  "words": [
+   "PROMISE",
+   "CHANGE",
+   "FUTURE",
+   "DREAMS",
+   "GOALS",
+   "BEGIN",
+   "NEW",
+   "START"
   ]
  }
 }
