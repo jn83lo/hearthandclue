@@ -9,7 +9,7 @@ from urllib.parse import quote
 
 import ws
 from pdfs import PROMISED, WORD_PT
-from wording import mid_sentence
+from wording import mid_sentence, number_word
 
 ORIGIN = "https://hearthandclue.com"
 V = "1"   # bump to refresh cached css/js
@@ -84,7 +84,7 @@ def _book(pack):
     JavaScript the first box stays and the second stays hidden."""
     b = pack["book"]
     box = """<section class="book" aria-labelledby="book-h%(n)s"%(when)s>
-<h2 id="book-h%(n)s">Want more than ten?</h2>
+<h2 id="book-h%(n)s">Want more than """ + number_word(len(pack["puzzles"])) + """?</h2>
 <p>%(blurb)s</p>
 <div class="btn-row"><a class="btn btn-primary" href="%(u)s" target="_blank" rel="noopener" data-ev="print_book">See %(label)s on Etsy</a></div>
 </section>

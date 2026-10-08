@@ -188,11 +188,58 @@ def _bat(c, cx, cy, w, colour, tilt=0.0):
     c.drawPath(path, stroke=0, fill=1)
 
 
+def _ornament(c, cx, cy, w, body, band, cap=BRASS):
+    """A glass bauble hanging from its cap: w is the ball's width."""
+    r = w / 2.0
+    _rgb(c, cap, stroke=True)
+    c.setLineWidth(max(0.8, w * 0.03))
+    c.circle(cx, cy + r + w * 0.17, w * 0.06, stroke=1, fill=0)
+    _rgb(c, cap)
+    c.roundRect(cx - w * 0.12, cy + r - w * 0.04, w * 0.24, w * 0.14, w * 0.02, stroke=0, fill=1)
+    _rgb(c, body)
+    c.circle(cx, cy, r, stroke=0, fill=1)
+    # the band: the front half of a ring round the ball, cut off at its edge
+    c.saveState()
+    clip = c.beginPath()
+    clip.circle(cx, cy, r)
+    c.clipPath(clip, stroke=0, fill=0)
+    _rgb(c, band, stroke=True)
+    c.setLineWidth(max(0.8, w * 0.07))
+    c.arc(cx - r * 1.1, cy - r * 0.22, cx + r * 1.1, cy + r * 0.22, startAng=180, extent=180)
+    c.restoreState()
+    # a curved glint, upper left
+    _rgb(c, WHITE, stroke=True)
+    c.setLineWidth(max(0.6, w * 0.05))
+    c.setLineCap(1)
+    c.arc(cx - r * 0.72, cy - r * 0.72, cx + r * 0.72, cy + r * 0.72, startAng=112, extent=46)
+    c.setLineCap(0)
+
+
+def _snowflake(c, cx, cy, w, colour):
+    """Six arms, each with two pairs of short branches."""
+    _rgb(c, colour, stroke=True)
+    c.setLineWidth(max(0.7, w * 0.07))
+    c.setLineCap(1)
+    for k in range(6):
+        a = math.radians(90 + 60 * k)
+        ux, uy = math.cos(a), math.sin(a)
+        c.line(cx, cy, cx + ux * w / 2, cy + uy * w / 2)
+        for at, length in ((0.30, 0.16), (0.55, 0.12)):
+            bx, by = cx + ux * w * at, cy + uy * w * at
+            for turn in (-50, 50):
+                b = a + math.radians(turn)
+                c.line(bx, by, bx + math.cos(b) * w * length, by + math.sin(b) * w * length)
+    c.setLineCap(0)
+
+
 def cover(c, page, book):
-    """Page 1: the house cover (cream, double border, two-colour title, a small grid)."""
+    """Page 1: the house cover (cream, double border, two-colour title, a small grid).
+    The grid's corner holds the book's motif: a pumpkin and two bats ("halloween",
+    the default) or two baubles and two snowflakes ("christmas")."""
     W, H = PAGES[page]
     cv = book["cover"]
     accent = tuple(cv["accent"])
+    motif = cv.get("motif", "halloween")
     k = H / 792.0                       # the taller A4 page spreads the same parts out a little
     s = min(W / 612.0, H / 792.0)       # ...and its narrower width shrinks them a little
 
@@ -255,10 +302,22 @@ def cover(c, page, book):
     pw = 104.0 * s
     pcx, pcy = gx + side + pad - pw * 0.30, gtop - side - pad + pw * 0.26
 
+    # the second, smaller bauble sits to the left of the first and a little lower
+    ow, ocx, ocy = pw * 0.86, pcx + pw * 0.02, pcy + pw * 0.02
+    sw, scx, scy = pw * 0.56, pcx - pw * 0.58, pcy - pw * 0.16
+
     def under_pumpkin(x, y):
         # a letter is left out if any of it would be hidden: the pumpkin's
-        # outline, grown by half a letter, and the stem above it
+        # outline, grown by half a letter, and the stem above it (or, on a
+        # Christmas cover, each bauble and its cap)
         reach = cell * 0.30
+        if motif == "christmas":
+            for bw, bx, by in ((ow, ocx, ocy), (sw, scx, scy)):
+                if math.hypot(x - bx, y - by) < bw / 2 + reach:
+                    return True
+                if abs(x - bx) < bw * 0.14 + reach and 0 < y - by < bw * 0.75 + reach:
+                    return True
+            return False
         body = ((x - pcx) / (pw * 0.52 + reach)) ** 2 + ((y - pcy) / (pw * 0.39 + reach)) ** 2 < 1.0
         stem = abs(x - pcx) < pw * 0.07 + reach and 0 < y - pcy < pw * 0.56 + reach
         return body or stem
@@ -278,9 +337,15 @@ def cover(c, page, book):
         x0, x1 = gx + (col + 0.5) * cell, gx + (col + length - 0.5) * cell
         yc = gtop - (r + 0.5) * cell
         c.roundRect(x0 - rad, yc - rad, x1 - x0 + 2 * rad, 2 * rad, rad, stroke=1, fill=0)
-    _pumpkin(c, pcx, pcy, pw)
-    _bat(c, gx + side + pad + 30 * s, gtop + 4 * s, 50 * s, INK, tilt=14)
-    _bat(c, gx + side + pad + 62 * s, gtop - 34 * s, 30 * s, INK, tilt=-8)
+    if motif == "christmas":
+        _ornament(c, scx, scy, sw, GREEN, BRASS)
+        _ornament(c, ocx, ocy, ow, accent, BRASS)
+        _snowflake(c, gx + side + pad + 30 * s, gtop + 4 * s, 46 * s, GREEN)
+        _snowflake(c, gx + side + pad + 62 * s, gtop - 34 * s, 28 * s, accent)
+    else:
+        _pumpkin(c, pcx, pcy, pw)
+        _bat(c, gx + side + pad + 30 * s, gtop + 4 * s, 50 * s, INK, tilt=14)
+        _bat(c, gx + side + pad + 62 * s, gtop - 34 * s, 30 * s, INK, tilt=-8)
 
     # what it is
     line = "LARGE PRINT   %s   PRINTABLE PDF" % DOT

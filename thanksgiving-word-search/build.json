@@ -1,0 +1,208 @@
+{
+ "checks": {
+  "grid_words_verified": 84,
+  "letter_sizes_pt": {
+   "grid": {
+    "easy": 28,
+    "hard": 22,
+    "medium": 24
+   },
+   "word_list": 18.0
+  },
+  "pack_a4": {
+   "answers": 6,
+   "pages": 10,
+   "puzzles": 6,
+   "words_checked": 84
+  },
+  "pack_letter": {
+   "answers": 6,
+   "pages": 10,
+   "puzzles": 6,
+   "words_checked": 84
+  },
+  "pages": 7,
+  "pdf_words_resolved": 336,
+  "pins": 10
+ },
+ "files": {
+  "thanksgiving-word-search/giving-thanks/index.html": {
+   "bytes": 7234,
+   "sha256": "e51e1bf9b36ac541d5d00d39e03f5690144380752e2afeda91696c6a32a832c5"
+  },
+  "thanksgiving-word-search/harvest-table/index.html": {
+   "bytes": 7393,
+   "sha256": "817f9c00262c14c22e483b7502b6ee82fa9687029aea80e995830715268062e9"
+  },
+  "thanksgiving-word-search/img/giving-thanks-s.png": {
+   "bytes": 34358,
+   "sha256": "6a431c2174e44b29ef7d19f3ff540c791c042e8aaace13ebff3be1497da6aa67"
+  },
+  "thanksgiving-word-search/img/giving-thanks.png": {
+   "bytes": 95926,
+   "sha256": "82e0613a487352107b85f3c72a49b972267dfb7ca2370deb57253a235dbca98e"
+  },
+  "thanksgiving-word-search/img/harvest-table-s.png": {
+   "bytes": 40112,
+   "sha256": "d6aee0b787eab99a4ffd7237be8f29008686ef1f7f08beec066286f96259d2a7"
+  },
+  "thanksgiving-word-search/img/harvest-table.png": {
+   "bytes": 111039,
+   "sha256": "1d6f025e357a3f0f7f282b313f03ea04e7b04de17bc8325b917e51afdb3e7b43"
+  },
+  "thanksgiving-word-search/img/og.png": {
+   "bytes": 260542,
+   "sha256": "4e3c97970399061f4e97011fadacb8cddc741b2fa0e096089e4522f9036bb9c1"
+  },
+  "thanksgiving-word-search/img/parade-morning-s.png": {
+   "bytes": 39713,
+   "sha256": "b44e398444245c0778869ab326b1b45d208b4d48daba7572bc2c97d8a37bc6cf"
+  },
+  "thanksgiving-word-search/img/parade-morning.png": {
+   "bytes": 109808,
+   "sha256": "8dd3a27f0afccc54f771e31566d6a64186fb50c6e613d5fbab383e441907edb9"
+  },
+  "thanksgiving-word-search/img/thanksgiving-afternoon-s.png": {
+   "bytes": 41470,
+   "sha256": "16d795e9a4ff9bcdca75b66f01fd937b2bf3f1f7cd13465e5aa699b12ecc7b29"
+  },
+  "thanksgiving-word-search/img/thanksgiving-afternoon.png": {
+   "bytes": 112787,
+   "sha256": "d70e614cfd84d4d076410fc8a57f40380c97870097b54c4f4589007f02696d31"
+  },
+  "thanksgiving-word-search/img/thanksgiving-feast-s.png": {
+   "bytes": 36033,
+   "sha256": "9159cf36df0eaa4c58d56bb7aff1c1c9ef920a1764094fbb481fb3671d40eaee"
+  },
+  "thanksgiving-word-search/img/thanksgiving-feast.png": {
+   "bytes": 101204,
+   "sha256": "1f6fbd55155c8f91dbb122a873f12d625c221488726fe345a6cc38ce0f4d6197"
+  },
+  "thanksgiving-word-search/img/thanksgiving-kitchen-s.png": {
+   "bytes": 42375,
+   "sha256": "05895633654899f502f93eff674eba017edf18fae6a2fe786e2286763e10c322"
+  },
+  "thanksgiving-word-search/img/thanksgiving-kitchen.png": {
+   "bytes": 116868,
+   "sha256": "59bc1b5cccec8214174b9b95e6fc8986320a0cb17b3e3c5fc1230949febe807a"
+  },
+  "thanksgiving-word-search/index.html": {
+   "bytes": 13099,
+   "sha256": "6f2344e949412fb6c4686d0e78a299240275592f5fb436bcd0c5db4723b10b88"
+  },
+  "thanksgiving-word-search/parade-morning/index.html": {
+   "bytes": 7541,
+   "sha256": "9b075575724e0d30ae52e8f44c579d3b44937435838105888ef7d7c26832821f"
+  },
+  "thanksgiving-word-search/pdf/6-thanksgiving-word-searches-large-print-a4.pdf": {
+   "bytes": 76477,
+   "sha256": "9264dbc86b5fac0ad6a28a9315628702fede0d49e412f57bf4fd06eeccf6bba9"
+  },
+  "thanksgiving-word-search/pdf/6-thanksgiving-word-searches-large-print-letter.pdf": {
+   "bytes": 76259,
+   "sha256": "d39a2cd362d922788e776c2e08cb814a5619f8369750e17b7d0cdb1da550e8d6"
+  },
+  "thanksgiving-word-search/pdf/giving-thanks-word-search-large-print-a4.pdf": {
+   "bytes": 47238,
+   "sha256": "7b59a83b618b6efe40e1f3f7fd2029b2e9d972556747cb054d789bc8db684146"
+  },
+  "thanksgiving-word-search/pdf/giving-thanks-word-search-large-print-letter.pdf": {
+   "bytes": 47360,
+   "sha256": "0e48180643a9ae35cdf2f4dce10d2eba6e6a51363142240c5efe559e9d3aed54"
+  },
+  "thanksgiving-word-search/pdf/harvest-table-word-search-large-print-a4.pdf": {
+   "bytes": 48323,
+   "sha256": "daf0128fb9dc1cc1346db1b11cc237627cde55c9b180637e6ff01bf74d288445"
+  },
+  "thanksgiving-word-search/pdf/harvest-table-word-search-large-print-letter.pdf": {
+   "bytes": 48345,
+   "sha256": "239ea5e843cdddf49635c5450413a0482b5285f503b758c837323eb17600c91f"
+  },
+  "thanksgiving-word-search/pdf/parade-morning-word-search-large-print-a4.pdf": {
+   "bytes": 48380,
+   "sha256": "b7ee39d873f5789ee3979855337e3c9a317b2c20114aa2752888aadd794322b6"
+  },
+  "thanksgiving-word-search/pdf/parade-morning-word-search-large-print-letter.pdf": {
+   "bytes": 48415,
+   "sha256": "11e99da67f3b5c1bc7f9169cf9439a7d1a5f7775dbedd346c46c81a4dc09cbfe"
+  },
+  "thanksgiving-word-search/pdf/thanksgiving-afternoon-word-search-large-print-a4.pdf": {
+   "bytes": 49132,
+   "sha256": "03ad7efcf43f22b8754af758691b62f99d64b0f6980f668c2bfc8eaac4f7dd81"
+  },
+  "thanksgiving-word-search/pdf/thanksgiving-afternoon-word-search-large-print-letter.pdf": {
+   "bytes": 49030,
+   "sha256": "670b7ad3ddd65c5247e14375db04bfca2b481c918a3bf0ffe33954170a72f661"
+  },
+  "thanksgiving-word-search/pdf/thanksgiving-feast-word-search-large-print-a4.pdf": {
+   "bytes": 47337,
+   "sha256": "26bda9b553869e8b8cad0111e3ea0436380c736d67120e23b49c540eadc5d56b"
+  },
+  "thanksgiving-word-search/pdf/thanksgiving-feast-word-search-large-print-letter.pdf": {
+   "bytes": 47446,
+   "sha256": "539d71ffcbbaeaad9aae4433cfdc1a8d96816f2c35c7d243aef1611df84e7964"
+  },
+  "thanksgiving-word-search/pdf/thanksgiving-kitchen-word-search-large-print-a4.pdf": {
+   "bytes": 49172,
+   "sha256": "354e74247da42adf3a372911c0075d5a83187aad2bce54c703b46f9f46dc2ed2"
+  },
+  "thanksgiving-word-search/pdf/thanksgiving-kitchen-word-search-large-print-letter.pdf": {
+   "bytes": 49019,
+   "sha256": "4724eec1bfc1114b1659c729534338f587bd0f88355d811e064fcdd01e1f6a47"
+  },
+  "thanksgiving-word-search/pins/easy.png": {
+   "bytes": 418894,
+   "sha256": "ae75b7d1fcf21c86d1c0a961200132b550095b065cc000031db706b3e24db1bc"
+  },
+  "thanksgiving-word-search/pins/giving-thanks.png": {
+   "bytes": 408674,
+   "sha256": "ecc704f3267ce05d1cda9d5b05dd7ad4d2b00c550ef06135a07b81c861087780"
+  },
+  "thanksgiving-word-search/pins/harvest-table.png": {
+   "bytes": 434515,
+   "sha256": "12b6a781ca70ff034fb52d66a8fb7a99d307cef3d23114fef00eadfbb381efe5"
+  },
+  "thanksgiving-word-search/pins/hub-1.png": {
+   "bytes": 448888,
+   "sha256": "3361d3755e9d31368d60319378c092fb3f7924d833990cf0690b09019bdb6187"
+  },
+  "thanksgiving-word-search/pins/hub-2.png": {
+   "bytes": 473260,
+   "sha256": "b546a493072e96dd085dc825a8cd13407ba0d75b29c7789634b5badc9d547e2a"
+  },
+  "thanksgiving-word-search/pins/parade-morning.png": {
+   "bytes": 441841,
+   "sha256": "61cc5d967ffbc9075978da4d906731345644359af98e2f7da0313a26ae6cebd3"
+  },
+  "thanksgiving-word-search/pins/seniors.png": {
+   "bytes": 404732,
+   "sha256": "39c0027f57e8be1f241f95e63c47acd3e0aaeb4a15379809735354ea76340106"
+  },
+  "thanksgiving-word-search/pins/thanksgiving-afternoon.png": {
+   "bytes": 448129,
+   "sha256": "ba256fe7c30d4ba92ef6161c241fe59d1591961eab18bf82e76514947561f8ad"
+  },
+  "thanksgiving-word-search/pins/thanksgiving-feast.png": {
+   "bytes": 408098,
+   "sha256": "a9b698f514219ce8f2f1e1d447c014357dd38a48cae3138549f53679df55252a"
+  },
+  "thanksgiving-word-search/pins/thanksgiving-kitchen.png": {
+   "bytes": 465747,
+   "sha256": "c6da287e6b8eec939e11e6151f0b4b80c0273b0a2721e301b7342e1ab6524cc3"
+  },
+  "thanksgiving-word-search/thanksgiving-afternoon/index.html": {
+   "bytes": 7568,
+   "sha256": "5fed9b3f283de6d15354ae66874cb53638ef44046233723146275bb8797acf19"
+  },
+  "thanksgiving-word-search/thanksgiving-feast/index.html": {
+   "bytes": 7417,
+   "sha256": "e37d443c2f3d175dfe1aa1de8a61ce8340d29c20e0a0c926a8ab3223702f67c8"
+  },
+  "thanksgiving-word-search/thanksgiving-kitchen/index.html": {
+   "bytes": 7657,
+   "sha256": "60856b05dd7b00efe773e316fd67c0c1060bd40e071595bbf3d4f0b568835300"
+  }
+ },
+ "pack": "thanksgiving-word-search",
+ "puzzles": 6
+}

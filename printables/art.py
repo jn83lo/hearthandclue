@@ -10,7 +10,7 @@ import os
 import subprocess
 import tempfile
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 import fonts
 
@@ -32,6 +32,32 @@ SCHEMES = {
     "sage":    {"bg": (78, 96, 64),    "title": (250, 246, 236), "accent": (238, 190, 98),
                 "chip": (238, 190, 98),  "chip_text": (40, 48, 30),    "foot": (250, 246, 236),
                 "sub": (222, 228, 206),  "ink": (40, 48, 30),          "moon": (238, 190, 98)},
+    # Christmas
+    "pine":    {"bg": (34, 66, 50),    "title": (250, 246, 236), "accent": (230, 190, 112),
+                "chip": (230, 190, 112), "chip_text": (24, 44, 34),    "foot": (250, 246, 236),
+                "sub": (206, 222, 210),  "ink": (24, 44, 34),          "moon": (230, 190, 112)},
+    "berry":   {"bg": (150, 32, 42),   "title": (255, 249, 242), "accent": (246, 208, 140),
+                "chip": (246, 208, 140), "chip_text": (88, 16, 22),    "foot": (255, 249, 242),
+                "sub": (246, 214, 210),  "ink": (88, 16, 22),          "moon": (246, 208, 140)},
+    "snow":    {"bg": (248, 243, 237), "title": (51, 48, 44),    "accent": (166, 36, 44),
+                "chip": (47, 75, 60),    "chip_text": (248, 243, 237), "foot": (166, 36, 44),
+                "sub": (95, 90, 82),     "ink": (51, 48, 44),          "moon": (232, 217, 195)},
+}
+
+# The Christmas pins: snowflakes in the top corners (first colour large,
+# second small), and two baubles where the other pins have pumpkins, each as
+# (body, band) - the band is the gold or cream stripe round the glass.
+FLAKES = {
+    "snow": [(47, 75, 60), (166, 36, 44)],
+    "pine": [(250, 246, 236), (230, 190, 112)],
+    "berry": [(255, 249, 242), (246, 208, 140)],
+    "cream": [(47, 75, 60), (166, 36, 44)],
+}
+BAUBLES = {
+    "snow": [((166, 36, 44), (214, 176, 108)), ((47, 75, 60), (214, 176, 108))],
+    "pine": [((190, 40, 50), (230, 190, 112)), ((230, 190, 112), (250, 246, 236))],
+    "berry": [((230, 190, 112), (255, 249, 242)), ((40, 88, 62), (230, 190, 112))],
+    "cream": [((166, 36, 44), (214, 176, 108)), ((47, 75, 60), (214, 176, 108))],
 }
 
 # Falling maple leaves for the autumn pins, in colours that stand out on each
@@ -175,6 +201,59 @@ def _pumpkin(d, cx, cy, w, body=(226, 113, 29), rib=(184, 82, 15), stem=(86, 98,
         d.ellipse((x0, cy - h / 2, x1, cy + h / 2), fill=body, outline=rib, width=max(2, int(w * 0.018)))
 
 
+def _round_line(d, a, b, fill, width):
+    """A straight stroke with rounded ends."""
+    d.line([a, b], fill=fill, width=width)
+    r = width / 2.0
+    for x, y in (a, b):
+        d.ellipse((x - r, y - r, x + r, y + r), fill=fill)
+
+
+def _snowflake(d, cx, cy, size, fill):
+    """Six arms, each with two pairs of short branches. `size` is tip to tip."""
+    arm = size / 2.0
+    w = max(2, int(size * 0.075))
+    for k in range(6):
+        a = math.radians(90 + 60 * k)
+        ux, uy = math.cos(a), -math.sin(a)
+        _round_line(d, (cx, cy), (cx + ux * arm, cy + uy * arm), fill, w)
+        for at, length in ((0.45, 0.34), (0.75, 0.24)):
+            bx, by = cx + ux * arm * at, cy + uy * arm * at
+            for turn in (-50, 50):
+                t = a + math.radians(turn)
+                _round_line(d, (bx, by), (bx + math.cos(t) * arm * length, by - math.sin(t) * arm * length), fill, w)
+
+
+def _bauble(img, cx, cy, w, body, band, cap=(214, 176, 108)):
+    """A glass bauble with its cap and hanging loop, a band round its middle and
+    a glint. `w` is the ball's width. Drawn straight onto `img`."""
+    d = ImageDraw.Draw(img)
+    r = w / 2.0
+    lw = max(2, int(w * 0.04))
+    d.ellipse((cx - w * 0.075, cy - r - w * 0.27, cx + w * 0.075, cy - r - w * 0.12), outline=cap, width=lw)
+    d.rounded_rectangle((cx - w * 0.13, cy - r - w * 0.13, cx + w * 0.13, cy - r + w * 0.06), radius=w * 0.03, fill=cap)
+    d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=body)
+    # the band: the front half of a ring round the ball, cut off at its edge
+    x0, y0 = int(cx - r) - 2, int(cy - r) - 2
+    size = (int(2 * r) + 6, int(2 * r) + 6)
+    ring = Image.new("L", size, 0)
+    ImageDraw.Draw(ring).arc((cx - r * 1.1 - x0, cy - r * 0.24 - y0, cx + r * 1.1 - x0, cy + r * 0.24 - y0), 0, 180,
+                             fill=255, width=max(2, int(w * 0.075)))
+    ball = Image.new("L", size, 0)
+    ImageDraw.Draw(ball).ellipse((cx - r - x0, cy - r - y0, cx + r - x0, cy + r - y0), fill=255)
+    img.paste(band, (x0, y0, x0 + size[0], y0 + size[1]), ImageChops.multiply(ring, ball))
+    # a curved glint, upper left
+    g = max(2, int(w * 0.055))
+    gr = r * 0.70
+    d = ImageDraw.Draw(img)
+    d.arc((cx - gr, cy - gr, cx + gr, cy + gr), 204, 248, fill=(255, 255, 255), width=g)
+    for t in (204, 248):
+        x, y = cx + gr * math.cos(math.radians(t)), cy + gr * math.sin(math.radians(t))
+        x -= math.cos(math.radians(t)) * g / 2.0
+        y -= math.sin(math.radians(t)) * g / 2.0
+        d.ellipse((x - g / 2.0, y - g / 2.0, x + g / 2.0, y + g / 2.0), fill=(255, 255, 255))
+
+
 def _page_card(page_img, width, angle, shadow=(0, 0, 0, 110)):
     """A white page with a soft shadow, rotated a little. Returns an RGBA image."""
     w = int(width)
@@ -191,14 +270,22 @@ def _page_card(page_img, width, angle, shadow=(0, 0, 0, 110)):
 
 def pin(out_path, scheme, eyebrow, title, chip, pages, footer_small, pumpkin=True, motif="halloween"):
     """One 1000x1500 pin. `pages` is a list of 1 to 3 PIL page images, front first.
-    `motif` is what fills the top corners: "halloween" (a moon and bats) or
-    "fall" (falling maple leaves)."""
+    `motif` is what fills the top corners: "halloween" (a moon and bats),
+    "fall" (falling maple leaves) or "christmas" (snowflakes). `pumpkin` puts
+    two pumpkins by the pages' lower corner, or two baubles on a Christmas pin."""
     c = SCHEMES[scheme]
     W, H = 1000 * SS, 1500 * SS
     img = Image.new("RGB", (W, H), c["bg"])
     d = ImageDraw.Draw(img)
 
-    if motif == "fall":
+    if motif == "christmas":
+        # snowflakes in both top corners, kept clear of the words
+        big, small = FLAKES[scheme]
+        _snowflake(d, 100 * SS, 92 * SS, 118 * SS, big)
+        _snowflake(d, 222 * SS, 50 * SS, 60 * SS, small)
+        _snowflake(d, W - 100 * SS, 90 * SS, 104 * SS, small)
+        _snowflake(d, W - 214 * SS, 46 * SS, 44 * SS, big)
+    elif motif == "fall":
         # falling leaves in both top corners, kept clear of the words
         leaf = LEAVES[scheme]
         for x, y, size, tilt, k in ((96, 92, 66, -24, 0), (214, 52, 40, 28, 1), (W / SS - 104, 98, 60, 156, 2),
@@ -253,7 +340,12 @@ def pin(out_path, scheme, eyebrow, title, chip, pages, footer_small, pumpkin=Tru
     layer.alpha_composite(front, (int(W / 2 - front.width / 2), int(y + room / 2 - front.height / 2)))
     img.paste(layer, (0, 0), layer)
     d = ImageDraw.Draw(img)
-    if pumpkin:
+    if pumpkin and motif == "christmas":
+        (b1, band1), (b2, band2) = BAUBLES[scheme]
+        _bauble(img, 132 * SS, foot_top - 92 * SS, 150 * SS, b1, band1)
+        _bauble(img, 238 * SS, foot_top - 52 * SS, 94 * SS, b2, band2)
+        d = ImageDraw.Draw(img)
+    elif pumpkin:
         _pumpkin(d, 128 * SS, foot_top - 84 * SS, 168 * SS)
         _pumpkin(d, 232 * SS, foot_top - 58 * SS, 104 * SS, body=(236, 140, 52))
 
@@ -366,9 +458,9 @@ def photo_pin(out_path, photo_path, scheme, eyebrow, title, chip, pages, footer_
     img.resize((1000, 1500), Image.LANCZOS).save(out_path, quality=90, optimize=True)
 
 
-def og(out_path, eyebrow, title, sub, pages):
-    """1200x630 link-preview image."""
-    c = SCHEMES["cream"]
+def og(out_path, eyebrow, title, sub, pages, scheme="cream"):
+    """1200x630 link-preview image, on a light scheme ("cream" or "snow")."""
+    c = SCHEMES[scheme]
     W, H = 1200 * SS, 630 * SS
     img = Image.new("RGB", (W, H), c["bg"])
     d = ImageDraw.Draw(img)

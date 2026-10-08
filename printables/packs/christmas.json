@@ -1,0 +1,390 @@
+{
+  "slug": "christmas-word-search",
+  "name": "Christmas Word Searches",
+  "season": "Christmas",
+  "year": 2026,
+  "released": "2026-10-09",
+  "seed": "christmas-2026-free",
+  "motif": "christmas",
+  "book": {
+    "url": "https://www.etsy.com/listing/4551500612",
+    "puzzles": 40,
+    "label": "the Christmas book",
+    "blurb": "The full Christmas book has 40 large-print word searches with solutions, as a PDF you print at home.",
+    "until": "2026-12-25",
+    "after": {
+      "url": "https://hearthandclue.etsy.com",
+      "label": "our puzzle books",
+      "blurb": "Hearth & Clue makes large-print puzzle books you print at home: word searches, sudoku and cozy mysteries."
+    }
+  },
+  "plug": {
+    "text": "Liked these? There is a new free puzzle every day.",
+    "link": "hearthandclue.com"
+  },
+  "related": [
+    {
+      "url": "/thanksgiving-word-search/",
+      "title": "Free printable Thanksgiving word searches",
+      "blurb": "Six more in the same large print, from the parade to the pie."
+    },
+    {
+      "url": "/fall-word-search/",
+      "title": "Free printable fall word searches",
+      "blurb": "Ten more in the same large print, from apple pie to football Saturday."
+    },
+    {
+      "url": "/halloween-word-search/",
+      "title": "Free printable Halloween word searches",
+      "blurb": "Ten more in the same large print, from trick-or-treating to things that go bump."
+    }
+  ],
+  "puzzles": [
+    {
+      "slug": "christmas-tree",
+      "level": "easy",
+      "title": "O Christmas Tree",
+      "search": "Christmas Tree Word Search",
+      "note": "Every year it leaned a little, and every year we called it perfect.",
+      "words": [
+        "BULBS",
+        "EVERGREEN",
+        "ORNAMENTS",
+        "PINECONES",
+        "POPCORN",
+        "RIBBON",
+        "SPRUCE",
+        "STAND",
+        "STAR",
+        "TINSEL"
+      ]
+    },
+    {
+      "slug": "santa-claus",
+      "level": "easy",
+      "title": "Santa's on His Way",
+      "search": "Santa Claus Word Search",
+      "note": "The cookies were gone by morning, and so was the carrot.",
+      "words": [
+        "BEARD",
+        "CHIMNEY",
+        "COOKIES",
+        "ELVES",
+        "PRESENTS",
+        "REINDEER",
+        "SACK",
+        "SANTA",
+        "SLEIGH",
+        "STOCKING"
+      ]
+    },
+    {
+      "slug": "snowman",
+      "level": "easy",
+      "title": "Building a Snowman",
+      "search": "Snowman Word Search",
+      "note": "Ours had a carrot nose and a slightly worried expression.",
+      "words": [
+        "BOWTIE",
+        "BUCKET",
+        "CARROT",
+        "EARMUFFS",
+        "MITTENS",
+        "PEBBLES",
+        "ROLLING",
+        "SHOVEL",
+        "TOPHAT",
+        "TWIGS"
+      ]
+    },
+    {
+      "slug": "cookie-swap",
+      "level": "easy",
+      "title": "The Cookie Swap",
+      "search": "Christmas Cookie Word Search",
+      "note": "Everyone brought four dozen and went home with five.",
+      "words": [
+        "BUTTER",
+        "CRUMBS",
+        "DOZEN",
+        "GINGERSNAP",
+        "ICING",
+        "PLATTER",
+        "RECIPE",
+        "SHORTBREAD",
+        "SPRINKLES",
+        "SUGAR"
+      ]
+    },
+    {
+      "slug": "caroling-night",
+      "level": "medium",
+      "title": "Caroling Night",
+      "search": "Christmas Caroling Word Search",
+      "note": "We sang the first verse well and the second verse loudly.",
+      "words": [
+        "CHORUS",
+        "CIDER",
+        "DOORBELL",
+        "HARMONY",
+        "LANTERN",
+        "MELODY",
+        "MITTENS",
+        "NEIGHBORS",
+        "PORCH",
+        "SNOWFLAKES",
+        "SONGBOOK",
+        "SOPRANO",
+        "TENOR",
+        "VERSE"
+      ]
+    },
+    {
+      "slug": "nativity",
+      "level": "medium",
+      "title": "Away in a Manger",
+      "search": "Nativity Word Search",
+      "note": "No room at the inn, so the animals made some.",
+      "words": [
+        "CRADLE",
+        "DONKEY",
+        "FLOCKS",
+        "HALO",
+        "HILLSIDE",
+        "INNKEEPER",
+        "LAMBS",
+        "LULLABY",
+        "MANGER",
+        "OXEN",
+        "SHEPHERDS",
+        "STABLE",
+        "STARLIGHT",
+        "SWADDLING"
+      ]
+    },
+    {
+      "slug": "christmas-dinner",
+      "level": "medium",
+      "title": "The Big Dinner",
+      "search": "Christmas Dinner Word Search",
+      "note": "The good gravy boat came out once a year.",
+      "words": [
+        "CANDLES",
+        "CRANBERRY",
+        "CUSTARD",
+        "DESSERT",
+        "EGGNOG",
+        "GRAVY",
+        "LEFTOVERS",
+        "MASHED",
+        "PIES",
+        "ROAST",
+        "SECONDS",
+        "STUFFING",
+        "TRIFLE",
+        "TURKEY"
+      ]
+    },
+    {
+      "slug": "out-in-the-snow",
+      "level": "hard",
+      "title": "Out in the Snow",
+      "search": "Winter Word Search",
+      "note": "We came home pink-cheeked and pretended it wasn't cold.",
+      "words": [
+        "BLIZZARD",
+        "BOOTS",
+        "CHILL",
+        "EARMUFFS",
+        "FLURRY",
+        "FROST",
+        "ICICLE",
+        "PARKA",
+        "POWDER",
+        "SHOVEL",
+        "SKATES",
+        "SLED",
+        "SLUSH",
+        "SNOWDRIFT",
+        "SNOWFLAKE",
+        "SNOWSHOE",
+        "TOBOGGAN",
+        "WINTRY"
+      ]
+    },
+    {
+      "slug": "gingerbread-village",
+      "level": "hard",
+      "title": "The Gingerbread Village",
+      "search": "Gingerbread Word Search",
+      "note": "The church had a licorice steeple and a gumdrop door.",
+      "words": [
+        "CHIMNEY",
+        "CINNAMON",
+        "COTTAGE",
+        "FROSTING",
+        "GINGERBREAD",
+        "GLAZE",
+        "GUMDROPS",
+        "ICING",
+        "LICORICE",
+        "MARSHMALLOW",
+        "MOLASSES",
+        "PEPPERMINT",
+        "PRETZELS",
+        "ROOFTOP",
+        "SHINGLES",
+        "SPRINKLES",
+        "STEEPLE",
+        "WAFERS"
+      ]
+    },
+    {
+      "slug": "seasons-greetings",
+      "level": "hard",
+      "title": "Season's Greetings",
+      "search": "Merry Christmas Word Search",
+      "note": "Grandma signed every card with three kisses and a weather report.",
+      "words": [
+        "BRIGHT",
+        "CELEBRATE",
+        "CHEER",
+        "FESTIVE",
+        "GOODWILL",
+        "GREETINGS",
+        "JOLLY",
+        "JOYFUL",
+        "MERRY",
+        "MIRTH",
+        "NOEL",
+        "PEACE",
+        "SPARKLE",
+        "TIDINGS",
+        "TWINKLE",
+        "WISHES",
+        "WONDER",
+        "YULETIDE"
+      ]
+    }
+  ],
+  "pinterest": {
+    "board_id": "300615412567055159",
+    "pins": [
+      {
+        "id": "hub-1",
+        "date": "2026-10-22",
+        "target": "hub",
+        "scheme": "snow",
+        "kind": "hub"
+      },
+      {
+        "id": "hub-photo",
+        "date": "2026-10-26",
+        "target": "hub",
+        "kind": "hub3",
+        "photo": "fairy-lights"
+      },
+      {
+        "id": "christmas-tree",
+        "date": "2026-10-29",
+        "target": "christmas-tree",
+        "scheme": "pine"
+      },
+      {
+        "id": "seniors",
+        "date": "2026-11-01",
+        "target": "hub",
+        "scheme": "berry",
+        "kind": "seniors"
+      },
+      {
+        "id": "santa-claus",
+        "date": "2026-11-05",
+        "target": "santa-claus",
+        "scheme": "berry"
+      },
+      {
+        "id": "cookie-swap-photo",
+        "date": "2026-11-08",
+        "target": "cookie-swap",
+        "photo": "cookie-baking"
+      },
+      {
+        "id": "snowman",
+        "date": "2026-11-11",
+        "target": "snowman",
+        "scheme": "snow"
+      },
+      {
+        "id": "seniors-photo",
+        "date": "2026-11-14",
+        "target": "hub",
+        "kind": "seniors2",
+        "photo": "tartan-tea"
+      },
+      {
+        "id": "nativity",
+        "date": "2026-11-17",
+        "target": "nativity",
+        "scheme": "pine"
+      },
+      {
+        "id": "easy-photo",
+        "date": "2026-11-20",
+        "target": "snowman",
+        "kind": "easy2",
+        "photo": "linen-baubles"
+      },
+      {
+        "id": "christmas-dinner",
+        "date": "2026-11-23",
+        "target": "christmas-dinner",
+        "scheme": "berry"
+      },
+      {
+        "id": "hub-2",
+        "date": "2026-11-27",
+        "target": "hub",
+        "scheme": "pine",
+        "kind": "hub2"
+      },
+      {
+        "id": "caroling-night",
+        "date": "2026-11-30",
+        "target": "caroling-night",
+        "scheme": "snow"
+      },
+      {
+        "id": "gingerbread-village",
+        "date": "2026-12-03",
+        "target": "gingerbread-village",
+        "scheme": "berry"
+      },
+      {
+        "id": "cookie-swap",
+        "date": "2026-12-06",
+        "target": "cookie-swap",
+        "scheme": "pine"
+      },
+      {
+        "id": "out-in-the-snow",
+        "date": "2026-12-09",
+        "target": "out-in-the-snow",
+        "scheme": "snow"
+      },
+      {
+        "id": "easy",
+        "date": "2026-12-12",
+        "target": "hub",
+        "scheme": "berry",
+        "kind": "easy"
+      },
+      {
+        "id": "seasons-greetings",
+        "date": "2026-12-15",
+        "target": "seasons-greetings",
+        "scheme": "pine"
+      }
+    ]
+  }
+}

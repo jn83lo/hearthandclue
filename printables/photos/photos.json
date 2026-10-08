@@ -1,5 +1,5 @@
 {
-  "_note": "Table photographs that some pins lay the real puzzle pages on. They were made for Hearth & Clue with an AI image model on 6 October 2026 and show no real people, brands or text. 'scene' is how the alt text describes the picture; 'card' is the colour of the panels the words sit on; 'stack' moves or shrinks the pages when something in the picture should stay in view.",
+  "_note": "Table photographs that some pins lay the real puzzle pages on. They were made for Hearth & Clue with an AI image model on 6 and 9 October 2026 and show no real people, brands or text. 'scene' is how the alt text describes the picture; 'card' is the colour of the panels the words sit on; 'stack' moves or shrinks the pages when something in the picture should stay in view.",
   "walnut-pumpkins": {
     "card": "cream",
     "scene": "a dark wooden table with small orange pumpkins, autumn leaves, a mug of coffee and a candle"
@@ -62,5 +62,21 @@
   "yarn-tea": {
     "card": "sage",
     "scene": "a light oak table with balls of mustard and rust yarn, wooden knitting needles, a cup of tea and autumn leaves"
+  },
+  "fairy-lights": {
+    "card": "berry",
+    "scene": "a honey-colored wooden table with pine branches, holly, gold baubles, a candy cane, fairy lights and a mug of hot cocoa"
+  },
+  "tartan-tea": {
+    "card": "snow",
+    "scene": "a red and green tartan blanket with reading glasses, a cup of tea, pine cones, holly and a wrapped present"
+  },
+  "linen-baubles": {
+    "card": "pine",
+    "scene": "a white linen tablecloth with silver and gold baubles, cinnamon sticks, star anise, dried orange slices, a gingerbread star and eucalyptus"
+  },
+  "cookie-baking": {
+    "card": "berry",
+    "scene": "a whitewashed wooden table with iced star and tree cookies, a rolling pin, cookie cutters, a dusting of flour and a cup of coffee"
   }
 }

@@ -1,0 +1,246 @@
+{
+  "slug": "thanksgiving-word-search",
+  "name": "Thanksgiving Word Searches",
+  "season": "Thanksgiving",
+  "year": 2026,
+  "released": "2026-10-09",
+  "seed": "thanksgiving-2026-free",
+  "motif": "fall",
+  "book": {
+    "url": "https://www.etsy.com/listing/4551500612",
+    "puzzles": 40,
+    "label": "the Christmas book",
+    "blurb": "Christmas is next. Our Christmas book has 40 large-print word searches with solutions, as a PDF you print at home.",
+    "until": "2026-12-25",
+    "after": {
+      "url": "https://hearthandclue.etsy.com",
+      "label": "our puzzle books",
+      "blurb": "Hearth & Clue makes large-print puzzle books you print at home: word searches, sudoku and cozy mysteries."
+    }
+  },
+  "plug": {
+    "text": "Liked these? There is a new free puzzle every day.",
+    "link": "hearthandclue.com"
+  },
+  "related": [
+    {
+      "url": "/christmas-word-search/",
+      "title": "Free printable Christmas word searches",
+      "blurb": "Ten more in the same large print, from the tree to the cookie swap."
+    },
+    {
+      "url": "/fall-word-search/",
+      "title": "Free printable fall word searches",
+      "blurb": "Ten more in the same large print, from apple pie to football Saturday."
+    }
+  ],
+  "puzzles": [
+    {
+      "slug": "giving-thanks",
+      "level": "easy",
+      "title": "Giving Thanks",
+      "search": "Gratitude Word Search",
+      "note": "Everyone said one thing they were thankful for. Uncle Joe said pie.",
+      "words": [
+        "ABUNDANCE",
+        "BLESSINGS",
+        "GATHER",
+        "GENEROUS",
+        "GRATEFUL",
+        "HARVEST",
+        "NEIGHBORS",
+        "SHARING",
+        "THANKFUL",
+        "TOGETHER"
+      ]
+    },
+    {
+      "slug": "thanksgiving-feast",
+      "level": "easy",
+      "title": "The Thanksgiving Feast",
+      "search": "Thanksgiving Dinner Word Search",
+      "note": "The turkey took six hours. Dinner took twenty minutes.",
+      "words": [
+        "CIDER",
+        "CORNBREAD",
+        "CRANBERRY",
+        "DRESSING",
+        "GRAVY",
+        "MARSHMALLOW",
+        "PECAN",
+        "PUMPKIN",
+        "SUCCOTASH",
+        "TURKEY"
+      ]
+    },
+    {
+      "slug": "parade-morning",
+      "level": "medium",
+      "title": "Parade Morning",
+      "search": "Thanksgiving Parade Word Search",
+      "note": "We watched the balloons from the couch, still in our slippers.",
+      "words": [
+        "BALLOONS",
+        "BATON",
+        "BLANKETS",
+        "CHEERLEADERS",
+        "CONFETTI",
+        "CROWDS",
+        "DRUMLINE",
+        "FLOATS",
+        "GRANDSTAND",
+        "HANDLERS",
+        "MARCHING",
+        "SANTA",
+        "SIDEWALK",
+        "TELEVISION"
+      ]
+    },
+    {
+      "slug": "harvest-table",
+      "level": "medium",
+      "title": "The Harvest Table",
+      "search": "Harvest Word Search",
+      "note": "Grandma's centerpiece got a little bigger every year.",
+      "words": [
+        "ACORNS",
+        "BERRIES",
+        "CANDLES",
+        "CORNUCOPIA",
+        "GARLAND",
+        "GOURDS",
+        "LEAVES",
+        "MUMS",
+        "PINECONES",
+        "PUMPKINS",
+        "RUNNER",
+        "SCARECROW",
+        "WHEAT",
+        "WREATH"
+      ]
+    },
+    {
+      "slug": "thanksgiving-kitchen",
+      "level": "hard",
+      "title": "The Thanksgiving Kitchen",
+      "search": "Thanksgiving Cooking Word Search",
+      "note": "Grandma ran the kitchen like air traffic control.",
+      "words": [
+        "APRON",
+        "BASTING",
+        "CARVING",
+        "CASSEROLE",
+        "COLANDER",
+        "DRUMSTICK",
+        "GIBLETS",
+        "LADLE",
+        "LEFTOVERS",
+        "MASHER",
+        "OVEN",
+        "PIECRUST",
+        "ROASTING",
+        "SKILLET",
+        "STOCKPOT",
+        "TIMER",
+        "WHISK",
+        "WISHBONE"
+      ]
+    },
+    {
+      "slug": "thanksgiving-afternoon",
+      "level": "hard",
+      "title": "Thanksgiving Afternoon",
+      "search": "Thanksgiving Day Word Search",
+      "note": "Football, a nap, and pie for a second lunch.",
+      "words": [
+        "BLANKET",
+        "CARDS",
+        "COFFEE",
+        "COUCH",
+        "COUSINS",
+        "DESSERT",
+        "DISHES",
+        "FOOTBALL",
+        "GRANDPARENTS",
+        "HALFTIME",
+        "LAUGHTER",
+        "NAPTIME",
+        "PHOTOS",
+        "PIES",
+        "PUZZLES",
+        "RECLINER",
+        "STORIES",
+        "STROLL"
+      ]
+    }
+  ],
+  "pinterest": {
+    "board_id": "300615412567055159",
+    "pins": [
+      {
+        "id": "hub-1",
+        "date": "2026-11-02",
+        "target": "hub",
+        "scheme": "harvest",
+        "kind": "hub"
+      },
+      {
+        "id": "giving-thanks",
+        "date": "2026-11-04",
+        "target": "giving-thanks",
+        "scheme": "cream"
+      },
+      {
+        "id": "thanksgiving-feast",
+        "date": "2026-11-06",
+        "target": "thanksgiving-feast",
+        "scheme": "pumpkin"
+      },
+      {
+        "id": "seniors",
+        "date": "2026-11-09",
+        "target": "hub",
+        "scheme": "sage",
+        "kind": "seniors"
+      },
+      {
+        "id": "parade-morning",
+        "date": "2026-11-12",
+        "target": "parade-morning",
+        "scheme": "harvest"
+      },
+      {
+        "id": "harvest-table",
+        "date": "2026-11-15",
+        "target": "harvest-table",
+        "scheme": "cream"
+      },
+      {
+        "id": "hub-2",
+        "date": "2026-11-18",
+        "target": "hub",
+        "scheme": "pumpkin",
+        "kind": "hub2"
+      },
+      {
+        "id": "thanksgiving-kitchen",
+        "date": "2026-11-19",
+        "target": "thanksgiving-kitchen",
+        "scheme": "sage"
+      },
+      {
+        "id": "thanksgiving-afternoon",
+        "date": "2026-11-21",
+        "target": "thanksgiving-afternoon",
+        "scheme": "harvest"
+      },
+      {
+        "id": "easy",
+        "date": "2026-11-24",
+        "target": "hub",
+        "scheme": "cream",
+        "kind": "easy"
+      }
+    ]
+  }
+}

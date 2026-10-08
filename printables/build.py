@@ -121,7 +121,7 @@ def pin_copy(pack, pin, photos=None):
                 raise AssertionError("pin text over %d characters: %r" % (limit, text))
         return title, desc, alt
     colour = {"night": "a dark purple", "pumpkin": "an orange", "cream": "a cream", "harvest": "a deep red",
-              "sage": "an olive green"}[pin["scheme"]]
+              "sage": "an olive green", "pine": "a dark green", "berry": "a deep red", "snow": "a cream"}[pin["scheme"]]
     if kind == "hub":
         title = "Free Printable %s Word Searches - Large Print, %d Puzzles with Answers" % (season, total)
         desc = ("%d free printable %s word searches in large print (22 to 28 pt letters). Three levels from easy to hard, "
@@ -184,14 +184,19 @@ def pin_art(pack, pin, page_img):
         return ("%d FREE PRINTABLES" % total, "%s Word Searches" % season,
                 "LARGE PRINT" + BULLET + "3 LEVELS" + BULLET + "ANSWER KEYS",
                 [page_img(p, 1) for p in picks], foot, True)
+    easy = by_level["easy"]     # a small pack may have only two
     if kind in ("seniors", "seniors2"):
-        puz = by_level["easy"][2] if kind == "seniors" else by_level["easy"][1]
+        if kind == "seniors":
+            puz = easy[2] if len(easy) > 2 else easy[0]
+        else:
+            puz = easy[1]
         return ("FREE PRINTABLE", "Large Print %s Word Search" % season,
                 "28 PT LETTERS" + BULLET + "EASY" + BULLET + "ANSWER KEY",
                 [page_img(puz, 1), page_img(puz, 2)], "For seniors, care homes and activity groups", False)
     if kind == "easy":
+        two = (easy[3], easy[1]) if len(easy) > 3 else (easy[-1], easy[0])
         return ("FREE PRINTABLE", "Easy %s Word Search" % season, "ACROSS AND DOWN ONLY" + BULLET + "28 PT",
-                [page_img(by_level["easy"][3], 1), page_img(by_level["easy"][1], 1)], foot, True)
+                [page_img(two[0], 1), page_img(two[1], 1)], foot, True)
     puz = next(p for p in pack["puzzles"] if p["slug"] == pin["target"])
     if kind == "easy2":
         return ("FREE PRINTABLE", "Easy %s Word Search" % season, "ACROSS AND DOWN ONLY" + BULLET + "28 PT",
@@ -285,7 +290,8 @@ def build(name, root):
                          os.path.join(out, "img", puz["slug"] + "-s.png"))
     art.og(os.path.join(out, "img", "og.png"), "%d FREE PRINTABLES" % total, "%s Word Searches" % pack["season"],
            "Large print. Three levels. Answer keys. No sign-up.",
-           [page_img(pack["puzzles"][0], 1), page_img(pack["puzzles"][4], 1)])
+           [page_img(pack["puzzles"][0], 1), page_img(pack["puzzles"][4], 1)],
+           scheme="snow" if pack.get("motif") == "christmas" else "cream")
 
     # 4. pins and their schedule
     pt = pack["pinterest"]

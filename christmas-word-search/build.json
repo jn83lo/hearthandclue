@@ -1,0 +1,320 @@
+{
+ "checks": {
+  "grid_words_verified": 136,
+  "letter_sizes_pt": {
+   "grid": {
+    "easy": 28,
+    "hard": 22,
+    "medium": 24
+   },
+   "word_list": 18.0
+  },
+  "pack_a4": {
+   "answers": 10,
+   "pages": 16,
+   "puzzles": 10,
+   "words_checked": 136
+  },
+  "pack_letter": {
+   "answers": 10,
+   "pages": 16,
+   "puzzles": 10,
+   "words_checked": 136
+  },
+  "pages": 11,
+  "pdf_words_resolved": 544,
+  "pins": 18
+ },
+ "files": {
+  "christmas-word-search/caroling-night/index.html": {
+   "bytes": 7413,
+   "sha256": "5bdbd40538b3621e1ac65f0c45d7d8e3e67cdc2d9275d14d40eb0128a86bc698"
+  },
+  "christmas-word-search/christmas-dinner/index.html": {
+   "bytes": 7399,
+   "sha256": "a7a33ddd69e8e71546111decc35c7d5cf787fca438e8416a9ddd3dd737aa9397"
+  },
+  "christmas-word-search/christmas-tree/index.html": {
+   "bytes": 7202,
+   "sha256": "17e4b1ff8ca76a44fed53512a405f84b92285837fe4a84ec65315f6613528c6f"
+  },
+  "christmas-word-search/cookie-swap/index.html": {
+   "bytes": 7229,
+   "sha256": "17be6153c0a7eec7ac2fb0c83cb198770c2b12bb19dcc4c09f3dfe1f2e9f14c3"
+  },
+  "christmas-word-search/gingerbread-village/index.html": {
+   "bytes": 7530,
+   "sha256": "4d4b348d10f8e56b1eac524cee37d863a46be91858a0ee65ca151a03cb24334b"
+  },
+  "christmas-word-search/img/caroling-night-s.png": {
+   "bytes": 39798,
+   "sha256": "904ad8e960891fbc48f568a2908a15bcb3415c674d11fef2f9dc2cf4a0b6bd9d"
+  },
+  "christmas-word-search/img/caroling-night.png": {
+   "bytes": 111702,
+   "sha256": "2edeb61cd96dbfb22f3bfed1eeaa8edf0983c7a43aec69f53e368ccc37994954"
+  },
+  "christmas-word-search/img/christmas-dinner-s.png": {
+   "bytes": 38457,
+   "sha256": "f1acdaaca04aad9ed547960b7e61afbb221c54820fe3599399ff6287f6ef7b60"
+  },
+  "christmas-word-search/img/christmas-dinner.png": {
+   "bytes": 109926,
+   "sha256": "9c0415c22b213bd1f53a9fe6349a10d665e0ac976f1979331f7a0d97089952b4"
+  },
+  "christmas-word-search/img/christmas-tree-s.png": {
+   "bytes": 34666,
+   "sha256": "2e1a4c48557efdd2feacc064251f3f1230e0de8eeb5c46fbd852448c148d7ffb"
+  },
+  "christmas-word-search/img/christmas-tree.png": {
+   "bytes": 98580,
+   "sha256": "b9a204e7c0aefdc11fff7dfc921364ebdb914d7500cb9bb2e6dd0906f9eaceed"
+  },
+  "christmas-word-search/img/cookie-swap-s.png": {
+   "bytes": 34470,
+   "sha256": "2858360ed8294dc5ad86ca9cea6b6e48e2f69bdcb277ef4783addb1163637e27"
+  },
+  "christmas-word-search/img/cookie-swap.png": {
+   "bytes": 100098,
+   "sha256": "a9ae64c9d19ec8b8982744011dbb18ad01e866f9d3603ad055c7304bb59f0c54"
+  },
+  "christmas-word-search/img/gingerbread-village-s.png": {
+   "bytes": 43463,
+   "sha256": "efa71d59c7979bb511dfef555c0fb5f510ce36361293e182b06c41f1a3ef30bb"
+  },
+  "christmas-word-search/img/gingerbread-village.png": {
+   "bytes": 120868,
+   "sha256": "8e21bda0c8ae688bd054815b03b51e894d6fa6dce0f4d22c16dc5d2c2da54dee"
+  },
+  "christmas-word-search/img/nativity-s.png": {
+   "bytes": 38726,
+   "sha256": "26b557a6aa6e3f34c7c0eea5c86c08118e9d45b9b7a924fcce44826f8ea6c597"
+  },
+  "christmas-word-search/img/nativity.png": {
+   "bytes": 107129,
+   "sha256": "89c5d23f648ef955c5295360847c94dbcb9bf39d219c245144f01bd73a9b3774"
+  },
+  "christmas-word-search/img/og.png": {
+   "bytes": 252968,
+   "sha256": "8201aeaf0cdf1b9348dfbed99385b8bd83dd48fafe570a57590b009676c02014"
+  },
+  "christmas-word-search/img/out-in-the-snow-s.png": {
+   "bytes": 41192,
+   "sha256": "4a0d76e50767fef5d44a5b0703fe4d6fb2d250b7cb44f052b01307cb2ab6d4e2"
+  },
+  "christmas-word-search/img/out-in-the-snow.png": {
+   "bytes": 115155,
+   "sha256": "3d7b3a114d464114c8b41c7ac5adc7fdb0f6cff7f67ee84b29163cd60f402282"
+  },
+  "christmas-word-search/img/santa-claus-s.png": {
+   "bytes": 33648,
+   "sha256": "d643cabf3f7191e131255e3e384f5b249e93b6670de7a637329952d29fda7e58"
+  },
+  "christmas-word-search/img/santa-claus.png": {
+   "bytes": 93346,
+   "sha256": "752a63cf441ed6651e143c20f14261f859f9f63188d434b96e9e5dafa8f43802"
+  },
+  "christmas-word-search/img/seasons-greetings-s.png": {
+   "bytes": 40954,
+   "sha256": "8331b9720bd61042b2ab24720c7c461e447a7f4564718ed1b445a185a20dd039"
+  },
+  "christmas-word-search/img/seasons-greetings.png": {
+   "bytes": 113111,
+   "sha256": "8a7fc1aab1fe76cfe600e7b9fb6c15c1c8e6a3e978ec0fba1590c559ce905203"
+  },
+  "christmas-word-search/img/snowman-s.png": {
+   "bytes": 33370,
+   "sha256": "5d7b78fd1dd554e7575af57bae59cf65e8c0517e5e49fb12d7fd5bf25e8fcfe4"
+  },
+  "christmas-word-search/img/snowman.png": {
+   "bytes": 92621,
+   "sha256": "8f08df1bb18772e9566e60656ce9c493a5deca9222738fa5d1dd0e338123ef08"
+  },
+  "christmas-word-search/index.html": {
+   "bytes": 16461,
+   "sha256": "980d714c0273694698853fc4daf79f23ad64ce20bd053dfc70195fc0a2fddf7a"
+  },
+  "christmas-word-search/nativity/index.html": {
+   "bytes": 7251,
+   "sha256": "b8827a9df27a8eacf12e76ddcbf9ee0e9c76a71c04c8b0c2c2c365e2bf369d85"
+  },
+  "christmas-word-search/out-in-the-snow/index.html": {
+   "bytes": 7390,
+   "sha256": "84762b6aff40223f5ad7e43f4d9448cf9b5a615652f82c27627d12b25806d931"
+  },
+  "christmas-word-search/pdf/10-christmas-word-searches-large-print-a4.pdf": {
+   "bytes": 97839,
+   "sha256": "b6c35d9123ab7f5ac0d8d6360904899ab86e1eac0badbdf26fe821741ae214b1"
+  },
+  "christmas-word-search/pdf/10-christmas-word-searches-large-print-letter.pdf": {
+   "bytes": 97322,
+   "sha256": "76a275c0f0c48362e3241114b38c4574c788ce25f8e07943f43a97e6a1146726"
+  },
+  "christmas-word-search/pdf/caroling-night-word-search-large-print-a4.pdf": {
+   "bytes": 48338,
+   "sha256": "064127c6373e8d0a24d61b53caef5c6c04204f8b60da29ae7fc5e75382188aa0"
+  },
+  "christmas-word-search/pdf/caroling-night-word-search-large-print-letter.pdf": {
+   "bytes": 48369,
+   "sha256": "5f0ea02636d185b901a3bc198e391da5f8cc7569a3c153ccbefc071862e25520"
+  },
+  "christmas-word-search/pdf/christmas-dinner-word-search-large-print-a4.pdf": {
+   "bytes": 48466,
+   "sha256": "1934e631cc0e3370567e0cf91b72cb1141857b6a9ca38db8ce0c3ba86e56de6e"
+  },
+  "christmas-word-search/pdf/christmas-dinner-word-search-large-print-letter.pdf": {
+   "bytes": 48254,
+   "sha256": "5d5e1d55d6df7915b2a9eb9ac2ec50292bb462bc6f227c959998e35fa90f1b4e"
+  },
+  "christmas-word-search/pdf/christmas-tree-word-search-large-print-a4.pdf": {
+   "bytes": 47311,
+   "sha256": "9afb249baa236d050ad3ed649098b363a220d5e71e8c437b8b2cae22435d3157"
+  },
+  "christmas-word-search/pdf/christmas-tree-word-search-large-print-letter.pdf": {
+   "bytes": 47415,
+   "sha256": "5c241e81130eb3706c7c75c28a4e0e9dcf0400b271b796fd313d8e87569e0f69"
+  },
+  "christmas-word-search/pdf/cookie-swap-word-search-large-print-a4.pdf": {
+   "bytes": 47306,
+   "sha256": "d4d92ae3413a266f255e3d77d645ea7e5af331abf30f28c162d20350adf91167"
+  },
+  "christmas-word-search/pdf/cookie-swap-word-search-large-print-letter.pdf": {
+   "bytes": 47399,
+   "sha256": "b0df6c335e067547ac0e6526ba31d4f5c0c2a61a94b82ec23f4cc2d757e9c07c"
+  },
+  "christmas-word-search/pdf/gingerbread-village-word-search-large-print-a4.pdf": {
+   "bytes": 49143,
+   "sha256": "cca8553a8147387862bfeb39613909ce42c18d7db09a38305ed4e8ed155ff3b3"
+  },
+  "christmas-word-search/pdf/gingerbread-village-word-search-large-print-letter.pdf": {
+   "bytes": 49062,
+   "sha256": "25268402fe600d333e1e4bdda2763efc3d80ed1afc60d474dc74a0623785e56b"
+  },
+  "christmas-word-search/pdf/nativity-word-search-large-print-a4.pdf": {
+   "bytes": 48326,
+   "sha256": "bb2e5553227d23de1a09c8eb715db76d7ee0bb66840f5742cccc4ca6e64c26f1"
+  },
+  "christmas-word-search/pdf/nativity-word-search-large-print-letter.pdf": {
+   "bytes": 48388,
+   "sha256": "ae5551a830c2c8198d1a4e4754435bad087164daf3d2ea74b880568e1d068321"
+  },
+  "christmas-word-search/pdf/out-in-the-snow-word-search-large-print-a4.pdf": {
+   "bytes": 49133,
+   "sha256": "e88c74c957c0df0c7a0740aee8fa96091b0efa9be30162ab4374b0f7e869167a"
+  },
+  "christmas-word-search/pdf/out-in-the-snow-word-search-large-print-letter.pdf": {
+   "bytes": 49045,
+   "sha256": "449d1c7d0aaf8d95abe896b36aff849136fa51f3b530c4aea4f3c559a112b494"
+  },
+  "christmas-word-search/pdf/santa-claus-word-search-large-print-a4.pdf": {
+   "bytes": 47199,
+   "sha256": "87422d701b63074281cd698a739ac8f822e939b6ec40a6075910ccac878dd068"
+  },
+  "christmas-word-search/pdf/santa-claus-word-search-large-print-letter.pdf": {
+   "bytes": 47122,
+   "sha256": "92f14671d017c60dc29db684eeb064033d65a50d268300aeef77b8517764373d"
+  },
+  "christmas-word-search/pdf/seasons-greetings-word-search-large-print-a4.pdf": {
+   "bytes": 49178,
+   "sha256": "fedb354897ea366c3ca4d3ba12fbaee7e9b01bbcaf43fd6b717660348534ce0e"
+  },
+  "christmas-word-search/pdf/seasons-greetings-word-search-large-print-letter.pdf": {
+   "bytes": 49112,
+   "sha256": "df8fce231956c5736b44de029f68972680aba1868d9b0c3abdae341dd4d04df4"
+  },
+  "christmas-word-search/pdf/snowman-word-search-large-print-a4.pdf": {
+   "bytes": 47273,
+   "sha256": "7aa5701fc60ef65eae9b92d3c7f6401ba2ec17ffc3708622da2d64adcd9e1109"
+  },
+  "christmas-word-search/pdf/snowman-word-search-large-print-letter.pdf": {
+   "bytes": 47160,
+   "sha256": "fc857bf7b03a8556af54228ab5f7ca4798d2dc40b25d2d1ef1233c11753d465f"
+  },
+  "christmas-word-search/pins/caroling-night.png": {
+   "bytes": 468431,
+   "sha256": "b78c6d08aaf554c96ea24566caa769ae5b49098f2b3e509d33e6adc357ac92e4"
+  },
+  "christmas-word-search/pins/christmas-dinner.png": {
+   "bytes": 452103,
+   "sha256": "37d8d0c0f4845b3469f3f27cceebddcad0f19f8a8dea45df45589727ebef8663"
+  },
+  "christmas-word-search/pins/christmas-tree.png": {
+   "bytes": 432207,
+   "sha256": "e581606cc0d363bdd2a8ad493429ffab69e118ab146b915c071a88023e7961a5"
+  },
+  "christmas-word-search/pins/cookie-swap-photo.jpg": {
+   "bytes": 361870,
+   "sha256": "eb1c5cf43d16c59e5fff5401b93208aeead61527eaf3dd5c4e3eb92e8f85deca"
+  },
+  "christmas-word-search/pins/cookie-swap.png": {
+   "bytes": 431544,
+   "sha256": "478e5b12ac7a52734164a95f55072c35d7b51f5c323a89754bad0a364e568a4c"
+  },
+  "christmas-word-search/pins/easy-photo.jpg": {
+   "bytes": 295317,
+   "sha256": "d29dac886bffdd09e08c029bcefed55947c281b263945e7684074ad54cf72971"
+  },
+  "christmas-word-search/pins/easy.png": {
+   "bytes": 419249,
+   "sha256": "99225c91f7a75920a51006a8e5708085e6686ede788dfc4f601edb10c591d9da"
+  },
+  "christmas-word-search/pins/gingerbread-village.png": {
+   "bytes": 474254,
+   "sha256": "733617a797eabca00f8d181899231c1dcd9cdc8848e8067cdb9d349ecd11702f"
+  },
+  "christmas-word-search/pins/hub-1.png": {
+   "bytes": 463348,
+   "sha256": "4e82d45e42f3989a9eea52b85ff245142b4784ccf0214ad9b48fd40350b24b82"
+  },
+  "christmas-word-search/pins/hub-2.png": {
+   "bytes": 471365,
+   "sha256": "bfbd69cc42d8bbc0b63a069905451296bf43ce515c68ace0d2a7b5bddf0eca4b"
+  },
+  "christmas-word-search/pins/hub-photo.jpg": {
+   "bytes": 355714,
+   "sha256": "738ceb6150904a31dbbd07c634953814a668ef1437bdaae58ba6eab9ef9de30e"
+  },
+  "christmas-word-search/pins/nativity.png": {
+   "bytes": 440255,
+   "sha256": "4c0c976d98f864171b1028c13f9f9258ac4eff1e4a86558ea75b08b14ee46570"
+  },
+  "christmas-word-search/pins/out-in-the-snow.png": {
+   "bytes": 456067,
+   "sha256": "694eeb3ee233892fb04a64be434b878344ba515c3a4ff7df3ccadb43d2f5bb20"
+  },
+  "christmas-word-search/pins/santa-claus.png": {
+   "bytes": 421252,
+   "sha256": "977c4120bcdd446459892a71117bae6ded1e0f22201da5b229ed748b669019a9"
+  },
+  "christmas-word-search/pins/seasons-greetings.png": {
+   "bytes": 459979,
+   "sha256": "8f6f99e0b33ce08cae6715034fbe1078ac82158d15eaf76b791ce43cd534d986"
+  },
+  "christmas-word-search/pins/seniors-photo.jpg": {
+   "bytes": 392734,
+   "sha256": "9fdb42030514c24ed26a4fb0317183b8d8c007aecc8f81f95ad34db29fa37ec6"
+  },
+  "christmas-word-search/pins/seniors.png": {
+   "bytes": 422329,
+   "sha256": "e93c6664695ea062917ea420b23e24980cbd6d4bed55d7935c00bc20ffab8bec"
+  },
+  "christmas-word-search/pins/snowman.png": {
+   "bytes": 421068,
+   "sha256": "134b37c816fc4a8b21a156eab0b724fd6f47e0bd9841b9f65d3eccc4870dbb81"
+  },
+  "christmas-word-search/santa-claus/index.html": {
+   "bytes": 7181,
+   "sha256": "ed0b9fd8ef52d55ff8334105f9cbec1df140afbbfc17881add54793578bbef83"
+  },
+  "christmas-word-search/seasons-greetings/index.html": {
+   "bytes": 7440,
+   "sha256": "80d17270fc95ac39144e3a390c44a5c91f845bf64d39110f8d8f99d1cd16a6a2"
+  },
+  "christmas-word-search/snowman/index.html": {
+   "bytes": 7107,
+   "sha256": "133f564762510475870478a10c75abebf0431e3dff705a3901576b4afa46df31"
+  }
+ },
+ "pack": "christmas-word-search",
+ "puzzles": 10
+}
