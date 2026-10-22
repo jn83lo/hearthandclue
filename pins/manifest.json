@@ -1,22 +1,4 @@
 {
- "294": {
-  "date": "2026-10-21",
-  "image": "/pins/294.png",
-  "note": "Wood speaks if you listen",
-  "subject": "Woodworking",
-  "title": "Sawdust and Light",
-  "url": "https://etsy.com/listing/4554679490",
-  "words": [
-   "HAMMER",
-   "WOOD",
-   "CHISEL",
-   "CRAFT",
-   "GRAIN",
-   "JOINTS",
-   "BUILD",
-   "FINISH"
-  ]
- },
  "295": {
   "date": "2026-10-22",
   "image": "/pins/295.png",
@@ -537,6 +519,24 @@
    "AUTHOR",
    "PLOT",
    "ADVENTURE"
+  ]
+ },
+ "324": {
+  "date": "2026-11-20",
+  "image": "/pins/324.png",
+  "note": "They live in the moment; we follow",
+  "subject": "Pets",
+  "title": "Paws and Prints",
+  "url": null,
+  "words": [
+   "ANIMALS",
+   "DOGS",
+   "CATS",
+   "PETS",
+   "FURRY",
+   "LOYAL",
+   "PAWS",
+   "CUDDLE"
   ]
  }
 }
