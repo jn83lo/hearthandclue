@@ -1,22 +1,4 @@
 {
- "304": {
-  "date": "2026-10-31",
-  "image": "/pins/304.png",
-  "note": "One night to dress up and find what's hiding",
-  "subject": "Halloween",
-  "title": "The Porch Light",
-  "url": "https://etsy.com/listing/4551703062",
-  "words": [
-   "COSTUME",
-   "MASK",
-   "CANDY",
-   "PUMPKIN",
-   "NIGHT",
-   "TRICK",
-   "TREAT",
-   "SPOOKY"
-  ]
- },
  "305": {
   "date": "2026-11-01",
   "image": "/pins/305.png",
@@ -537,6 +519,24 @@
    "VALUE",
    "RARE",
    "PRECIOUS"
+  ]
+ },
+ "334": {
+  "date": "2026-11-30",
+  "image": "/pins/334.png",
+  "note": "Every day is January 1st if you need it to be",
+  "subject": "New Year",
+  "title": "Resolutions",
+  "url": null,
+  "words": [
+   "PROMISE",
+   "CHANGE",
+   "FUTURE",
+   "DREAMS",
+   "GOALS",
+   "BEGIN",
+   "NEW",
+   "START"
   ]
  }
 }
