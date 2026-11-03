@@ -1,22 +1,4 @@
 {
- "306": {
-  "date": "2026-11-02",
-  "image": "/pins/306.png",
-  "note": "Every journey starts with leaving",
-  "subject": "Travel",
-  "title": "On the Platform",
-  "url": null,
-  "words": [
-   "JOURNEY",
-   "ADVENTURE",
-   "EXPLORE",
-   "DISTANCE",
-   "PLACES",
-   "DISCOVER",
-   "TRAVEL",
-   "ESCAPE"
-  ]
- },
  "307": {
   "date": "2026-11-03",
   "image": "/pins/307.png",
@@ -537,6 +519,24 @@
    "TREES",
    "SINGING",
    "NATURE"
+  ]
+ },
+ "336": {
+  "date": "2026-12-02",
+  "image": "/pins/336.png",
+  "note": "Quiet before the thaw",
+  "subject": "Winter",
+  "title": "The Frost Holds",
+  "url": null,
+  "words": [
+   "SNOW",
+   "FROST",
+   "COLD",
+   "SILENT",
+   "ICY",
+   "FROZEN",
+   "PEACE",
+   "REST"
   ]
  }
 }
