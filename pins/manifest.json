@@ -1,22 +1,4 @@
 {
- "307": {
-  "date": "2026-11-03",
-  "image": "/pins/307.png",
-  "note": "Butter, herbs, time, and care",
-  "subject": "Cooking",
-  "title": "The Feast",
-  "url": null,
-  "words": [
-   "COOKING",
-   "RECIPE",
-   "KITCHEN",
-   "FLAVORS",
-   "HERBS",
-   "DELICIOUS",
-   "TASTE",
-   "FEAST"
-  ]
- },
  "308": {
   "date": "2026-11-04",
   "image": "/pins/308.png",
@@ -537,6 +519,24 @@
    "FROZEN",
    "PEACE",
    "REST"
+  ]
+ },
+ "337": {
+  "date": "2026-12-03",
+  "image": "/pins/337.png",
+  "note": "When the tent stakes hold and the lantern glows",
+  "subject": "Camping & RV",
+  "title": "Out Under Canvas",
+  "url": "https://etsy.com/listing/4554896237",
+  "words": [
+   "CANVAS",
+   "CAMPFIRE",
+   "LANTERN",
+   "SLEEPING",
+   "TENT",
+   "STAKES",
+   "NATURE",
+   "ESCAPE"
   ]
  }
 }
