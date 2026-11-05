@@ -1,0 +1,16 @@
+# Netlify settings for hearthandclue.com (6 Nov 2026).
+#
+# Skip the automatic rebuild when a push only adds pin images and day pages
+# (pins/ and daily/, committed daily by .github/workflows/pins.yml), except on
+# Mondays (UTC). Pins are rendered 30 days ahead, so a weekly deploy keeps every
+# day's image live, and the puzzle itself is date-seeded in the page, so it needs
+# no deploy. When a day page isn't live yet, the site's pinner links that day's
+# pin to the home page instead. Any other change (Index.html, functions,
+# .deploy-trigger, this file) still deploys straight away.
+#
+# Why: one deploy a day is more than Netlify's free plan allows; one a week fits.
+# Netlify skips the build when this command exits 0; anything else, including
+# any git error, builds as usual.
+# To undo: delete this file.
+[build]
+  ignore = '''[ "$CACHED_COMMIT_REF" != "$COMMIT_REF" ] && [ "$(date -u +%u)" != "1" ] && git diff --quiet "$CACHED_COMMIT_REF" "$COMMIT_REF" -- . ':(exclude)pins' ':(exclude)daily' '''
