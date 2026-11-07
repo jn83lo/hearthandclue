@@ -1,22 +1,4 @@
 {
- "310": {
-  "date": "2026-11-06",
-  "image": "/pins/310.png",
-  "note": "Every day is January 1st if you need it to be",
-  "subject": "New Year",
-  "title": "Resolutions",
-  "url": null,
-  "words": [
-   "PROMISE",
-   "CHANGE",
-   "FUTURE",
-   "DREAMS",
-   "GOALS",
-   "BEGIN",
-   "NEW",
-   "START"
-  ]
- },
  "311": {
   "date": "2026-11-07",
   "image": "/pins/311.png",
@@ -537,6 +519,24 @@
    "WORDS",
    "HEART",
    "WAITING"
+  ]
+ },
+ "340": {
+  "date": "2026-12-06",
+  "image": "/pins/340.png",
+  "note": "Line up the shot; the grass is perfect today",
+  "subject": "Golf",
+  "title": "The Fairway",
+  "url": "https://etsy.com/listing/4555025178",
+  "words": [
+   "FAIRWAY",
+   "PUTT",
+   "GOLF",
+   "GREEN",
+   "COURSE",
+   "DRIVE",
+   "BIRDIE",
+   "SWING"
   ]
  }
 }
