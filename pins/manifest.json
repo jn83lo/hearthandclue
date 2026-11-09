@@ -1,22 +1,4 @@
 {
- "312": {
-  "date": "2026-11-08",
-  "image": "/pins/312.png",
-  "note": "Letting go looks beautiful",
-  "subject": "Autumn",
-  "title": "Leaves Turning",
-  "url": null,
-  "words": [
-   "LEAVES",
-   "HARVEST",
-   "COLORS",
-   "AUTUMN",
-   "COOL",
-   "CHANGE",
-   "FALLING",
-   "SEASON"
-  ]
- },
  "313": {
   "date": "2026-11-09",
   "image": "/pins/313.png",
@@ -537,6 +519,24 @@
    "SQUARES",
    "COLORS",
    "DESIGN"
+  ]
+ },
+ "342": {
+  "date": "2026-12-08",
+  "image": "/pins/342.png",
+  "note": "Wood speaks if you listen",
+  "subject": "Woodworking",
+  "title": "Sawdust and Light",
+  "url": "https://etsy.com/listing/4554679490",
+  "words": [
+   "HAMMER",
+   "WOOD",
+   "CHISEL",
+   "CRAFT",
+   "GRAIN",
+   "JOINTS",
+   "BUILD",
+   "FINISH"
   ]
  }
 }
