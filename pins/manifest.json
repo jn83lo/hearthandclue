@@ -1,22 +1,4 @@
 {
- "314": {
-  "date": "2026-11-10",
-  "image": "/pins/314.png",
-  "note": "Chrome and miles; each one counts",
-  "subject": "Vintage Cars",
-  "title": "The Fuel Receipt Kept in the Folder",
-  "url": null,
-  "words": [
-   "CHROME",
-   "MILES",
-   "VINTAGE",
-   "HIGHWAY",
-   "FUEL",
-   "JOURNEY",
-   "ROAD",
-   "MEMORY"
-  ]
- },
  "315": {
   "date": "2026-11-11",
   "image": "/pins/315.png",
@@ -537,6 +519,24 @@
    "GROWING",
    "SOIL",
    "SPRING"
+  ]
+ },
+ "344": {
+  "date": "2026-12-10",
+  "image": "/pins/344.png",
+  "note": "One loop builds on another",
+  "subject": "Knitting",
+  "title": "Stitches Across Time",
+  "url": null,
+  "words": [
+   "KNITTING",
+   "NEEDLES",
+   "YARN",
+   "STITCHES",
+   "LOOPS",
+   "PATTERN",
+   "WOOL",
+   "ROWS"
   ]
  }
 }
