@@ -1,22 +1,4 @@
 {
- "320": {
-  "date": "2026-11-16",
-  "image": "/pins/320.png",
-  "note": "One loop builds on another",
-  "subject": "Knitting",
-  "title": "Stitches Across Time",
-  "url": null,
-  "words": [
-   "KNITTING",
-   "NEEDLES",
-   "YARN",
-   "STITCHES",
-   "LOOPS",
-   "PATTERN",
-   "WOOL",
-   "ROWS"
-  ]
- },
  "321": {
   "date": "2026-11-17",
   "image": "/pins/321.png",
@@ -537,6 +519,24 @@
    "DETECT",
    "TRUTH",
    "PUZZLE"
+  ]
+ },
+ "350": {
+  "date": "2026-12-16",
+  "image": "/pins/350.png",
+  "note": "Someone's secret, waiting to be found",
+  "subject": "Mystery #2",
+  "title": "The Lost Letter",
+  "url": null,
+  "words": [
+   "LETTER",
+   "MISSING",
+   "HIDDEN",
+   "SEARCH",
+   "SECRETS",
+   "FOUND",
+   "CLUE",
+   "DISCOVER"
   ]
  }
 }
