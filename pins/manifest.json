@@ -1,22 +1,4 @@
 {
- "321": {
-  "date": "2026-11-17",
-  "image": "/pins/321.png",
-  "note": "Where the river knows your rhythm",
-  "subject": "Fishing",
-  "title": "The Fly Cast",
-  "url": null,
-  "words": [
-   "FISHING",
-   "RIVER",
-   "TROUT",
-   "CAST",
-   "FLIES",
-   "WATERS",
-   "REEL",
-   "CATCH"
-  ]
- },
  "322": {
   "date": "2026-11-18",
   "image": "/pins/322.png",
@@ -537,6 +519,24 @@
    "FOUND",
    "CLUE",
    "DISCOVER"
+  ]
+ },
+ "351": {
+  "date": "2026-12-17",
+  "image": "/pins/351.png",
+  "note": "Four suspects, and one of them is lying",
+  "subject": "Murder Mystery",
+  "title": "The Missing Alibi",
+  "url": "https://etsy.com/listing/4587074636",
+  "words": [
+   "ALIBI",
+   "MOTIVE",
+   "SUSPECT",
+   "WITNESS",
+   "INSPECTOR",
+   "VERDICT",
+   "BUTLER",
+   "SLEUTH"
   ]
  }
 }
